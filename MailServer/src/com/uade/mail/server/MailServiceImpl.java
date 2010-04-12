@@ -77,7 +77,13 @@ public class MailServiceImpl implements MailService{
 	}
 
 	@Override
-	public ArrayList<Mail> updateInbox(Casilla c) throws MailServiceException {
+	public HashSet<Mail> updateInbox(Casilla c) throws MailServiceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashSet<Casilla> getContacts(Casilla c) throws MailServiceException {
 		// TODO Auto-generated method stub
 		return null;
 	}

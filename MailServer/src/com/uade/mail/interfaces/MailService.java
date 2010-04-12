@@ -1,6 +1,6 @@
 package com.uade.mail.interfaces;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 
 import com.uade.mail.beans.Casilla;
@@ -17,7 +17,7 @@ public interface MailService {
 	 * @return
 	 * @throws MailServiceException
 	 */
-	public ArrayList<Mail> updateInbox(Casilla c) throws MailServiceException;
+	public HashSet<Mail> updateInbox(Casilla c) throws MailServiceException;
 	
 	/**
 	 * Realiza el envio de un mensaje. Toda la info relevante para realizar 
@@ -92,6 +92,16 @@ public interface MailService {
 	 * @throws MailServiceException
 	 */
 	public void deleteTrustedLink(OficinaDeCorreo o1, OficinaDeCorreo o2) throws MailServiceException;
+	
+	
+	/**
+	 * Obtiene toda la lista de contactos para una determinada casilla basandose
+	 * en la oficina de correo a la(s) que pertenece y las relaciones de confianza
+	 * involucradas
+	 * @param c
+	 * @throws MailServiceException
+	 */
+	public HashSet<Casilla> getContacts(Casilla c) throws MailServiceException;
 	
 	
 	//TODO - Log Interface

@@ -10,6 +10,13 @@ public class Casilla {
 	private Inbox inbox;
 	
 	
+	
+	public Inbox getInbox() {
+		return inbox;
+	}
+	public void setInbox(Inbox inbox) {
+		this.inbox = inbox;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

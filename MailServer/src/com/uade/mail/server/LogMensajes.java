@@ -49,7 +49,4 @@ public class LogMensajes {
 		this.log = log;
 	}
 	
-	
-	
-	
 }
