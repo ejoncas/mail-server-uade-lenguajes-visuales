@@ -2,16 +2,13 @@ package com.uade.mail.beans;
 
 public class Mail {
 	
-	private String from;
-	private String to;
+	//cambiar to y from por casillas
+	
+	private Casilla from;
+	private Casilla to;
 	private String subject;
 	private String message;
-	public String getFrom() {
-		return from;
-	}
-	public void setFrom(String from) {
-		this.from = from;
-	}
+	
 	public String getSubject() {
 		return subject;
 	}
@@ -24,13 +21,21 @@ public class Mail {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public String getTo() {
+	
+	
+	
+	public Casilla getFrom() {
+		return from;
+	}
+	public void setFrom(Casilla from) {
+		this.from = from;
+	}
+	public Casilla getTo() {
 		return to;
 	}
-	public void setTo(String to) {
+	public void setTo(Casilla to) {
 		this.to = to;
 	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -74,8 +79,8 @@ public class Mail {
 	}
 	
 	public String toString(){
-		return "From: "+this.from+
-		" To: "+this.to+
+		return "From: "+this.from.getNombre()+
+		" To: "+this.to.getNombre()+
 		" Subject: "+this.subject+
 		" Message: "+this.message;
 		
