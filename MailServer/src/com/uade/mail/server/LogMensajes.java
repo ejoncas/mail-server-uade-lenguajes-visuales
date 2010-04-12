@@ -1,5 +1,8 @@
 package com.uade.mail.server;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -11,6 +14,7 @@ import com.uade.mail.beans.Mail;
 public class LogMensajes {
 
 	private StringBuffer log;
+	private File logFile;
 	private SimpleDateFormat formatter;
 	private String logPath;
 	private static LogMensajes instance=null;
@@ -27,6 +31,7 @@ public class LogMensajes {
 		this.log = new StringBuffer();
 		this.formatter = new SimpleDateFormat(conf.getString("mail.log.dateformat","yyyyMMdd"));
 		this.logPath = conf.getString("mail.log.path","");
+		this.logFile = new File(this.logPath);
 	}
 	
 	//SINGLETON
@@ -42,7 +47,19 @@ public class LogMensajes {
 	}
 	
 	public void addMessage(Mail m){
-		this.log.append("\n["+this.formatter.format(new Date())+"] - Sending Message:"+m.toString());
+		String msg = "\n["+this.formatter.format(new Date())+"] - Sending Message:"+m.toString();
+		FileWriter writer;
+		try {
+			System.out.println("Grabando mensaje en el log");
+			boolean append = true;
+			writer = new FileWriter(this.logFile,append);
+			writer.append(msg);
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			System.out.println("No se pudo escribir el log");
+			e.printStackTrace();
+		}
 	}
 
 	public void setLog(StringBuffer log) {
