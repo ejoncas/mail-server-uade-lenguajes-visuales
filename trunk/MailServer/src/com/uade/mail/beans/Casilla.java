@@ -1,6 +1,5 @@
 package com.uade.mail.beans;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Casilla {
@@ -8,6 +7,7 @@ public class Casilla {
 	private String nombre;
 	private String nombreDuenio;
 	private HashSet<Casilla> bloqueados;
+	private Inbox inbox;
 	
 	
 	@Override
