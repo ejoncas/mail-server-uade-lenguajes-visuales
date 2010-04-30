@@ -1,97 +1,99 @@
 package com.uade.mail.interfaces;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.HashSet;
 
 
 import com.uade.mail.beans.Casilla;
 import com.uade.mail.beans.Mail;
 import com.uade.mail.beans.OficinaDeCorreo;
-import com.uade.mail.exceptions.MailServiceException;
 
-public interface MailService {
+
+public interface MailService extends Remote{
 
 	
 	/**
 	 * Actualizar Casilla en base a una cuenta 
 	 * @param c
 	 * @return
-	 * @throws MailServiceException
+	 * @throws RemoteException
 	 */
-	public HashSet<Mail> updateInbox(Casilla c) throws MailServiceException;
+	public HashSet<Mail> updateInbox(Casilla c) throws RemoteException;
 	
 	/**
 	 * Realiza el envio de un mensaje. Toda la info relevante para realizar 
 	 * el envio se debe encontrar en el Mail (to, addres, from, etc)
 	 * @param m
-	 * @throws MailServiceException
+	 * @throws RemoteException
 	 */
-	public void sendEmail(Mail m) throws MailServiceException;
+	public void sendEmail(Mail m) throws RemoteException;
 	
 	/**
 	 * Se encarga de crear una nueva cuenta de mail.
 	 * @param c
-	 * @throws MailServiceException
+	 * @throws RemoteException
 	 */
-	public void newAccout(Casilla c) throws MailServiceException;
+	public void newAccout(Casilla c) throws RemoteException;
 	/**
 	 * Modifica la password de un usuario
 	 * @param c
 	 * @param p
-	 * @throws MailServiceException
+	 * @throws RemoteException
 	 */
-	public void modifPassword(Casilla c, String p) throws MailServiceException;
+	public void modifPassword(Casilla c, String p) throws RemoteException;
 	
 	/**
 	 * Elimina una cuenta
 	 * @param c
-	 * @throws MailServiceException
+	 * @throws RemoteException
 	 */
-	public void deleteAccount(Casilla c) throws MailServiceException;
+	public void deleteAccount(Casilla c) throws RemoteException;
 	
 	/**
 	 * Modifica una cuenta de correo (La pisa)
 	 * @param c
-	 * @throws MailServiceException
+	 * @throws RemoteException
 	 */
-	public void modifAccout(Casilla c) throws MailServiceException;
+	public void modifAccout(Casilla c) throws RemoteException;
 	
 	/**
 	 * Crea una oficina de correo
 	 * @param o
-	 * @throws MailServiceException
+	 * @throws RemoteException
 	 */
-	public void newOffice(OficinaDeCorreo o) throws MailServiceException;
+	public void newOffice(OficinaDeCorreo o) throws RemoteException;
 	
 	/**
 	 * Elimina una oficina de correo
 	 * @param o
-	 * @throws MailServiceException
+	 * @throws RemoteException
 	 */
-	public void deleteOffice(OficinaDeCorreo o) throws MailServiceException;
+	public void deleteOffice(OficinaDeCorreo o) throws RemoteException;
 	
 	/**
 	 * Modifica una Oficina de Correo
 	 * @param o
-	 * @throws MailServiceException
+	 * @throws RemoteException
 	 */
-	public void modifOffice(OficinaDeCorreo o) throws MailServiceException;
+	public void modifOffice(OficinaDeCorreo o) throws RemoteException;
 	
 	/**
 	 * Agrega una relacion de confianza entre un par de Oficinas de Correo
 	 * @param o1
 	 * @param o2
-	 * @throws MailServiceException
+	 * @throws RemoteException
 	 */
-	public void addTrustedLink(OficinaDeCorreo o1, OficinaDeCorreo o2) throws MailServiceException;
+	public void addTrustedLink(OficinaDeCorreo o1, OficinaDeCorreo o2) throws RemoteException;
 	
 	/**
 	 * Elimina una relacion de confianza entre un par de Oficinas de Correo, si no
 	 * existe la relacion, no hace nada.
 	 * @param o1
 	 * @param o2
-	 * @throws MailServiceException
+	 * @throws RemoteException
 	 */
-	public void deleteTrustedLink(OficinaDeCorreo o1, OficinaDeCorreo o2) throws MailServiceException;
+	public void deleteTrustedLink(OficinaDeCorreo o1, OficinaDeCorreo o2) throws RemoteException;
 	
 	
 	/**
@@ -99,9 +101,9 @@ public interface MailService {
 	 * en la oficina de correo a la(s) que pertenece y las relaciones de confianza
 	 * involucradas
 	 * @param c
-	 * @throws MailServiceException
+	 * @throws RemoteException
 	 */
-	public HashSet<Casilla> getContacts(Casilla c) throws MailServiceException;
+	public HashSet<Casilla> getContacts(Casilla c) throws RemoteException;
 	
 	
 	//TODO - Log Interface

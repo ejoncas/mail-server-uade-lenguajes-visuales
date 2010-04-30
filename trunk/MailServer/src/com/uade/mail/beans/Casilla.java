@@ -10,7 +10,6 @@ public class Casilla {
 	private Inbox inbox;
 	
 	
-	
 	public Inbox getInbox() {
 		return inbox;
 	}
