@@ -18,6 +18,7 @@ public class Test extends TestCase{
 		m.setTo(c2);
 		m.setSubject("sujeto 1");
 		m.setMessage("Hola que tal la puta madre que peola anda esto");
+		
 		System.out.println(m.toString());
 		LogMensajes.getInstance().addMessage(m);
 	}
