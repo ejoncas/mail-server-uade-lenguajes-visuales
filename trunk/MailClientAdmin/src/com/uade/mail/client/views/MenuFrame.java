@@ -5,6 +5,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -59,6 +60,11 @@ public class MenuFrame extends javax.swing.JDialog {
 	
 	private void initGUI() {
 		try {
+			
+			//Icons
+			ImageIcon groups = createImageIcon("resources/groups.png");
+			ImageIcon office = createImageIcon("resources/sucs.gif");
+			ImageIcon links = createImageIcon("resources/edit.png");
 			{
 				tabbedPane = new JTabbedPane();
 				getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -67,7 +73,7 @@ public class MenuFrame extends javax.swing.JDialog {
 					tab1 = new JPanel();
 					GroupLayout tab1Layout = new GroupLayout((JComponent)tab1);
 					tab1.setLayout(tab1Layout);
-					tabbedPane.addTab("Usuarios", null, tab1, null);
+					tabbedPane.addTab("Usuarios", groups, tab1, "Administracion de Usuarios");
 					tab1.setPreferredSize(new java.awt.Dimension(721, 432));
 					{
 						jScrollPane1 = new JScrollPane();
@@ -120,7 +126,7 @@ public class MenuFrame extends javax.swing.JDialog {
 					tab2 = new JPanel();
 					GroupLayout tab2Layout = new GroupLayout((JComponent)tab2);
 					tab2.setLayout(tab2Layout);
-					tabbedPane.addTab("Centros de Correo", null, tab2, null);
+					tabbedPane.addTab("Centros de Correo", office, tab2, "Administracion de Oficinas de Correo");
 					tab2Layout.setVerticalGroup(tab2Layout.createParallelGroup());
 					tab2Layout.setHorizontalGroup(tab2Layout.createParallelGroup());
 				}
@@ -128,7 +134,7 @@ public class MenuFrame extends javax.swing.JDialog {
 					tab3 = new JPanel();
 					GroupLayout tab3Layout = new GroupLayout((JComponent)tab3);
 					tab3.setLayout(tab3Layout);
-					tabbedPane.addTab("Vinculos de Confianza", null, tab3, null);
+					tabbedPane.addTab("Vinculos de Confianza", links, tab3, "Administracion de vinculos de confianza");
 					tab3Layout.setVerticalGroup(tab3Layout.createParallelGroup());
 					tab3Layout.setHorizontalGroup(tab3Layout.createParallelGroup());
 				}
@@ -139,4 +145,13 @@ public class MenuFrame extends javax.swing.JDialog {
 		}
 	}
 
+    /** Returns an ImageIcon, or null if the path was invalid. */
+    protected static ImageIcon createImageIcon(String path) {
+    	try{
+            return new ImageIcon(path);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    		return null;
+		}
+    }
 }
