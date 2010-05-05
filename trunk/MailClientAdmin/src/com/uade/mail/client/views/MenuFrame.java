@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import com.uade.mail.beans.Casilla;
+import com.uade.mail.client.controller.MenuFrameController;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -44,6 +45,9 @@ public class MenuFrame extends javax.swing.JDialog {
 	private JButton nuevoBtn;
 	private JTable usuariosTable;
 	private JPanel tab3;
+	
+	//Controller
+	private MenuFrameController c;
 
 	/**
 	* Auto-generated main method to display this JDialog
@@ -51,15 +55,15 @@ public class MenuFrame extends javax.swing.JDialog {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				JFrame frame = new JFrame();
-				MenuFrame inst = new MenuFrame(frame);
+				MenuFrame inst = new MenuFrame(new MenuFrameController());
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public MenuFrame(JFrame frame) {
-		super(frame);
+	public MenuFrame(MenuFrameController controller) {
+		super();
+		c = controller;
 		initGUI();
 	}
 	
@@ -89,20 +93,7 @@ public class MenuFrame extends javax.swing.JDialog {
 							CasillaTableModel model = new CasillaTableModel();
 							//TODO - Comentar todo esto de las casillas es solo
 							//con motivos de probar que funciona el table model
-							Vector<Casilla> casillas = new Vector<Casilla>();
-							Casilla c1 = new Casilla();
-							Casilla c2 = new Casilla();
-							Casilla c3 = new Casilla();
-							c1.setNombre("cuenta1@"+Casilla.SERVER_DOMAIN);
-							c2.setNombre("cuenta2@"+Casilla.SERVER_DOMAIN);
-							c3.setNombre("cuenta3@"+Casilla.SERVER_DOMAIN);
-							c1.setNombreDuenio("Jonatan");
-							c2.setNombreDuenio("Godio");
-							c3.setNombreDuenio("Julian");
-							casillas.add(c1);
-							casillas.add(c2);
-							casillas.add(c3);
-							model.addCasillaList(casillas);
+							model.addCasillaList(c.getAccounts());
 							usuariosTable.setModel(model);
 						}
 					}
