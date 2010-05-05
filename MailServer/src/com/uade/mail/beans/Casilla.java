@@ -1,15 +1,30 @@
 package com.uade.mail.beans;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
-public class Casilla {
+public class Casilla implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8170596700073558218L;
+	public static String SERVER_DOMAIN = "lenguajes.edu.ar";
+	public static int MAX_CHARACTERS = 20;
 	private String nombre;
+	private String password;
 	private String nombreDuenio;
 	private HashSet<Casilla> bloqueados;
 	private Inbox inbox;
 	
 	
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public Inbox getInbox() {
 		return inbox;
 	}

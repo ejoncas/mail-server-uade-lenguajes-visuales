@@ -1,9 +1,13 @@
 package com.uade.mail.beans;
 
-public class Mail {
+import java.io.Serializable;
+
+public class Mail implements Serializable{
 	
-	//cambiar to y from por casillas
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8436467574116565414L;
 	private Casilla from;
 	private Casilla to;
 	private String subject;
