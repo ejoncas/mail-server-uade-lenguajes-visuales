@@ -1,7 +1,9 @@
 package com.uade.mail.client.controller;
 
-import javax.swing.JFrame;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 
+import com.uade.mail.beans.Casilla;
 import com.uade.mail.client.main.MailClient;
 import com.uade.mail.client.views.MenuFrame;
 import com.uade.mail.interfaces.MailService;
@@ -13,7 +15,17 @@ public class MenuFrameController {
 	
 	public MenuFrameController(){
 		model = MailClient.getInstance().getServiceInterface();
-		frame = new MenuFrame(new JFrame());
+		frame = new MenuFrame(this);
+	}
+	
+	public ArrayList<Casilla> getAccounts(){
+		try {
+			return this.model.getAllAccounts();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			System.out.println("No se pudo obtener todas las casillas");
+			return null;
+		}
 	}
 
 	

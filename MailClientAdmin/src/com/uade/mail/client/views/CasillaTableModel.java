@@ -1,5 +1,6 @@
 package com.uade.mail.client.views;
 
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
@@ -9,6 +10,10 @@ import com.uade.mail.beans.Casilla;
 
 public class CasillaTableModel extends AbstractTableModel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2653781189034583870L;
 	private String [] columnNames = {"Casilla","Dueño"};
 	private Vector<Casilla> datalist = new Vector<Casilla>();
 	
@@ -58,7 +63,7 @@ public class CasillaTableModel extends AbstractTableModel{
 		fireTableDataChanged();
 	}
 
-	public void addCasillaList(Vector<Casilla> l) {
+	public void addCasillaList(List<Casilla> l) {
 		datalist.addAll(l);
 		fireTableDataChanged();
 	}
