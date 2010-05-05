@@ -32,6 +32,8 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	
 	protected MailServiceImpl() throws RemoteException {
 		super();
+		usuarios = new ArrayList<Casilla>();
+		oficinas = new ArrayList<OficinaDeCorreo>();
 	}
 	
 	
@@ -115,15 +117,27 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	}
 
 	@Override
-	public HashSet<Mail> updateInbox(Casilla c) throws RemoteException {
+	public ArrayList<Mail> updateInbox(Casilla c) throws RemoteException {
 		System.out.println("Method invocation [updateInbox]");
 		return null;
 	}
 
 	@Override
-	public HashSet<Casilla> getContacts(Casilla c) throws RemoteException {
+	public ArrayList<Casilla> getContacts(Casilla c) throws RemoteException {
 		System.out.println("Method invocation [getContacts]");
 		return null;
+	}
+
+
+	@Override
+	public ArrayList<Casilla> getAllAccounts() throws RemoteException {
+		return this.usuarios;
+	}
+
+
+	@Override
+	public ArrayList<OficinaDeCorreo> getAllOfices() throws RemoteException {
+		return this.oficinas;
 	}
 	
 

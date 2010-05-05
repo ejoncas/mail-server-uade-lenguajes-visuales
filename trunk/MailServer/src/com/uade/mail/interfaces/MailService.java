@@ -2,7 +2,7 @@ package com.uade.mail.interfaces;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 
 import com.uade.mail.beans.Casilla;
@@ -19,7 +19,7 @@ public interface MailService extends Remote{
 	 * @return
 	 * @throws RemoteException
 	 */
-	public HashSet<Mail> updateInbox(Casilla c) throws RemoteException;
+	public ArrayList<Mail> updateInbox(Casilla c) throws RemoteException;
 	
 	/**
 	 * Realiza el envio de un mensaje. Toda la info relevante para realizar 
@@ -103,8 +103,11 @@ public interface MailService extends Remote{
 	 * @param c
 	 * @throws RemoteException
 	 */
-	public HashSet<Casilla> getContacts(Casilla c) throws RemoteException;
+	public ArrayList<Casilla> getContacts(Casilla c) throws RemoteException;
 	
+	public ArrayList<Casilla> getAllAccounts() throws RemoteException;
+	
+	public ArrayList<OficinaDeCorreo> getAllOfices() throws RemoteException;
 	
 	//TODO - Log Interface
 	//TODO - Alerts Interface
