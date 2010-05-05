@@ -35,6 +35,7 @@ public class MenuFrame extends javax.swing.JDialog {
 	private JPanel tab2;
 	private JScrollPane jScrollPane1;
 	private JButton modificarBtn;
+	private JPanel tab4;
 	private JButton eliminarBtn;
 	private JButton nuevoBtn;
 	private JTable usuariosTable;
@@ -65,6 +66,7 @@ public class MenuFrame extends javax.swing.JDialog {
 			ImageIcon groups = createImageIcon("resources/groups.png");
 			ImageIcon office = createImageIcon("resources/sucs.gif");
 			ImageIcon links = createImageIcon("resources/edit.png");
+			ImageIcon passwd = createImageIcon("resources/passgen.gif");
 			{
 				tabbedPane = new JTabbedPane();
 				getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -137,6 +139,14 @@ public class MenuFrame extends javax.swing.JDialog {
 					tabbedPane.addTab("Vinculos de Confianza", links, tab3, "Administracion de vinculos de confianza");
 					tab3Layout.setVerticalGroup(tab3Layout.createParallelGroup());
 					tab3Layout.setHorizontalGroup(tab3Layout.createParallelGroup());
+				}
+				{
+					tab4 = new JPanel();
+					GroupLayout tab4Layout = new GroupLayout((JComponent)tab4);
+					tab4.setLayout(tab4Layout);
+					tabbedPane.addTab("Contraseñas", passwd, tab4, "Administracion de Contraseñas");
+					tab4Layout.setVerticalGroup(tab4Layout.createParallelGroup());
+					tab4Layout.setHorizontalGroup(tab4Layout.createParallelGroup());
 				}
 			}
 			pack();
