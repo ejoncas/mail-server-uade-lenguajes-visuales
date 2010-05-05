@@ -1,6 +1,8 @@
 package com.uade.mail.client.views;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.Vector;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -16,6 +18,8 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
+import com.uade.mail.beans.Casilla;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -80,13 +84,26 @@ public class MenuFrame extends javax.swing.JDialog {
 					{
 						jScrollPane1 = new JScrollPane();
 						{
-							TableModel usuariosTableModel = 
-								new DefaultTableModel(
-										new String[][] { { "One", "Two" }, { "Three", "Four" } },
-										new String[] { "Column 1", "Column 2" });
 							usuariosTable = new JTable();
 							jScrollPane1.setViewportView(usuariosTable);
-							usuariosTable.setModel(usuariosTableModel);
+							CasillaTableModel model = new CasillaTableModel();
+							//TODO - Comentar todo esto de las casillas es solo
+							//con motivos de probar que funciona el table model
+							Vector<Casilla> casillas = new Vector<Casilla>();
+							Casilla c1 = new Casilla();
+							Casilla c2 = new Casilla();
+							Casilla c3 = new Casilla();
+							c1.setNombre("cuenta1@"+Casilla.SERVER_DOMAIN);
+							c2.setNombre("cuenta2@"+Casilla.SERVER_DOMAIN);
+							c3.setNombre("cuenta3@"+Casilla.SERVER_DOMAIN);
+							c1.setNombreDuenio("Jonatan");
+							c2.setNombreDuenio("Godio");
+							c3.setNombreDuenio("Julian");
+							casillas.add(c1);
+							casillas.add(c2);
+							casillas.add(c3);
+							model.addCasillaList(casillas);
+							usuariosTable.setModel(model);
 						}
 					}
 					{
