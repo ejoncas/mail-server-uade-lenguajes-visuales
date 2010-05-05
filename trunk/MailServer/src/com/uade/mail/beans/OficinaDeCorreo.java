@@ -1,9 +1,14 @@
 package com.uade.mail.beans;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
-public class OficinaDeCorreo {
+public class OficinaDeCorreo implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3734982664715988832L;
 	private String nombreOficina;
 	private HashSet<Casilla> casillasMiembro;
 	private HashSet<OficinaDeCorreo> oficinasDeConfianza;
