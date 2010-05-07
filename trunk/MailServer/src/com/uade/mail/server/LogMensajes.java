@@ -51,6 +51,7 @@ public class LogMensajes {
 		FileWriter writer;
 		try {
 			System.out.println("Grabando mensaje en el log");
+			System.out.println("MENSAJE | "+m.toString());
 			boolean append = true;
 			writer = new FileWriter(this.logFile,append);
 			writer.append(msg);

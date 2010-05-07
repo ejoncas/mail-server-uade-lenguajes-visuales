@@ -18,6 +18,13 @@ public class Casilla implements Serializable{
 	private Inbox inbox;
 	
 	
+	public Casilla(){
+		this.nombre="";
+		this.password="";
+		this.nombreDuenio="";
+		this.bloqueados = new HashSet<Casilla>();
+		this.inbox = new Inbox();
+	}
 	
 	public String getPassword() {
 		return password;
