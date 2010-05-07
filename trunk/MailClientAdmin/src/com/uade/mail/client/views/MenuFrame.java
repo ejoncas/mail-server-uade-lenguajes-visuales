@@ -9,6 +9,7 @@ import javax.swing.JComponent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -20,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import com.uade.mail.beans.Casilla;
+import com.uade.mail.beans.OficinaDeCorreo;
 import com.uade.mail.client.controller.MenuFrameController;
 
 /**
@@ -40,12 +42,17 @@ public class MenuFrame extends javax.swing.JDialog {
 	private JPanel tab2;
 	private JScrollPane jScrollPane1;
 	private JButton modificarBtn;
-	private JPanel tab4;
+	private JButton btnNuevo;
+	private JButton btnVinculos;
+	private JButton btnModificar;
+	private JButton btnEliminar;
+	private JButton btnContrasenia;
+	private JScrollPane jScrollPane2;
+	private JTable tableOficinas;
 	private JButton eliminarBtn;
 	private JButton nuevoBtn;
 	private JTable usuariosTable;
-	private JPanel tab3;
-	
+
 	//Controller
 	private MenuFrameController c;
 
@@ -98,38 +105,51 @@ public class MenuFrame extends javax.swing.JDialog {
 						}
 					}
 					{
+						btnContrasenia = new JButton();
+						btnContrasenia.setText("Contraseña");
+						btnContrasenia.setIcon(passwd);
+						btnContrasenia.setFont(new java.awt.Font("AlArabiya",0,10));
+					}
+					{
 						modificarBtn = new JButton();
 						modificarBtn.setText("Modificar");
+						modificarBtn.setFont(new java.awt.Font("AlArabiya",0,10));
 					}
 					{
 						eliminarBtn = new JButton();
 						eliminarBtn.setText("Eliminar");
+						eliminarBtn.setFont(new java.awt.Font("AlArabiya",0,10));
 					}
 					{
 						nuevoBtn = new JButton();
 						nuevoBtn.setText("Nuevo");
+						nuevoBtn.setFont(new java.awt.Font("AlArabiya",0,10));
 					}
 					tab1Layout.setHorizontalGroup(tab1Layout.createSequentialGroup()
 						.addContainerGap()
 						.addGroup(tab1Layout.createParallelGroup()
 						    .addGroup(GroupLayout.Alignment.LEADING, tab1Layout.createSequentialGroup()
 						        .addComponent(nuevoBtn, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
-						        .addGap(330)
+						        .addGap(0, 221, GroupLayout.PREFERRED_SIZE)
+						        .addComponent(btnContrasenia, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+						        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 						        .addComponent(eliminarBtn, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
-						        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+						        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 						        .addComponent(modificarBtn, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
-						        .addGap(0, 38, Short.MAX_VALUE))
-						    .addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, 0, 727, Short.MAX_VALUE)));
-					tab1Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {eliminarBtn, nuevoBtn, modificarBtn});
+						        .addGap(0, 0, Short.MAX_VALUE))
+						    .addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, 0, 695, Short.MAX_VALUE))
+						.addContainerGap());
+					tab1Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnContrasenia, eliminarBtn, modificarBtn});
 					tab1Layout.setVerticalGroup(tab1Layout.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 359, GroupLayout.PREFERRED_SIZE)
-						.addGap(24)
+						.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 1, Short.MAX_VALUE)
 						.addGroup(tab1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						    .addComponent(nuevoBtn, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(btnContrasenia, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 						    .addComponent(eliminarBtn, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 						    .addComponent(modificarBtn, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(15, 15));
+						.addContainerGap());
 					tab1Layout.linkSize(SwingConstants.VERTICAL, new Component[] {eliminarBtn, nuevoBtn, modificarBtn});
 				}
 				{
@@ -137,24 +157,63 @@ public class MenuFrame extends javax.swing.JDialog {
 					GroupLayout tab2Layout = new GroupLayout((JComponent)tab2);
 					tab2.setLayout(tab2Layout);
 					tabbedPane.addTab("Centros de Correo", office, tab2, "Administracion de Oficinas de Correo");
-					tab2Layout.setVerticalGroup(tab2Layout.createParallelGroup());
-					tab2Layout.setHorizontalGroup(tab2Layout.createParallelGroup());
-				}
-				{
-					tab3 = new JPanel();
-					GroupLayout tab3Layout = new GroupLayout((JComponent)tab3);
-					tab3.setLayout(tab3Layout);
-					tabbedPane.addTab("Vinculos de Confianza", links, tab3, "Administracion de vinculos de confianza");
-					tab3Layout.setVerticalGroup(tab3Layout.createParallelGroup());
-					tab3Layout.setHorizontalGroup(tab3Layout.createParallelGroup());
-				}
-				{
-					tab4 = new JPanel();
-					GroupLayout tab4Layout = new GroupLayout((JComponent)tab4);
-					tab4.setLayout(tab4Layout);
-					tabbedPane.addTab("Contraseñas", passwd, tab4, "Administracion de Contraseñas");
-					tab4Layout.setVerticalGroup(tab4Layout.createParallelGroup());
-					tab4Layout.setHorizontalGroup(tab4Layout.createParallelGroup());
+					{
+						jScrollPane2 = new JScrollPane();
+						{
+							CentroTableModel tableModel = new CentroTableModel();
+							tableModel.addOficinaDeCorreoList(c.getOffices());
+							tableOficinas = new JTable();
+							jScrollPane2.setViewportView(tableOficinas);
+							tableOficinas.setModel(tableModel);
+						}
+					}
+					{
+						btnEliminar = new JButton();
+						btnEliminar.setText("Eliminar");
+						btnEliminar.setFont(new java.awt.Font("AlArabiya",0,10));
+					}
+					{
+						btnModificar = new JButton();
+						btnModificar.setText("Modificar");
+						btnModificar.setFont(new java.awt.Font("AlArabiya",0,10));
+					}
+					{
+						btnVinculos = new JButton();
+						btnVinculos.setText("Vinculos Confianza");
+						btnVinculos.setIcon(links);
+						btnVinculos.setFont(new java.awt.Font("AlArabiya",0,10));
+					}
+					{
+						btnNuevo = new JButton();
+						btnNuevo.setText("Nuevo");
+						btnNuevo.setFont(new java.awt.Font("AlArabiya",0,10));
+					}
+					tab2Layout.setHorizontalGroup(tab2Layout.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(tab2Layout.createParallelGroup()
+						    .addGroup(tab2Layout.createSequentialGroup()
+						        .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 695, GroupLayout.PREFERRED_SIZE)
+						        .addGap(0, 0, Short.MAX_VALUE))
+						    .addGroup(GroupLayout.Alignment.LEADING, tab2Layout.createSequentialGroup()
+						        .addComponent(btnNuevo, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+						        .addGap(0, 204, Short.MAX_VALUE)
+						        .addComponent(btnVinculos, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+						        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 1, GroupLayout.PREFERRED_SIZE)
+						        .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
+						        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+						        .addComponent(btnModificar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)))
+						.addContainerGap());
+					tab2Layout.setVerticalGroup(tab2Layout.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 361, GroupLayout.PREFERRED_SIZE)
+						.addGap(23)
+						.addGroup(tab2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						    .addComponent(btnEliminar, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(btnModificar, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(btnVinculos, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(btnNuevo, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+						.addContainerGap());
+					tab2Layout.linkSize(SwingConstants.VERTICAL, new Component[] {btnNuevo, btnVinculos, btnEliminar, btnModificar});
 				}
 			}
 			pack();
