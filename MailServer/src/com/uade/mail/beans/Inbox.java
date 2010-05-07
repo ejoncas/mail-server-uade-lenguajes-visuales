@@ -12,6 +12,9 @@ public class Inbox implements Serializable{
 	private static final long serialVersionUID = -8739695856410122183L;
 	private HashMap<Mail, Estado> estadoInbox;
 
+	public Inbox(){
+		this.estadoInbox = new HashMap<Mail, Estado>();
+	}
 	public HashMap<Mail, Estado> getEstadoInbox() {
 		return estadoInbox;
 	}
