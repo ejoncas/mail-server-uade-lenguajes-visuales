@@ -1,0 +1,20 @@
+#Como configurar el proyecto
+
+= Confiruacion MailServer =
+
+Para configurar el proyecto es necesario editar el archivo config.properties en la carpeta src/.
+
+en este archivo se encuentran las siguientes propiedades:
+
+_mail.log.dateformat=[formato de dia para el log]_
+_mail.log.path=[path a la direccion local donde se quiere guardar el LOG]_
+_database.jdbc=[url de conexion a la base de datos]_
+
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
