@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 
 import com.uade.mail.beans.Casilla;
 import com.uade.mail.beans.Mail;
+import com.uade.mail.beans.OficinaDeCorreo;
 import com.uade.mail.interfaces.MailService;
 import com.uade.mail.server.LogMensajes;
 import com.uade.mail.server.MailServer;
@@ -37,10 +38,28 @@ public class Test extends TestCase{
 			serviceInterface = (MailService) Naming.lookup(MailServer.SERVICE_URL);
 			
 			
+			
+			
 			Casilla c1 = new Casilla();
-			c1.setNombre("joncas@arnet.com.ar");
 			Casilla c2 = new Casilla();
-			c2.setNombre("lalala@lalal.com");
+			Casilla c3 = new Casilla();
+			c1.setNombre("cuenta1@"+Casilla.SERVER_DOMAIN);
+			c2.setNombre("cuenta2@"+Casilla.SERVER_DOMAIN);
+			c3.setNombre("cuenta3@"+Casilla.SERVER_DOMAIN);
+			c1.setNombreDuenio("Jonatan");
+			c2.setNombreDuenio("Godio");
+			c3.setNombreDuenio("Julian");
+			
+			OficinaDeCorreo o1 = new OficinaDeCorreo();
+			OficinaDeCorreo o2 = new OficinaDeCorreo();
+			o1.setNombreOficina("Oficina Loca 1");
+			o2.setNombreOficina("Oficina Uade");
+			
+			o1.addCasillaMiembro(c1);
+			o2.addCasillaMiembro(c1);
+			o2.addCasillaMiembro(c2);
+			o2.addCasillaMiembro(c3);
+			
 			
 			Mail m = new Mail();
 			m.setFrom(c1);
@@ -51,6 +70,13 @@ public class Test extends TestCase{
 			serviceInterface.newAccout(c1);
 			serviceInterface.newAccout(c2);
 			serviceInterface.sendEmail(m);
+			
+			serviceInterface.newAccout(c1);
+			serviceInterface.newAccout(c2);
+			serviceInterface.newAccout(c3);
+			
+			serviceInterface.newOffice(o1);
+			serviceInterface.newOffice(o2);
 			
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
