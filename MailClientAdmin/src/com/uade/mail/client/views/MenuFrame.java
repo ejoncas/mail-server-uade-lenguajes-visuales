@@ -1,15 +1,14 @@
 package com.uade.mail.client.views;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.util.Vector;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -17,11 +16,7 @@ import javax.swing.JTable;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import com.uade.mail.beans.Casilla;
-import com.uade.mail.beans.OficinaDeCorreo;
+import javax.swing.WindowConstants;
 import com.uade.mail.client.controller.MenuFrameController;
 
 /**
@@ -37,6 +32,10 @@ import com.uade.mail.client.controller.MenuFrameController;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class MenuFrame extends javax.swing.JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7263844117190098177L;
 	private JTabbedPane tabbedPane;
 	private JPanel tab1;
 	private JPanel tab2;
@@ -48,11 +47,13 @@ public class MenuFrame extends javax.swing.JDialog {
 	private JButton btnEliminar;
 	private JButton btnContrasenia;
 	private JScrollPane jScrollPane2;
-	private JTable tableOficinas;
 	private JButton eliminarBtn;
 	private JButton nuevoBtn;
 	private JTable usuariosTable;
+	private JTable centrosTable;
 
+	private CasillaTableModel modelCasilla;
+	private CentroTableModel modelCentros;
 	//Controller
 	private MenuFrameController c;
 
@@ -76,7 +77,9 @@ public class MenuFrame extends javax.swing.JDialog {
 	
 	private void initGUI() {
 		try {
-			
+			{
+				this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			}
 			//Icons
 			ImageIcon groups = createImageIcon("resources/groups.png");
 			ImageIcon office = createImageIcon("resources/sucs.gif");
@@ -97,11 +100,9 @@ public class MenuFrame extends javax.swing.JDialog {
 						{
 							usuariosTable = new JTable();
 							jScrollPane1.setViewportView(usuariosTable);
-							CasillaTableModel model = new CasillaTableModel();
-							//TODO - Comentar todo esto de las casillas es solo
-							//con motivos de probar que funciona el table model
-							model.addCasillaList(c.getAccounts());
-							usuariosTable.setModel(model);
+							modelCasilla = new CasillaTableModel();
+							modelCasilla.addCasillaList(c.getAccounts());
+							usuariosTable.setModel(modelCasilla);
 						}
 					}
 					{
@@ -124,6 +125,11 @@ public class MenuFrame extends javax.swing.JDialog {
 						nuevoBtn = new JButton();
 						nuevoBtn.setText("Nuevo");
 						nuevoBtn.setFont(new java.awt.Font("AlArabiya",0,10));
+						nuevoBtn.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								nuevoBtnActionPerformed(evt);
+							}
+						});
 					}
 					tab1Layout.setHorizontalGroup(tab1Layout.createSequentialGroup()
 						.addContainerGap()
@@ -160,11 +166,11 @@ public class MenuFrame extends javax.swing.JDialog {
 					{
 						jScrollPane2 = new JScrollPane();
 						{
-							CentroTableModel tableModel = new CentroTableModel();
-							tableModel.addOficinaDeCorreoList(c.getOffices());
-							tableOficinas = new JTable();
-							jScrollPane2.setViewportView(tableOficinas);
-							tableOficinas.setModel(tableModel);
+							centrosTable = new JTable();
+							jScrollPane2.setViewportView(centrosTable);
+							modelCentros = new CentroTableModel();
+							modelCentros.addOficinaDeCorreoList(c.getOffices());
+							centrosTable.setModel(modelCentros);
 						}
 					}
 					{
@@ -230,5 +236,17 @@ public class MenuFrame extends javax.swing.JDialog {
     		e.printStackTrace();
     		return null;
 		}
+    }
+    
+    private void nuevoBtnActionPerformed(ActionEvent evt) {
+    	System.out.println("nuevoBtn.actionPerformed, event="+evt);
+    	new NewUserFrame(c, this).setVisible(true);
+    }
+    
+    public void updateWindow(){
+    	modelCasilla.getDatalist().removeAllElements();
+    	modelCentros.getDatalist().removeAllElements();
+    	modelCasilla.addCasillaList(c.getAccounts());
+    	modelCentros.addOficinaDeCorreoList(c.getOffices());
     }
 }
