@@ -14,6 +14,24 @@ public class OficinaDeCorreo implements Serializable{
 	private HashSet<OficinaDeCorreo> oficinasDeConfianza;
 	
 	
+	public void addCasillaMiembro(Casilla c){
+		this.casillasMiembro.add(c);
+	}
+	
+	public void addOficinaDeCorreo(OficinaDeCorreo o){
+		this.oficinasDeConfianza.add(o);
+	}
+	
+	public OficinaDeCorreo(){
+		casillasMiembro=new HashSet<Casilla>();
+		oficinasDeConfianza=new HashSet<OficinaDeCorreo>();
+	}
+	
+	public OficinaDeCorreo(String nombre){
+		nombreOficina = nombre;
+		casillasMiembro=new HashSet<Casilla>();
+		oficinasDeConfianza=new HashSet<OficinaDeCorreo>();
+	}
 	
 	
 	@Override
