@@ -68,8 +68,6 @@ public class CasillaTableModel extends AbstractTableModel{
 		fireTableDataChanged();
 	}
 
-	
-	
 	public Vector<Casilla> getDatalist() {
 		return datalist;
 	}

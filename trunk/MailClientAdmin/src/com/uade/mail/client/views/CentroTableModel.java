@@ -40,12 +40,12 @@ public class CentroTableModel extends AbstractTableModel {
 		case 1:
 			String r="";
 			for(Casilla c: j.getCasillasMiembro())
-				r+=c.getNombre();
+				r+=c.getNombre()+"|";
 			return r;
 		case 2:
 			String or="";
 			for(OficinaDeCorreo o: j.getOficinasDeConfianza())
-				or+=o.getNombreOficina();
+				or+=o.getNombreOficina()+"|";
 			return or;
 		default:
 			return null;
