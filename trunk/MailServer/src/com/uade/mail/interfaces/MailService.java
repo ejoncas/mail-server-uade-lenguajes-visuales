@@ -5,9 +5,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 
-import com.uade.mail.beans.Casilla;
-import com.uade.mail.beans.Mail;
-import com.uade.mail.beans.OficinaDeCorreo;
+import com.uade.mail.beans.CasillaVO;
+import com.uade.mail.beans.MailVO;
+import com.uade.mail.beans.OficinaDeCorreoVO;
 
 
 public interface MailService extends Remote{
@@ -19,7 +19,7 @@ public interface MailService extends Remote{
 	 * @return
 	 * @throws RemoteException
 	 */
-	public ArrayList<Mail> updateInbox(Casilla c) throws RemoteException;
+	public ArrayList<MailVO> updateInbox(CasillaVO c) throws RemoteException;
 	
 	/**
 	 * Realiza el envio de un mensaje. Toda la info relevante para realizar 
@@ -27,56 +27,56 @@ public interface MailService extends Remote{
 	 * @param m
 	 * @throws RemoteException
 	 */
-	public void sendEmail(Mail m) throws RemoteException;
+	public void sendEmail(MailVO m) throws RemoteException;
 	
 	/**
 	 * Se encarga de crear una nueva cuenta de mail.
 	 * @param c
 	 * @throws RemoteException
 	 */
-	public void newAccout(Casilla c) throws RemoteException;
+	public void newAccout(CasillaVO c) throws RemoteException;
 	/**
 	 * Modifica la password de un usuario
 	 * @param c
 	 * @param p
 	 * @throws RemoteException
 	 */
-	public void modifPassword(Casilla c, String p) throws RemoteException;
+	public void modifPassword(CasillaVO c, String p) throws RemoteException;
 	
 	/**
 	 * Elimina una cuenta
 	 * @param c
 	 * @throws RemoteException
 	 */
-	public void deleteAccount(Casilla c) throws RemoteException;
+	public void deleteAccount(CasillaVO c) throws RemoteException;
 	
 	/**
 	 * Modifica una cuenta de correo (La pisa)
 	 * @param c
 	 * @throws RemoteException
 	 */
-	public void modifAccout(Casilla c) throws RemoteException;
+	public void modifAccout(CasillaVO c) throws RemoteException;
 	
 	/**
 	 * Crea una oficina de correo
 	 * @param o
 	 * @throws RemoteException
 	 */
-	public void newOffice(OficinaDeCorreo o) throws RemoteException;
+	public void newOffice(OficinaDeCorreoVO o) throws RemoteException;
 	
 	/**
 	 * Elimina una oficina de correo
 	 * @param o
 	 * @throws RemoteException
 	 */
-	public void deleteOffice(OficinaDeCorreo o) throws RemoteException;
+	public void deleteOffice(OficinaDeCorreoVO o) throws RemoteException;
 	
 	/**
 	 * Modifica una Oficina de Correo
 	 * @param o
 	 * @throws RemoteException
 	 */
-	public void modifOffice(OficinaDeCorreo o) throws RemoteException;
+	public void modifOffice(OficinaDeCorreoVO o) throws RemoteException;
 	
 	/**
 	 * Agrega una relacion de confianza entre un par de Oficinas de Correo
@@ -84,7 +84,7 @@ public interface MailService extends Remote{
 	 * @param o2
 	 * @throws RemoteException
 	 */
-	public void addTrustedLink(OficinaDeCorreo o1, OficinaDeCorreo o2) throws RemoteException;
+	public void addTrustedLink(OficinaDeCorreoVO o1, OficinaDeCorreoVO o2) throws RemoteException;
 	
 	/**
 	 * Elimina una relacion de confianza entre un par de Oficinas de Correo, si no
@@ -93,7 +93,7 @@ public interface MailService extends Remote{
 	 * @param o2
 	 * @throws RemoteException
 	 */
-	public void deleteTrustedLink(OficinaDeCorreo o1, OficinaDeCorreo o2) throws RemoteException;
+	public void deleteTrustedLink(OficinaDeCorreoVO o1, OficinaDeCorreoVO o2) throws RemoteException;
 	
 	
 	/**
@@ -103,11 +103,11 @@ public interface MailService extends Remote{
 	 * @param c
 	 * @throws RemoteException
 	 */
-	public ArrayList<Casilla> getContacts(Casilla c) throws RemoteException;
+	public ArrayList<CasillaVO> getContacts(CasillaVO c) throws RemoteException;
 	
-	public ArrayList<Casilla> getAllAccounts() throws RemoteException;
+	public ArrayList<CasillaVO> getAllAccounts() throws RemoteException;
 	
-	public ArrayList<OficinaDeCorreo> getAllOfices() throws RemoteException;
+	public ArrayList<OficinaDeCorreoVO> getAllOfices() throws RemoteException;
 	
 	//TODO - Log Interface
 	//TODO - Alerts Interface

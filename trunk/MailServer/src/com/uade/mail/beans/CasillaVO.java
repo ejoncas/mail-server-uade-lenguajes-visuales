@@ -1,29 +1,23 @@
 package com.uade.mail.beans;
 
-import java.io.Serializable;
 import java.util.HashSet;
 
-public class Casilla implements Serializable{
+public class CasillaVO{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8170596700073558218L;
 	public static String SERVER_DOMAIN = "lenguajes.edu.ar";
 	public static int MAX_CHARACTERS = 20;
 	private String nombre;
 	private String password;
-	private String nombreDuenio;
-	private HashSet<Casilla> bloqueados;
-	private Inbox inbox;
+	private UsuarioVO infoUsuario;
+	private HashSet<CasillaVO> bloqueados;
+	private InboxVO inbox;
 	
 	
-	public Casilla(){
+	public CasillaVO(){
 		this.nombre="";
 		this.password="";
-		this.nombreDuenio="";
-		this.bloqueados = new HashSet<Casilla>();
-		this.inbox = new Inbox();
+		this.bloqueados = new HashSet<CasillaVO>();
+		this.inbox = new InboxVO();
 	}
 	
 	public String getPassword() {
@@ -32,10 +26,10 @@ public class Casilla implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Inbox getInbox() {
+	public InboxVO getInbox() {
 		return inbox;
 	}
-	public void setInbox(Inbox inbox) {
+	public void setInbox(InboxVO inbox) {
 		this.inbox = inbox;
 	}
 	@Override
@@ -53,7 +47,7 @@ public class Casilla implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Casilla other = (Casilla) obj;
+		CasillaVO other = (CasillaVO) obj;
 		if (nombre == null) {
 			if (other.nombre != null)
 				return false;
@@ -67,19 +61,24 @@ public class Casilla implements Serializable{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getNombreDuenio() {
-		return nombreDuenio;
-	}
-	public void setNombreDuenio(String nombreDuenio) {
-		this.nombreDuenio = nombreDuenio;
-	}
-	public HashSet<Casilla> getBloqueados() {
+	
+	public HashSet<CasillaVO> getBloqueados() {
 		return bloqueados;
 	}
-	public void setBloqueados(HashSet<Casilla> bloqueados) {
+
+	public void setBloqueados(HashSet<CasillaVO> bloqueados) {
 		this.bloqueados = bloqueados;
 	}
 
+	public UsuarioVO getInfoUsuario() {
+		return infoUsuario;
+	}
+
+	public void setInfoUsuario(UsuarioVO infoUsuario) {
+		this.infoUsuario = infoUsuario;
+	}
+
+	
 	
 	
 }
