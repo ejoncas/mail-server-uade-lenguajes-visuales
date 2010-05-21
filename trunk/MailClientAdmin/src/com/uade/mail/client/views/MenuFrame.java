@@ -240,7 +240,7 @@ public class MenuFrame extends javax.swing.JDialog {
     
     private void nuevoBtnActionPerformed(ActionEvent evt) {
     	System.out.println("nuevoBtn.actionPerformed, event="+evt);
-    	new NewUserFrame(c, this).setVisible(true);
+    	new NewAccountFrame(c, this).setVisible(true);
     }
     
     public void updateWindow(){

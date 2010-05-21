@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
-import com.uade.mail.beans.Casilla;
+import com.uade.mail.beans.CasillaVO;
 
 
 public class CasillaTableModel extends AbstractTableModel{
@@ -15,7 +15,7 @@ public class CasillaTableModel extends AbstractTableModel{
 	 */
 	private static final long serialVersionUID = -2653781189034583870L;
 	private String [] columnNames = {"Casilla","Dueño"};
-	private Vector<Casilla> datalist = new Vector<Casilla>();
+	private Vector<CasillaVO> datalist = new Vector<CasillaVO>();
 	
 	
 	public CasillaTableModel(){}
@@ -32,12 +32,12 @@ public class CasillaTableModel extends AbstractTableModel{
 
 	@Override
 	public Object getValueAt(int row, int col) {
-		Casilla j = datalist.get(row);
+		CasillaVO j = datalist.get(row);
 		switch (col) {
 		case 0:
 			return j.getNombre();
 		case 1:
-			return j.getNombreDuenio();
+			return j.getInfoUsuario().getNombre()+j.getInfoUsuario().getApellido();
 		default:
 			return null;
 		}
@@ -48,27 +48,27 @@ public class CasillaTableModel extends AbstractTableModel{
 		return columnNames[col];
 	}
 
-	public Casilla getCasillAt(int row){
+	public CasillaVO getCasillAt(int row){
 		return datalist.get(row);
 	}
 
-	public Casilla removeCasillaAt(int row){
-		Casilla j = datalist.remove(row);
+	public CasillaVO removeCasillaAt(int row){
+		CasillaVO j = datalist.remove(row);
 		fireTableDataChanged();
 		return j;
 	}
 
-	public void addCasilla(Casilla w) {
+	public void addCasilla(CasillaVO w) {
 		datalist.add(w);
 		fireTableDataChanged();
 	}
 
-	public void addCasillaList(List<Casilla> l) {
+	public void addCasillaList(List<CasillaVO> l) {
 		datalist.addAll(l);
 		fireTableDataChanged();
 	}
 
-	public Vector<Casilla> getDatalist() {
+	public Vector<CasillaVO> getDatalist() {
 		return datalist;
 	}
 
