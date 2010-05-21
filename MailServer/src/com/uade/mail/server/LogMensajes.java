@@ -9,7 +9,7 @@ import java.util.Date;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import com.uade.mail.beans.Mail;
+import com.uade.mail.beans.MailVO;
 
 public class LogMensajes {
 
@@ -46,7 +46,7 @@ public class LogMensajes {
 		return log;
 	}
 	
-	public void addMessage(Mail m){
+	public void addMessage(MailVO m){
 		String msg = "\n["+this.formatter.format(new Date())+"] - Sending Message:"+m.toString();
 		FileWriter writer;
 		try {

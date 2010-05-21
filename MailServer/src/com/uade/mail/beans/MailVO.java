@@ -1,15 +1,10 @@
 package com.uade.mail.beans;
 
-import java.io.Serializable;
 
-public class Mail implements Serializable{
+public class MailVO {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8436467574116565414L;
-	private Casilla from;
-	private Casilla to;
+	private CasillaVO from;
+	private CasillaVO to;
 	private String subject;
 	private String message;
 	
@@ -28,16 +23,16 @@ public class Mail implements Serializable{
 	
 	
 	
-	public Casilla getFrom() {
+	public CasillaVO getFrom() {
 		return from;
 	}
-	public void setFrom(Casilla from) {
+	public void setFrom(CasillaVO from) {
 		this.from = from;
 	}
-	public Casilla getTo() {
+	public CasillaVO getTo() {
 		return to;
 	}
-	public void setTo(Casilla to) {
+	public void setTo(CasillaVO to) {
 		this.to = to;
 	}
 	@Override
@@ -58,7 +53,7 @@ public class Mail implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Mail other = (Mail) obj;
+		MailVO other = (MailVO) obj;
 		if (from == null) {
 			if (other.from != null)
 				return false;

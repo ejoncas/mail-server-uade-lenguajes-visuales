@@ -1,4 +1,4 @@
-package com.uade.mail.beans;
+package com.uade.beans.entities;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ public class Inbox implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8739695856410122183L;
+	private static final long serialVersionUID = 4798659227819111841L;
 	private HashMap<Mail, Estado> estadoInbox;
 
 	public Inbox(){

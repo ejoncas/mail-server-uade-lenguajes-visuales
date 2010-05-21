@@ -1,4 +1,4 @@
-package com.uade.mail.beans;
+package com.uade.beans.entities;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -12,8 +12,11 @@ public class OficinaDeCorreo implements Serializable{
 	private String nombreOficina;
 	private HashSet<Casilla> casillasMiembro;
 	private HashSet<OficinaDeCorreo> oficinasDeConfianza;
+
 	
 	
+
+
 	public void addCasillaMiembro(Casilla c){
 		this.casillasMiembro.add(c);
 	}
@@ -31,32 +34,6 @@ public class OficinaDeCorreo implements Serializable{
 		nombreOficina = nombre;
 		casillasMiembro=new HashSet<Casilla>();
 		oficinasDeConfianza=new HashSet<OficinaDeCorreo>();
-	}
-	
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((nombreOficina == null) ? 0 : nombreOficina.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		OficinaDeCorreo other = (OficinaDeCorreo) obj;
-		if (nombreOficina == null) {
-			if (other.nombreOficina != null)
-				return false;
-		} else if (!nombreOficina.equals(other.nombreOficina))
-			return false;
-		return true;
 	}
 	public String getNombreOficina() {
 		return nombreOficina;
