@@ -1,26 +1,17 @@
 package com.uade.mail.client.views;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
 
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
-
-import com.sun.xml.internal.ws.util.StringUtils;
-import com.uade.mail.client.controller.MenuFrameController;
 
 
 /**
@@ -37,173 +28,126 @@ import com.uade.mail.client.controller.MenuFrameController;
 */
 public class NewUserFrame extends javax.swing.JFrame {
 	private JPanel panel;
-	private JLabel txtNombre;
-	private JTextField inputNombreCasilla;
+	private JTextField txtNombre;
 	private JButton btnCrear;
-	private JPasswordField inputPasswd2;
-	private JPasswordField inputPasswd1;
-	private JTextField inputApellido;
-	private JTextField inputNombre;
-	private JLabel txtContrasenia2;
-	private JLabel txtContrasenia;
-	private JLabel txtApellido;
-	private JLabel txtNombreCuenta;
-	private MenuFrameController c;
-	private MenuFrame vistaPadre;
+	private JTextField txtDni;
+	private JTextField txtDireccion;
+	private JTextField txtApellido;
+	private JLabel lblDni;
+	private JLabel lblDireccion;
+	private JLabel lblApellido;
+	private JLabel lblNombre;
 
-	public NewUserFrame(MenuFrameController c, MenuFrame vistaPadre) {
+	/**
+	* Auto-generated main method to display this JFrame
+	*/
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				NewUserFrame inst = new NewUserFrame();
+				inst.setLocationRelativeTo(null);
+				inst.setVisible(true);
+			}
+		});
+	}
+	
+	public NewUserFrame() {
 		super();
-		this.c=c;
-		this.vistaPadre = vistaPadre;
 		initGUI();
 	}
 	
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			
+			this.setTitle("Crear Usuario");
 			{
 				panel = new JPanel();
 				GroupLayout panelLayout = new GroupLayout((JComponent)panel);
 				panel.setLayout(panelLayout);
 				getContentPane().add(panel, BorderLayout.CENTER);
-				panel.setPreferredSize(new java.awt.Dimension(497, 232));
+				panel.setPreferredSize(new java.awt.Dimension(554, 176));
 				{
-					txtNombreCuenta = new JLabel();
-					txtNombreCuenta.setText("Nombre de Cuenta:");
+					lblNombre = new JLabel();
+					lblNombre.setText("Nombre");
 				}
 				{
-					txtNombre = new JLabel();
-					txtNombre.setText("Su Nombre:");
+					lblApellido = new JLabel();
+					lblApellido.setText("Apellido");
 				}
 				{
-					txtApellido = new JLabel();
-					txtApellido.setText("Su Apellido:");
+					lblDireccion = new JLabel();
+					lblDireccion.setText("Direccion");
 				}
 				{
-					txtContrasenia = new JLabel();
-					txtContrasenia.setText("Contraseña");
+					lblDni = new JLabel();
+					lblDni.setText("DNI");
 				}
 				{
-					txtContrasenia2 = new JLabel();
-					txtContrasenia2.setText("Repita su Contraseña");
+					txtNombre = new JTextField();
 				}
 				{
-					inputNombreCasilla = new JTextField();
+					txtApellido = new JTextField();
 				}
 				{
-					inputNombre = new JTextField();
+					txtDireccion = new JTextField();
 				}
 				{
-					inputApellido = new JTextField();
-				}
-				{
-					inputPasswd1 = new JPasswordField();
-				}
-				{
-					inputPasswd2 = new JPasswordField();
-					inputPasswd2.addFocusListener(new FocusAdapter() {
-						public void focusLost(FocusEvent evt) {
-							inputPasswd2FocusLost(evt);
-						}
-					});
+					txtDni = new JTextField();
 				}
 				{
 					btnCrear = new JButton();
-					btnCrear.setText("Crear");
-					btnCrear.setEnabled(false);
-					btnCrear.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent evt) {
-							btnCrearActionPerformed(evt);
-						}
-					});
+					btnCrear.setText("Crear!");
 				}
 				panelLayout.setHorizontalGroup(panelLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(panelLayout.createParallelGroup()
-					    .addComponent(txtNombreCuenta, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(txtNombre, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(txtApellido, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(txtContrasenia, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(txtContrasenia2, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+					    .addComponent(lblNombre, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+					    .addComponent(lblApellido, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+					    .addComponent(lblDireccion, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
+					    .addComponent(lblDni, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE))
+					.addGap(111)
 					.addGroup(panelLayout.createParallelGroup()
-					    .addComponent(inputNombreCasilla, GroupLayout.Alignment.LEADING, 0, 286, Short.MAX_VALUE)
-					    .addComponent(inputNombre, GroupLayout.Alignment.LEADING, 0, 286, Short.MAX_VALUE)
-					    .addComponent(inputApellido, GroupLayout.Alignment.LEADING, 0, 286, Short.MAX_VALUE)
-					    .addComponent(inputPasswd1, GroupLayout.Alignment.LEADING, 0, 286, Short.MAX_VALUE)
-					    .addComponent(inputPasswd2, GroupLayout.Alignment.LEADING, 0, 286, Short.MAX_VALUE)
+					    .addGroup(panelLayout.createSequentialGroup()
+					        .addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
+					        .addGap(0, 0, Short.MAX_VALUE))
+					    .addGroup(panelLayout.createSequentialGroup()
+					        .addComponent(txtApellido, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
+					        .addGap(0, 0, Short.MAX_VALUE))
+					    .addGroup(panelLayout.createSequentialGroup()
+					        .addComponent(txtDireccion, GroupLayout.PREFERRED_SIZE, 254, GroupLayout.PREFERRED_SIZE)
+					        .addGap(0, 0, Short.MAX_VALUE))
+					    .addComponent(txtDni, GroupLayout.Alignment.LEADING, 0, 254, Short.MAX_VALUE)
 					    .addGroup(GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
-					        .addGap(0, 148, Short.MAX_VALUE)
-					        .addComponent(btnCrear, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap());
-				panelLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {txtContrasenia2, txtContrasenia});
-				panelLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {txtApellido, txtNombre, txtNombreCuenta});
+					        .addGap(0, 112, Short.MAX_VALUE)
+					        .addComponent(btnCrear, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(49, 49));
+				panelLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {txtDireccion, txtNombre, txtApellido, txtDni});
+				panelLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {lblDni, lblDireccion, lblApellido, lblNombre});
 				panelLayout.setVerticalGroup(panelLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-					    .addComponent(inputNombreCasilla, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(txtNombreCuenta, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+					    .addComponent(txtNombre, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+					    .addComponent(lblNombre, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 					.addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-					    .addComponent(inputNombre, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(txtNombre, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+					    .addComponent(txtApellido, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+					    .addComponent(lblApellido, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 					.addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-					    .addComponent(inputApellido, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(txtApellido, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+					    .addComponent(txtDireccion, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+					    .addComponent(lblDireccion, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 					.addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-					    .addComponent(inputPasswd1, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(txtContrasenia, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-					.addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-					    .addComponent(inputPasswd2, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(txtContrasenia2, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(0, 45, Short.MAX_VALUE)
-					.addComponent(btnCrear, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+					    .addComponent(txtDni, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+					    .addComponent(lblDni, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(0, 75, Short.MAX_VALUE)
+					.addComponent(btnCrear, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap());
 			}
 			pack();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	private void btnCrearActionPerformed(ActionEvent evt) {
-		System.out.println("btnCrear.actionPerformed, event="+evt);
-		c.crearCuenta(inputNombreCasilla.getText(), inputNombre.getText()+" "+inputApellido.getText(), inputPasswd1.getPassword());
-		dispose();
-		this.vistaPadre.updateWindow();
-	}
-	
-	private void inputPasswd2FocusLost(FocusEvent evt) {
-		System.out.println("inputPasswd2.focusLost, event="+evt);
-		//Validar Form
-		if(inputNombreCasilla.getText().isEmpty()){
-			JOptionPane.showMessageDialog(null, "Nombre de Cuenta no definido");
-			btnCrear.setEnabled(false);
-		}
-		else if(inputNombre.getText().isEmpty()){
-			JOptionPane.showMessageDialog(null, "Nombre no definido");
-			btnCrear.setEnabled(false);
-		}
-		else if(inputApellido.getText().isEmpty()){
-			JOptionPane.showMessageDialog(null, "Apellido no defnido");
-			btnCrear.setEnabled(false);	
-		}
-		else if(!compararPasswords(inputPasswd1.getPassword(),inputPasswd2.getPassword())){
-			JOptionPane.showMessageDialog(null, "Passwords no coinciden");
-			btnCrear.setEnabled(false);
-		}
-		else
-			btnCrear.setEnabled(true);
-	}
-	
-	private boolean compararPasswords(char[] a, char[] b){
-		for(int i=0; i<a.length;i++)
-			if(a[i]!=b[i])return false;
-		return true;
 	}
 
 }

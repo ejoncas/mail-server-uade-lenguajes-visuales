@@ -5,8 +5,8 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
-import com.uade.mail.beans.Casilla;
-import com.uade.mail.beans.OficinaDeCorreo;
+import com.uade.mail.beans.CasillaVO;
+import com.uade.mail.beans.OficinaDeCorreoVO;
 
 public class CentroTableModel extends AbstractTableModel {
 
@@ -16,7 +16,7 @@ public class CentroTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = -2653781189034583870L;
 	private String[] columnNames = { "Nombre Oficina", "Casillas Miembro",
 			"Oficinas de Confianza" };
-	private Vector<OficinaDeCorreo> datalist = new Vector<OficinaDeCorreo>();
+	private Vector<OficinaDeCorreoVO> datalist = new Vector<OficinaDeCorreoVO>();
 
 	public CentroTableModel() {
 	}
@@ -33,18 +33,18 @@ public class CentroTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int row, int col) {
-		OficinaDeCorreo j = datalist.get(row);
+		OficinaDeCorreoVO j = datalist.get(row);
 		switch (col) {
 		case 0:
 			return j.getNombreOficina();
 		case 1:
 			String r="";
-			for(Casilla c: j.getCasillasMiembro())
+			for(CasillaVO c: j.getCasillasMiembro())
 				r+=c.getNombre()+"|";
 			return r;
 		case 2:
 			String or="";
-			for(OficinaDeCorreo o: j.getOficinasDeConfianza())
+			for(OficinaDeCorreoVO o: j.getOficinasDeConfianza())
 				or+=o.getNombreOficina()+"|";
 			return or;
 		default:
@@ -57,27 +57,27 @@ public class CentroTableModel extends AbstractTableModel {
 		return columnNames[col];
 	}
 
-	public OficinaDeCorreo getOficinaDeCorreoAt(int row) {
+	public OficinaDeCorreoVO getOficinaDeCorreoAt(int row) {
 		return datalist.get(row);
 	}
 
-	public OficinaDeCorreo removeOficinaDeCorreoAt(int row) {
-		OficinaDeCorreo j = datalist.remove(row);
+	public OficinaDeCorreoVO removeOficinaDeCorreoAt(int row) {
+		OficinaDeCorreoVO j = datalist.remove(row);
 		fireTableDataChanged();
 		return j;
 	}
 
-	public void addOficinaDeCorreo(OficinaDeCorreo w) {
+	public void addOficinaDeCorreo(OficinaDeCorreoVO w) {
 		datalist.add(w);
 		fireTableDataChanged();
 	}
 
-	public void addOficinaDeCorreoList(List<OficinaDeCorreo> l) {
+	public void addOficinaDeCorreoList(List<OficinaDeCorreoVO> l) {
 		datalist.addAll(l);
 		fireTableDataChanged();
 	}
 
-	public Vector<OficinaDeCorreo> getDatalist() {
+	public Vector<OficinaDeCorreoVO> getDatalist() {
 		return datalist;
 	}
 
