@@ -1,39 +1,33 @@
 package com.uade.beans.entities;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
-public class OficinaDeCorreo implements Serializable{
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="oficinas")
+public class OficinaDeCorreo{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3734982664715988832L;
+	
+	private Long id;
 	private String nombreOficina;
-	private HashSet<Casilla> casillasMiembro;
-	private HashSet<OficinaDeCorreo> oficinasDeConfianza;
+	private List<Casilla> casillasMiembro;
+	private List<OficinaDeCorreo> oficinasDeConfianza;
 
-	
-	
-
-
-	public void addCasillaMiembro(Casilla c){
-		this.casillasMiembro.add(c);
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	public Long getId() {
+		return id;
 	}
-	
-	public void addOficinaDeCorreo(OficinaDeCorreo o){
-		this.oficinasDeConfianza.add(o);
-	}
-	
-	public OficinaDeCorreo(){
-		casillasMiembro=new HashSet<Casilla>();
-		oficinasDeConfianza=new HashSet<OficinaDeCorreo>();
-	}
-	
-	public OficinaDeCorreo(String nombre){
-		nombreOficina = nombre;
-		casillasMiembro=new HashSet<Casilla>();
-		oficinasDeConfianza=new HashSet<OficinaDeCorreo>();
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getNombreOficina() {
 		return nombreOficina;
@@ -41,20 +35,19 @@ public class OficinaDeCorreo implements Serializable{
 	public void setNombreOficina(String nombreOficina) {
 		this.nombreOficina = nombreOficina;
 	}
-	public HashSet<Casilla> getCasillasMiembro() {
+	@ManyToMany
+	public List<Casilla> getCasillasMiembro() {
 		return casillasMiembro;
 	}
-	public void setCasillasMiembro(HashSet<Casilla> casillasMiembro) {
+	public void setCasillasMiembro(ArrayList<Casilla> casillasMiembro) {
 		this.casillasMiembro = casillasMiembro;
 	}
-	public HashSet<OficinaDeCorreo> getOficinasDeConfianza() {
+	@OneToMany
+	public List<OficinaDeCorreo> getOficinasDeConfianza() {
 		return oficinasDeConfianza;
 	}
-	public void setOficinasDeConfianza(HashSet<OficinaDeCorreo> oficinasDeConfianza) {
+	public void setOficinasDeConfianza(List<OficinaDeCorreo> oficinasDeConfianza) {
 		this.oficinasDeConfianza = oficinasDeConfianza;
 	}
-	
-	
-	
 	
 }

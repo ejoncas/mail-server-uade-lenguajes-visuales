@@ -1,32 +1,33 @@
 package com.uade.beans.entities;
 
-import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 
-public class Casilla implements Serializable{
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="casillas")
+public class Casilla{
+
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8170596700073558218L;
+	private Long id;
 	private String nombre;
 	private String password;
 	private Usuario infoUsuario;
-	private HashSet<Casilla> bloqueados;
+	private List<Casilla> bloqueados;
 	private Inbox inbox;
 	
-	
-	public String getPassword() {
-		return password;
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	public Long getId() {
+		return id;
 	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public Inbox getInbox() {
-		return inbox;
-	}
-	public void setInbox(Inbox inbox) {
-		this.inbox = inbox;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getNombre() {
 		return nombre;
@@ -34,24 +35,32 @@ public class Casilla implements Serializable{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	public HashSet<Casilla> getBloqueados() {
-		return bloqueados;
+	public String getPassword() {
+		return password;
 	}
-
-	public void setBloqueados(HashSet<Casilla> bloqueados) {
-		this.bloqueados = bloqueados;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-
+	@OneToOne
 	public Usuario getInfoUsuario() {
 		return infoUsuario;
 	}
-
 	public void setInfoUsuario(Usuario infoUsuario) {
 		this.infoUsuario = infoUsuario;
 	}
-
-	
+	public List<Casilla> getBloqueados() {
+		return bloqueados;
+	}
+	public void setBloqueados(List<Casilla> bloqueados) {
+		this.bloqueados = bloqueados;
+	}
+	@OneToOne
+	public Inbox getInbox() {
+		return inbox;
+	}
+	public void setInbox(Inbox inbox) {
+		this.inbox = inbox;
+	}
 	
 	
 }
