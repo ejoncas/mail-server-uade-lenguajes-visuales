@@ -2,6 +2,8 @@ package com.uade.mail.beans;
 
 import java.io.Serializable;
 
+import com.uade.beans.entities.Usuario;
+
 public class UsuarioVO implements Serializable{
 
 	
@@ -25,6 +27,18 @@ public class UsuarioVO implements Serializable{
 		this.direccion=direccion;
 		this.dni=dni;
 	}
+	
+	public UsuarioVO() {
+	}
+
+	public UsuarioVO(Usuario usuario) {
+		this.nombre = usuario.getNombre();
+		this.apellido = usuario.getApellido();
+		this.direccion = usuario.getDireccion();
+		this.dni = usuario.getDni();
+		this.id = usuario.getId();
+	}
+
 	public Long getId() {
 		return id;
 	}

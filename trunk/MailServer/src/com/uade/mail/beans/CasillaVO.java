@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.uade.beans.entities.Casilla;
+import com.uade.beans.entities.EstadoMail;
+
 
 public class CasillaVO implements Serializable{
 
@@ -23,8 +26,21 @@ public class CasillaVO implements Serializable{
 		this.bloqueados = new ArrayList<CasillaVO>();
 		this.inbox = new ArrayList<EstadoMailVO>();
 	}
-	
-	
+
+	public CasillaVO(Casilla casilla) {
+		List<CasillaVO> bloqueados = new ArrayList<CasillaVO>();
+		for(Casilla c: casilla.getBloqueados())
+			bloqueados.add(c.dameValueObject());
+		this.bloqueados = bloqueados;
+		this.id = casilla.getId();
+		List<EstadoMailVO> estados = new ArrayList<EstadoMailVO>();
+		for(EstadoMail e: casilla.getInbox())
+			estados.add(e.dameValueObject());
+		this.inbox = estados;
+		this.infoUsuario = casilla.getInfoUsuario().dameValueObject();
+		this.nombre = casilla.getNombre();
+		this.password = casilla.getPassword();
+	}
 
 	public Long getId() {
 		return id;
