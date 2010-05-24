@@ -1,9 +1,14 @@
 package com.uade.mail.beans;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
-public class CasillaVO{
+public class CasillaVO implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4936005102902381936L;
 	public static String SERVER_DOMAIN = "lenguajes.edu.ar";
 	public static int MAX_CHARACTERS = 20;
 	private String nombre;

@@ -1,8 +1,14 @@
 package com.uade.mail.beans;
 
+import java.io.Serializable;
 
-public class MailVO {
+
+public class MailVO implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2260860238070839469L;
 	private CasillaVO from;
 	private CasillaVO to;
 	private String subject;

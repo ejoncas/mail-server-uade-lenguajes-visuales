@@ -1,10 +1,15 @@
 package com.uade.mail.beans;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class InboxVO{
+public class InboxVO implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6460668743557747950L;
 	private HashMap<MailVO, EstadoVO> estadoInbox;
 
 	public InboxVO(){

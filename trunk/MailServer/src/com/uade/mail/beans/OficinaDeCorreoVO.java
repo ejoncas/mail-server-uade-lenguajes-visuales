@@ -1,9 +1,14 @@
 package com.uade.mail.beans;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
-public class OficinaDeCorreoVO{
+public class OficinaDeCorreoVO implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5416090686125514365L;
 	private String nombreOficina;
 	private HashSet<CasillaVO> casillasMiembro;
 	private HashSet<OficinaDeCorreoVO> oficinasDeConfianza;
@@ -73,6 +78,10 @@ public class OficinaDeCorreoVO{
 	}
 	public void setOficinasDeConfianza(HashSet<OficinaDeCorreoVO> oficinasDeConfianza) {
 		this.oficinasDeConfianza = oficinasDeConfianza;
+	}
+	
+	public String toString(){
+		return this.nombreOficina;
 	}
 	
 	

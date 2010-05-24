@@ -8,8 +8,8 @@ import com.uade.mail.beans.CasillaVO;
 import com.uade.mail.beans.EstadoVO;
 import com.uade.mail.beans.MailVO;
 import com.uade.mail.beans.OficinaDeCorreoVO;
+import com.uade.mail.beans.UsuarioVO;
 import com.uade.mail.interfaces.MailService;
-import com.uade.mail.utils.PasswordEncrypt;
 
 public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	
@@ -27,6 +27,7 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	 * Model
 	 */
 	private ArrayList<CasillaVO> usuarios;
+	private ArrayList<UsuarioVO> infoUsuarios;
 	private ArrayList<OficinaDeCorreoVO> oficinas;
 	
 	
@@ -34,15 +35,17 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		super();
 		usuarios = new ArrayList<CasillaVO>();
 		oficinas = new ArrayList<OficinaDeCorreoVO>();
+		infoUsuarios = new ArrayList<UsuarioVO>();
 	}
 	
 	
 	@Override
 	public void addTrustedLink(OficinaDeCorreoVO o1, OficinaDeCorreoVO o2)
 			throws RemoteException {
-		//TODO
 		System.out.println("Method invocation [addTrustedLink]");
-		
+		for(OficinaDeCorreoVO o:oficinas)
+			if(o.equals(o1))
+				o.addOficinaDeCorreo(o2);
 	}
 	
 	@Override
@@ -90,7 +93,7 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	@Override
 	public void modifPassword(CasillaVO c, String p) throws RemoteException {
 		System.out.println("Method invocation [modifPassword]");
-		this.usuarios.get(this.usuarios.indexOf(c)).setPassword(PasswordEncrypt.generateMD5(p));
+		this.usuarios.get(this.usuarios.indexOf(c)).setPassword(p);
 	}
 
 	@Override
@@ -131,13 +134,44 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 
 	@Override
 	public ArrayList<CasillaVO> getAllAccounts() throws RemoteException {
+		System.out.println("Method invocation [getAllAccounts]");
 		return this.usuarios;
 	}
 
 
 	@Override
 	public ArrayList<OficinaDeCorreoVO> getAllOfices() throws RemoteException {
+		System.out.println("Method invocation [getAllOfices]");
 		return this.oficinas;
+	}
+
+
+	@Override
+	public void addNewUser(UsuarioVO user) throws RemoteException {
+		System.out.println("Method invocation [addNewUser]");
+		this.infoUsuarios.add(user);
+	}
+
+
+	@Override
+	public ArrayList<UsuarioVO> getAllUsers() throws RemoteException {
+		System.out.println("Method invocation [getAllUsers]");
+		return this.infoUsuarios;
+	}
+
+
+	@Override
+	public void modifUser(UsuarioVO user) throws RemoteException {
+		//TODO - Update
+		System.out.println("Method invocation [modifUser]");
+	}
+
+
+	@Override
+	public void removeUser(UsuarioVO user) throws RemoteException {
+		// TODO Delete
+		System.out.println("Method invocation [removeUser]");
+		this.infoUsuarios.remove(user);
 	}
 	
 

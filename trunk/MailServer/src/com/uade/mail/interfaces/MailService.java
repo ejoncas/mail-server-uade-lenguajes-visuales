@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.uade.mail.beans.CasillaVO;
 import com.uade.mail.beans.MailVO;
 import com.uade.mail.beans.OficinaDeCorreoVO;
+import com.uade.mail.beans.UsuarioVO;
 
 
 public interface MailService extends Remote{
@@ -108,6 +109,15 @@ public interface MailService extends Remote{
 	public ArrayList<CasillaVO> getAllAccounts() throws RemoteException;
 	
 	public ArrayList<OficinaDeCorreoVO> getAllOfices() throws RemoteException;
+	
+	public ArrayList<UsuarioVO> getAllUsers() throws RemoteException;
+	
+	public void addNewUser(UsuarioVO user) throws RemoteException;
+
+	public void modifUser(UsuarioVO user) throws RemoteException;
+	
+	public void removeUser(UsuarioVO user) throws RemoteException;
+	
 	
 	//TODO - Log Interface
 	//TODO - Alerts Interface

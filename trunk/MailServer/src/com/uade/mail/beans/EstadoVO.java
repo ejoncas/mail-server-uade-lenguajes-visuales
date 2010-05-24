@@ -1,3 +1,5 @@
 package com.uade.mail.beans;
 
-public enum EstadoVO {SENT, UNSENT, READ, UNREAD, TRASH};
+import java.io.Serializable;
+
+public enum EstadoVO implements Serializable{SENT, UNSENT, READ, UNREAD, TRASH};
