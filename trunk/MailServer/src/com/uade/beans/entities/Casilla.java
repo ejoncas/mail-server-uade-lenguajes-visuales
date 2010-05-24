@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,7 +21,7 @@ public class Casilla{
 	private String password;
 	private Usuario infoUsuario;
 	private List<Casilla> bloqueados;
-	private Inbox inbox;
+	private List<EstadoMail> inbox;
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId() {
@@ -48,19 +49,22 @@ public class Casilla{
 	public void setInfoUsuario(Usuario infoUsuario) {
 		this.infoUsuario = infoUsuario;
 	}
+	@OneToMany
 	public List<Casilla> getBloqueados() {
 		return bloqueados;
 	}
 	public void setBloqueados(List<Casilla> bloqueados) {
 		this.bloqueados = bloqueados;
 	}
-	@OneToOne
-	public Inbox getInbox() {
+	@OneToMany
+	public List<EstadoMail> getInbox() {
 		return inbox;
 	}
-	public void setInbox(Inbox inbox) {
+	public void setInbox(List<EstadoMail> inbox) {
 		this.inbox = inbox;
 	}
+	
+	
 	
 	
 }

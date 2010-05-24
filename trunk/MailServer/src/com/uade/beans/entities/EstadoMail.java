@@ -4,20 +4,21 @@ import java.util.Map;
 
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
 @Entity
-@Table(name="inboxes")
-public class Inbox{
+@Table(name="estadomail")
+public class EstadoMail{
 
 	private Long id;
-	private Map<Mail, String> estadoInbox;
+	private Mail mail;
+	private String estado;
 
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)	
 	public Long getId() {
@@ -27,15 +28,24 @@ public class Inbox{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	@OneToMany
-	public Map<Mail, String> getEstadoInbox() {
-		return estadoInbox;
+
+	@OneToOne
+	public Mail getMail() {
+		return mail;
 	}
 
-	public void setEstadoInbox(Map<Mail, String> estadoInbox) {
-		this.estadoInbox = estadoInbox;
+	public void setMail(Mail mail) {
+		this.mail = mail;
 	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	
 	
 	
 	
