@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -6,8 +8,8 @@ import javax.persistence.EntityTransaction;
 import junit.framework.TestCase;
 
 import com.uade.beans.entities.Casilla;
-import com.uade.beans.entities.Estado;
-import com.uade.beans.entities.Inbox;
+import com.uade.beans.entities.EstadosPosibles;
+import com.uade.beans.entities.EstadoMail;
 import com.uade.beans.entities.Mail;
 import com.uade.beans.entities.Usuario;
 import com.uade.mail.utils.HibernateUtils;
@@ -30,10 +32,24 @@ public class TestHibernate extends TestCase{
 		c.setPassword(PasswordEncrypt.generateMD5("1234"));
 		
 		
+		
 		Casilla c1 = new Casilla();
 		c1.setInfoUsuario(u);
 		c1.setNombre("ejoncas2@lenguajes.edu.ar");
 		c1.setPassword(PasswordEncrypt.generateMD5("1234"));
+		
+		Casilla c2 = new Casilla();
+		c2.setInfoUsuario(u);
+		c2.setNombre("ejoncas3@lenguajes.edu.ar");
+		c2.setPassword(PasswordEncrypt.generateMD5("1234"));
+		
+		
+		List<Casilla> bloqueadosc  = new ArrayList<Casilla>();
+		bloqueadosc.add(c2);
+		bloqueadosc.add(c1);
+		
+		c.setBloqueados(bloqueadosc);
+		
 		
 		Mail m = new Mail();
 		m.setFrom(c);
@@ -41,19 +57,22 @@ public class TestHibernate extends TestCase{
 		m.setMessage("Hola como va?");
 		m.setSubject("Como va?");
 		
-		Inbox i = new Inbox();
-		HashMap<Mail, String> inbox = new HashMap<Mail, String>();
+		EstadoMail i = new EstadoMail();
+		i.setMail(m);
+		i.setEstado(EstadosPosibles.READ);
 		
-		inbox.put(m, Estado.UNREAD);
-		i.setEstadoInbox(inbox);
+		EstadoMail i1 = new EstadoMail();
+		i1.setMail(m);
+		i1.setEstado(EstadosPosibles.UNREAD);
 		
-		Inbox i1 = new Inbox();
-		HashMap<Mail, String> inbox1 = new HashMap<Mail, String>();
-		inbox.put(m, Estado.SENT);
-		i1.setEstadoInbox(inbox1);
+		ArrayList<EstadoMail> lista = new ArrayList<EstadoMail>();
+		lista.add(i);
 		
-		c.setInbox(i1);
-		c.setInbox(i);
+		ArrayList<EstadoMail> lista2 = new ArrayList<EstadoMail>();
+		lista.add(i1);
+		
+		c.setInbox(lista);
+		c.setInbox(lista2);
 		
 		
 		EntityManager em = HibernateUtils.getEntityManager();
@@ -64,11 +83,12 @@ public class TestHibernate extends TestCase{
 		t.begin();
 		{
 			em.persist(u);
-			em.persist(c);
-			em.persist(c1);
 			em.persist(m);
-			em.persist(i1);
 			em.persist(i);
+			em.persist(i1);
+			em.persist(c1);
+			em.persist(c2);
+			em.persist(c);
 		}
 		t.commit();
 		

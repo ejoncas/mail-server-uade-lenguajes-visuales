@@ -1,6 +1,6 @@
 package com.uade.beans.entities;
 
-public class Estado {
+public class EstadosPosibles {
 	
 	public static String SENT="SENT";
 	public static String UNSENT="UNSENT";
