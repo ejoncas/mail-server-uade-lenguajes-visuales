@@ -1,3 +1,11 @@
 package com.uade.beans.entities;
 
-public enum Estado {SENT, UNSENT, READ, UNREAD, TRASH};
+public class Estado {
+	
+	public static String SENT="SENT";
+	public static String UNSENT="UNSENT";
+	public static String READ="READ";
+	public static String UNREAD="UNREAD";
+	public static String TRASH="TRASH";
+
+}

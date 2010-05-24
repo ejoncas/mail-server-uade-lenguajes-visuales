@@ -1,18 +1,29 @@
 package com.uade.beans.entities;
 
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class Usuario implements Serializable{
+@Entity
+@Table(name="usuarios")
+public class Usuario{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2470877119556848768L;
+	
+	private Long id;
 	private String nombre;
 	private String apellido;
 	private String direccion;
 	private String dni;
 	
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -38,9 +49,6 @@ public class Usuario implements Serializable{
 		this.dni = dni;
 	}
 	
-	
-
-
 	
 	
 }

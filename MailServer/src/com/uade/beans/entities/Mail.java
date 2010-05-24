@@ -1,18 +1,45 @@
 package com.uade.beans.entities;
 
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-public class Mail implements Serializable{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8436467574116565414L;
+@Entity
+@Table(name="mails")
+public class Mail{
+
+
+	private Long id;
 	private Casilla from;
 	private Casilla to;
 	private String subject;
 	private String message;
 	
+	
+	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	@OneToOne
+	public Casilla getFrom() {
+		return from;
+	}
+	public void setFrom(Casilla from) {
+		this.from = from;
+	}
+	@OneToOne
+	public Casilla getTo() {
+		return to;
+	}
+	public void setTo(Casilla to) {
+		this.to = to;
+	}
 	public String getSubject() {
 		return subject;
 	}
@@ -25,20 +52,6 @@ public class Mail implements Serializable{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	public Casilla getFrom() {
-		return from;
-	}
-	public void setFrom(Casilla from) {
-		this.from = from;
-	}
-	public Casilla getTo() {
-		return to;
-	}
-	public void setTo(Casilla to) {
-		this.to = to;
-	}
-	
 	
 
 }
