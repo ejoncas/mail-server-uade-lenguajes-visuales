@@ -1,65 +1,38 @@
 package com.uade.mail.beans;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OficinaDeCorreoVO implements Serializable{
+	
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5416090686125514365L;
+	private static final long serialVersionUID = -7199150831295591617L;
+	private Long id;
 	private String nombreOficina;
-	private HashSet<CasillaVO> casillasMiembro;
-	private HashSet<OficinaDeCorreoVO> oficinasDeConfianza;
+	private List<CasillaVO> casillasMiembro;
+	private List<OficinaDeCorreoVO> oficinasDeConfianza;
 
 	
 	
+	
 
-
-	public void addCasillaMiembro(CasillaVO c){
-		this.casillasMiembro.add(c);
-	}
-	
-	public void addOficinaDeCorreo(OficinaDeCorreoVO o){
-		this.oficinasDeConfianza.add(o);
-	}
-	
-	public OficinaDeCorreoVO(){
-		casillasMiembro=new HashSet<CasillaVO>();
-		oficinasDeConfianza=new HashSet<OficinaDeCorreoVO>();
-	}
-	
 	public OficinaDeCorreoVO(String nombre){
-		nombreOficina = nombre;
-		casillasMiembro=new HashSet<CasillaVO>();
-		oficinasDeConfianza=new HashSet<OficinaDeCorreoVO>();
+		this.nombreOficina=nombre;
+		this.casillasMiembro = new ArrayList<CasillaVO>();
+		this.oficinasDeConfianza = new ArrayList<OficinaDeCorreoVO>();
 	}
 	
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((nombreOficina == null) ? 0 : nombreOficina.hashCode());
-		return result;
+	public OficinaDeCorreoVO() {
+		this.casillasMiembro = new ArrayList<CasillaVO>();
+		this.oficinasDeConfianza = new ArrayList<OficinaDeCorreoVO>();
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		OficinaDeCorreoVO other = (OficinaDeCorreoVO) obj;
-		if (nombreOficina == null) {
-			if (other.nombreOficina != null)
-				return false;
-		} else if (!nombreOficina.equals(other.nombreOficina))
-			return false;
-		return true;
+
+	public Long getId() {
+		return id;
 	}
 	public String getNombreOficina() {
 		return nombreOficina;
@@ -67,24 +40,27 @@ public class OficinaDeCorreoVO implements Serializable{
 	public void setNombreOficina(String nombreOficina) {
 		this.nombreOficina = nombreOficina;
 	}
-	public HashSet<CasillaVO> getCasillasMiembro() {
+	public List<CasillaVO> getCasillasMiembro() {
 		return casillasMiembro;
 	}
-	public void setCasillasMiembro(HashSet<CasillaVO> casillasMiembro) {
+	public void setCasillasMiembro(List<CasillaVO> casillasMiembro) {
 		this.casillasMiembro = casillasMiembro;
 	}
-	public HashSet<OficinaDeCorreoVO> getOficinasDeConfianza() {
+	public List<OficinaDeCorreoVO> getOficinasDeConfianza() {
 		return oficinasDeConfianza;
 	}
-	public void setOficinasDeConfianza(HashSet<OficinaDeCorreoVO> oficinasDeConfianza) {
+	public void setOficinasDeConfianza(List<OficinaDeCorreoVO> oficinasDeConfianza) {
 		this.oficinasDeConfianza = oficinasDeConfianza;
 	}
-	
-	public String toString(){
-		return this.nombreOficina;
+
+
+
+	public void addOficinaDeCorreo(OficinaDeCorreoVO o2) {
+		this.oficinasDeConfianza.add(o2);
 	}
-	
-	
-	
+
+	public void addCasillaMiembro(CasillaVO c1) {
+		this.casillasMiembro.add(c1);
+	}
 	
 }

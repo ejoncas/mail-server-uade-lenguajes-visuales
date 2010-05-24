@@ -5,7 +5,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
 import com.uade.mail.beans.CasillaVO;
-import com.uade.mail.beans.EstadoVO;
+import com.uade.mail.beans.EstadoMailVO;
+import com.uade.mail.beans.EstadosPosibles;
 import com.uade.mail.beans.MailVO;
 import com.uade.mail.beans.OficinaDeCorreoVO;
 import com.uade.mail.beans.UsuarioVO;
@@ -13,14 +14,11 @@ import com.uade.mail.interfaces.MailService;
 
 public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	
-	
-
 	/**
 	 * STATIC 
 	 */
 	
 	private static final long serialVersionUID = -210094816812915149L;
-	
 	
 	
 	/**
@@ -114,8 +112,16 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		//SEND MAIL
 		CasillaVO from = m.getFrom();
 		CasillaVO to = m.getTo();
-		from.getInbox().getEstadoInbox().put(m, EstadoVO.UNREAD);
-		to.getInbox().getEstadoInbox().put(m, EstadoVO.SENT);
+		EstadoMailVO estado1 = new EstadoMailVO();
+		estado1.setMail(m);
+		estado1.setEstado(EstadosPosibles.SENT);
+		EstadoMailVO estado2 = new EstadoMailVO();
+		estado2.setMail(m);
+		estado2.setEstado(EstadosPosibles.UNREAD);
+		
+		from.getInbox().add(estado1);
+		to.getInbox().add(estado2);
+		
 		LogMensajes.getInstance().addMessage(m);
 	}
 

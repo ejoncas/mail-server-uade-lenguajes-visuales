@@ -1,15 +1,20 @@
 package com.uade.beans.entities;
 
-import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name="casillas")
@@ -42,21 +47,26 @@ public class Casilla{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	@OneToOne
+	@ManyToOne
 	public Usuario getInfoUsuario() {
 		return infoUsuario;
 	}
 	public void setInfoUsuario(Usuario infoUsuario) {
 		this.infoUsuario = infoUsuario;
 	}
-	@OneToMany
+	
+	@ManyToMany
+	@Cascade({CascadeType.ALL, CascadeType.DELETE_ORPHAN})
 	public List<Casilla> getBloqueados() {
 		return bloqueados;
 	}
 	public void setBloqueados(List<Casilla> bloqueados) {
 		this.bloqueados = bloqueados;
 	}
+	
 	@OneToMany
+	@JoinColumn(name="idcasilla")
+	@Cascade({CascadeType.ALL, CascadeType.DELETE_ORPHAN})
 	public List<EstadoMail> getInbox() {
 		return inbox;
 	}
