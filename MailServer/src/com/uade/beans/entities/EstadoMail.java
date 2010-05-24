@@ -10,6 +10,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.uade.mail.beans.EstadoMailVO;
+
 
 @Entity
 @Table(name="estadomail")
@@ -47,7 +49,17 @@ public class EstadoMail{
 	}
 	
 	
+	public EstadoMailVO dameValueObject(){
+		return new EstadoMailVO(this);
+	}
 	
+	public EstadoMail(EstadoMailVO e){
+		this.estado = e.getEstado();
+		this.mail = new Mail(e.getMail());
+	}
+
+	public EstadoMail() {
+	}
 	
 }
 

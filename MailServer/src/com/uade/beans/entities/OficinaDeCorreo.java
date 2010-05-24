@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.uade.mail.beans.CasillaVO;
+import com.uade.mail.beans.OficinaDeCorreoVO;
+
 @Entity
 @Table(name="oficinas")
 public class OficinaDeCorreo{
@@ -47,6 +50,25 @@ public class OficinaDeCorreo{
 	}
 	public void setOficinasDeConfianza(List<OficinaDeCorreo> oficinasDeConfianza) {
 		this.oficinasDeConfianza = oficinasDeConfianza;
+	}
+	
+	public OficinaDeCorreoVO dameValueObject(){
+		return new OficinaDeCorreoVO(this);
+	}
+	
+	public OficinaDeCorreo(OficinaDeCorreoVO o){
+		List<Casilla> miembros = new ArrayList<Casilla>();
+		for(CasillaVO c : o.getCasillasMiembro())
+			miembros.add(new Casilla(c));
+		this.casillasMiembro = miembros;
+		this.nombreOficina = o.getNombreOficina();
+		List<OficinaDeCorreo> of = new ArrayList<OficinaDeCorreo>();
+		for(OficinaDeCorreoVO oo: o.getOficinasDeConfianza())
+			of.add(new OficinaDeCorreo(oo));
+		this.oficinasDeConfianza = of;
+	}
+	
+	public OficinaDeCorreo() {
 	}
 	
 }

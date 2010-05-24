@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.uade.beans.entities.Casilla;
+import com.uade.beans.entities.OficinaDeCorreo;
+
 public class OficinaDeCorreoVO implements Serializable{
 	
 	
@@ -18,7 +21,6 @@ public class OficinaDeCorreoVO implements Serializable{
 
 	
 	
-	
 
 	public OficinaDeCorreoVO(String nombre){
 		this.nombreOficina=nombre;
@@ -29,6 +31,19 @@ public class OficinaDeCorreoVO implements Serializable{
 	public OficinaDeCorreoVO() {
 		this.casillasMiembro = new ArrayList<CasillaVO>();
 		this.oficinasDeConfianza = new ArrayList<OficinaDeCorreoVO>();
+	}
+
+	public OficinaDeCorreoVO(OficinaDeCorreo oficinaDeCorreo) {
+		List<CasillaVO> miembros = new ArrayList<CasillaVO>();
+		for(Casilla c:oficinaDeCorreo.getCasillasMiembro())
+			miembros.add(c.dameValueObject());
+		this.casillasMiembro = miembros;
+		this.id = oficinaDeCorreo.getId();
+		this.nombreOficina = oficinaDeCorreo.getNombreOficina();
+		List<OficinaDeCorreoVO> oficinas = new ArrayList<OficinaDeCorreoVO>();
+		for(OficinaDeCorreo oo: oficinaDeCorreo.getOficinasDeConfianza())
+			oficinas.add(oo.dameValueObject());
+		this.oficinasDeConfianza = oficinas;
 	}
 
 	public Long getId() {
@@ -52,7 +67,6 @@ public class OficinaDeCorreoVO implements Serializable{
 	public void setOficinasDeConfianza(List<OficinaDeCorreoVO> oficinasDeConfianza) {
 		this.oficinasDeConfianza = oficinasDeConfianza;
 	}
-
 
 
 	public void addOficinaDeCorreo(OficinaDeCorreoVO o2) {

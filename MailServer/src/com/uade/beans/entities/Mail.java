@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.uade.mail.beans.MailVO;
+
 @Entity
 @Table(name="mails")
 public class Mail{
@@ -52,6 +54,20 @@ public class Mail{
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
+	public MailVO dameValueObject(){
+		return new MailVO(this);
+	}
+	
+	public Mail(MailVO m){
+		this.from = new Casilla(m.getFrom());
+		this.to = new Casilla(m.getTo());
+		this.message = m.getMessage();
+		this.subject = m.getSubject();
+	}
+	public Mail() {
+	}
+	
 	
 
 }

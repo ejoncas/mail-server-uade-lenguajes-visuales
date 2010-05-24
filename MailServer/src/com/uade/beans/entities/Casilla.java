@@ -1,9 +1,9 @@
 package com.uade.beans.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +15,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+
+import com.uade.mail.beans.CasillaVO;
+import com.uade.mail.beans.EstadoMailVO;
 
 @Entity
 @Table(name="casillas")
@@ -74,7 +77,27 @@ public class Casilla{
 		this.inbox = inbox;
 	}
 	
+	public CasillaVO dameValueObject(){
+		return new CasillaVO(this);
+	}
+	
+	public Casilla(CasillaVO c){
+		List<Casilla> casillas = new ArrayList<Casilla>();
+		for(CasillaVO c1:c.getBloqueados())
+			casillas.add(new Casilla(c1));
+		this.bloqueados = casillas;
+		List<EstadoMail> estados = new ArrayList<EstadoMail>();
+		for(EstadoMailVO e : c.getInbox())
+			estados.add(new EstadoMail(e));
+		this.inbox = estados;
+		this.infoUsuario = new Usuario(c.getInfoUsuario());
+		this.nombre = c.getNombre();
+		this.password = c.getPassword();
+	}
+	public Casilla() {
+	}
 	
 	
 	
 }
+

@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.uade.mail.beans.UsuarioVO;
+
 @Entity
 @Table(name="usuarios")
 public class Usuario{
@@ -49,6 +51,17 @@ public class Usuario{
 		this.dni = dni;
 	}
 	
+	public UsuarioVO dameValueObject(){
+		UsuarioVO r = new UsuarioVO(this);
+		return r;
+	}
 	
+	public Usuario(){}
+	public Usuario(UsuarioVO u){
+		this.nombre = u.getNombre();
+		this.direccion = u.getDireccion();
+		this.dni = u.getDni();
+		this.nombre = u.getDni();
+	}
 	
 }

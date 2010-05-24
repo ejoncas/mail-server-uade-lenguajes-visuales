@@ -2,6 +2,8 @@ package com.uade.mail.beans;
 
 import java.io.Serializable;
 
+import com.uade.beans.entities.Mail;
+
 public class MailVO implements Serializable{
 
 
@@ -16,8 +18,15 @@ public class MailVO implements Serializable{
 	private String message;
 	
 	
-	
-	
+	public MailVO(Mail mail) {
+		this.id =mail.getId();
+		this.from = mail.getFrom().dameValueObject();
+		this.to = mail.getFrom().dameValueObject();
+		this.subject = mail.getSubject();
+		this.message = mail.getMessage();
+	}
+	public MailVO() {
+	}
 	public Long getId() {
 		return id;
 	}
