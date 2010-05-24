@@ -156,7 +156,7 @@ public class MenuFrameController {
 			String nombreNuevo, ArrayList<CasillaVO> nuevaSeleccionCasillas) {
 		try {
 			oficinaAModificar.setNombreOficina(nombreNuevo);
-			HashSet<CasillaVO> nuevas = new HashSet<CasillaVO>();
+			List<CasillaVO> nuevas = new ArrayList<CasillaVO>();
 			for (CasillaVO c : nuevaSeleccionCasillas)
 				nuevas.add(c);
 			oficinaAModificar.setCasillasMiembro(nuevas);
