@@ -37,7 +37,7 @@ public class CasillaTableModel extends AbstractTableModel{
 		case 0:
 			return j.getNombre();
 		case 1:
-			return j.getInfoUsuario().getNombre()+j.getInfoUsuario().getApellido();
+			return j.getInfoUsuario().getNombre()+" "+j.getInfoUsuario().getApellido();
 		default:
 			return null;
 		}

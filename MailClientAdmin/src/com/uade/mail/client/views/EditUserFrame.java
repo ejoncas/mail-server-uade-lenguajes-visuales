@@ -163,6 +163,7 @@ public class EditUserFrame extends javax.swing.JFrame {
 	private void btnCrearActionPerformed(ActionEvent evt) {
 		System.out.println("btnCrear.actionPerformed, event="+evt);
 		this.c.modificarUsuario(usuarioAModificar, txtNombre.getText(),txtApellido.getText(),txtDireccion.getText(),txtDni.getText());
+		this.vistaPadre.updateWindow();
 		this.dispose();
 	}
 
