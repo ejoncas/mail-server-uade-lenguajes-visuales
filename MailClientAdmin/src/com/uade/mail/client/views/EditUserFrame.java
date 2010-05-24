@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
+import com.uade.mail.beans.OficinaDeCorreoVO;
 import com.uade.mail.beans.UsuarioVO;
 import com.uade.mail.client.controller.MenuFrameController;
 
@@ -31,7 +32,7 @@ import com.uade.mail.client.controller.MenuFrameController;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class NewUserFrame extends javax.swing.JFrame {
+public class EditUserFrame extends javax.swing.JFrame {
 	private JPanel panel;
 	private JTextField txtNombre;
 	private JButton btnCrear;
@@ -43,14 +44,18 @@ public class NewUserFrame extends javax.swing.JFrame {
 	private JLabel lblApellido;
 	private JLabel lblNombre;
 	private MenuFrameController c;
-	private SelectUserFrame vistaPadre;
+	private MenuFrame vistaPadre;
+	private UsuarioVO usuarioAModificar;
 	
 	
-	public NewUserFrame(MenuFrameController c, SelectUserFrame selectUserFrame) {
+	public EditUserFrame(MenuFrameController c, MenuFrame menuFrame, UsuarioVO usuarioAModificar) {
 		this.c = c;
-		this.vistaPadre = selectUserFrame;
+		this.vistaPadre = menuFrame;
+		this.usuarioAModificar = usuarioAModificar;
 		initGUI();
 	}
+
+	
 
 	private void initGUI() {
 		try {
@@ -80,19 +85,23 @@ public class NewUserFrame extends javax.swing.JFrame {
 				}
 				{
 					txtNombre = new JTextField();
+					txtNombre.setText(this.usuarioAModificar.getNombre());
 				}
 				{
 					txtApellido = new JTextField();
+					txtApellido.setText(this.usuarioAModificar.getApellido());
 				}
 				{
 					txtDireccion = new JTextField();
+					txtDireccion.setText(this.usuarioAModificar.getDireccion());
 				}
 				{
 					txtDni = new JTextField();
+					txtDni.setText(this.usuarioAModificar.getDni());
 				}
 				{
 					btnCrear = new JButton();
-					btnCrear.setText("Crear!");
+					btnCrear.setText("Modificar!");
 					btnCrear.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							btnCrearActionPerformed(evt);
@@ -153,10 +162,7 @@ public class NewUserFrame extends javax.swing.JFrame {
 	
 	private void btnCrearActionPerformed(ActionEvent evt) {
 		System.out.println("btnCrear.actionPerformed, event="+evt);
-		this.c.crearUsuario(txtNombre.getText(), txtApellido.getText(), txtDireccion.getText(), txtDni.getText());
-		
-		this.vistaPadre.getCmbUsuarios().addItem(new UsuarioVO(txtNombre.getText(), txtApellido.getText(), txtDireccion.getText(), txtDni.getText()));
-		this.vistaPadre.setVisible(true);
+		this.c.modificarUsuario(usuarioAModificar, txtNombre.getText(),txtApellido.getText(),txtDireccion.getText(),txtDni.getText());
 		this.dispose();
 	}
 

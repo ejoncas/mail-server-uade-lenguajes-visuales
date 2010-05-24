@@ -1,23 +1,23 @@
 package com.uade.mail.client.views;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.BorderFactory;
+
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle;
-
 import javax.swing.WindowConstants;
-import javax.swing.border.LineBorder;
-import javax.swing.SwingUtilities;
+
+import com.uade.mail.beans.UsuarioVO;
+import com.uade.mail.client.controller.MenuFrameController;
 
 
 /**
@@ -39,25 +39,24 @@ public class SelectUserFrame extends javax.swing.JFrame {
 	private JComboBox cmbUsuarios;
 	private JLabel lblCombo;
 	private JLabel labelUsr;
+	private MenuFrameController c;
+	private MenuFrame vistaPadre;
 
-	/**
-	* Auto-generated main method to display this JFrame
-	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				SelectUserFrame inst = new SelectUserFrame();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
 	
-	public SelectUserFrame() {
-		super();
+	public SelectUserFrame(MenuFrameController c, MenuFrame menuFrame) {
+		this.c = c;
+		this.vistaPadre = menuFrame;
 		initGUI();
 	}
 	
+	
+
+	public JComboBox getCmbUsuarios() {
+		return cmbUsuarios;
+	}
+
+
+
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -67,7 +66,7 @@ public class SelectUserFrame extends javax.swing.JFrame {
 				GroupLayout panelLayout = new GroupLayout((JComponent)panel);
 				panel.setLayout(panelLayout);
 				getContentPane().add(panel, BorderLayout.CENTER);
-				panel.setPreferredSize(new java.awt.Dimension(491, 174));
+				panel.setPreferredSize(new java.awt.Dimension(487, 173));
 				{
 					labelUsr = new JLabel();
 					labelUsr.setText("Seleccione el Usuario al cual desea agregar una cuenta");
@@ -75,6 +74,11 @@ public class SelectUserFrame extends javax.swing.JFrame {
 				{
 					btnCrearCuenta = new JButton();
 					btnCrearCuenta.setText("Crear Cuenta");
+					btnCrearCuenta.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							btnCrearCuentaActionPerformed(evt);
+						}
+					});
 				}
 				{
 					lblCombo = new JLabel();
@@ -82,8 +86,7 @@ public class SelectUserFrame extends javax.swing.JFrame {
 				}
 				{
 					ComboBoxModel cmbUsuariosModel = 
-						new DefaultComboBoxModel(
-								new String[] { "Item One", "Item Two" });
+						new DefaultComboBoxModel(this.c.getUsuarios().toArray());
 					cmbUsuarios = new JComboBox();
 					cmbUsuarios.setModel(cmbUsuariosModel);
 				}
@@ -138,7 +141,14 @@ public class SelectUserFrame extends javax.swing.JFrame {
 	private void lblUsuarioNuevoMouseClicked(MouseEvent evt) {
 		System.out.println("lblUsuarioNuevo.mouseClicked, event="+evt);
 		//TODO add your code for lblUsuarioNuevo.mouseClicked
-		JOptionPane.showMessageDialog(null, "Creando usuario Nuevo");
+		new NewUserFrame(c,this).setVisible(true);
+		this.setVisible(false);
+	}
+	
+	private void btnCrearCuentaActionPerformed(ActionEvent evt) {
+		System.out.println("btnCrearCuenta.actionPerformed, event="+evt);
+		new NewAccountFrame(c,vistaPadre, (UsuarioVO)this.cmbUsuarios.getSelectedItem()).setVisible(true);
+		this.dispose();
 	}
 
 }

@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -17,6 +18,9 @@ import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+
+import com.uade.mail.beans.CasillaVO;
+import com.uade.mail.beans.OficinaDeCorreoVO;
 import com.uade.mail.client.controller.MenuFrameController;
 
 /**
@@ -72,7 +76,10 @@ public class MenuFrame extends javax.swing.JDialog {
 	public MenuFrame(MenuFrameController controller) {
 		super();
 		c = controller;
-		initGUI();
+		if(c.getModel()==null)
+			JOptionPane.showMessageDialog(null, "No se pudo conectar al servidor RMI");
+		else
+			initGUI();
 	}
 	
 	private void initGUI() {
@@ -110,16 +117,31 @@ public class MenuFrame extends javax.swing.JDialog {
 						btnContrasenia.setText("Contraseña");
 						btnContrasenia.setIcon(passwd);
 						btnContrasenia.setFont(new java.awt.Font("AlArabiya",0,10));
+						btnContrasenia.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								btnContraseniaActionPerformed(evt);
+							}
+						});
 					}
 					{
 						modificarBtn = new JButton();
-						modificarBtn.setText("Modificar");
+						modificarBtn.setText("Modificar Usuario");
 						modificarBtn.setFont(new java.awt.Font("AlArabiya",0,10));
+						modificarBtn.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								modificarBtnActionPerformed(evt);
+							}
+						});
 					}
 					{
 						eliminarBtn = new JButton();
 						eliminarBtn.setText("Eliminar");
 						eliminarBtn.setFont(new java.awt.Font("AlArabiya",0,10));
+						eliminarBtn.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								eliminarBtnActionPerformed(evt);
+							}
+						});
 					}
 					{
 						nuevoBtn = new JButton();
@@ -177,22 +199,42 @@ public class MenuFrame extends javax.swing.JDialog {
 						btnEliminar = new JButton();
 						btnEliminar.setText("Eliminar");
 						btnEliminar.setFont(new java.awt.Font("AlArabiya",0,10));
+						btnEliminar.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								btnEliminarActionPerformed(evt);
+							}
+						});
 					}
 					{
 						btnModificar = new JButton();
 						btnModificar.setText("Modificar");
 						btnModificar.setFont(new java.awt.Font("AlArabiya",0,10));
+						btnModificar.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								btnModificarActionPerformed(evt);
+							}
+						});
 					}
 					{
 						btnVinculos = new JButton();
 						btnVinculos.setText("Vinculos Confianza");
 						btnVinculos.setIcon(links);
 						btnVinculos.setFont(new java.awt.Font("AlArabiya",0,10));
+						btnVinculos.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								btnVinculosActionPerformed(evt);
+							}
+						});
 					}
 					{
 						btnNuevo = new JButton();
 						btnNuevo.setText("Nuevo");
 						btnNuevo.setFont(new java.awt.Font("AlArabiya",0,10));
+						btnNuevo.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								btnNuevoActionPerformed(evt);
+							}
+						});
 					}
 					tab2Layout.setHorizontalGroup(tab2Layout.createSequentialGroup()
 						.addContainerGap()
@@ -240,7 +282,7 @@ public class MenuFrame extends javax.swing.JDialog {
     
     private void nuevoBtnActionPerformed(ActionEvent evt) {
     	System.out.println("nuevoBtn.actionPerformed, event="+evt);
-    	new NewAccountFrame(c, this).setVisible(true);
+    	new SelectUserFrame(c, this).setVisible(true);
     }
     
     public void updateWindow(){
@@ -248,5 +290,58 @@ public class MenuFrame extends javax.swing.JDialog {
     	modelCentros.getDatalist().removeAllElements();
     	modelCasilla.addCasillaList(c.getAccounts());
     	modelCentros.addOficinaDeCorreoList(c.getOffices());
+    }
+    
+    private void btnContraseniaActionPerformed(ActionEvent evt) {
+    	System.out.println("btnContrasenia.actionPerformed, event="+evt);
+    	CasillaVO casilla = this.modelCasilla.getCasillAt(this.usuariosTable.getSelectedRow());
+    	if(casilla!=null)
+    		new ChangPasswdFrame(c,this,casilla).setVisible(true);
+    	else
+    		JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna casilla");
+
+    }
+    
+    private void eliminarBtnActionPerformed(ActionEvent evt) {
+    	System.out.println("eliminarBtn.actionPerformed, event="+evt);
+    	CasillaVO casilla = this.modelCasilla.getCasillAt(this.usuariosTable.getSelectedRow());
+    	if(casilla!=null){
+    		this.c.eliminarCasilla(casilla);
+    		this.updateWindow();
+    	}
+    	else
+    		JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna casilla");
+    }
+    
+    private void modificarBtnActionPerformed(ActionEvent evt) {
+    	System.out.println("modificarBtn.actionPerformed, event="+evt);
+    	CasillaVO casilla = this.modelCasilla.getCasillAt(this.usuariosTable.getSelectedRow());
+    	if(casilla!=null){
+    		new EditUserFrame(c,this,casilla.getInfoUsuario()).setVisible(true);
+    	}
+    }
+    
+    private void btnNuevoActionPerformed(ActionEvent evt) {
+    	System.out.println("btnNuevo.actionPerformed, event="+evt);
+    	new NewOfficeFrame(c,this).setVisible(true);
+    }
+    
+    private void btnModificarActionPerformed(ActionEvent evt) {
+    	System.out.println("btnModificar.actionPerformed, event="+evt);
+    	OficinaDeCorreoVO oficinaSelected = this.modelCentros.getOficinaDeCorreoAt(this.centrosTable.getSelectedRow());
+    	new EditOfficeFrame(c,this,oficinaSelected).setVisible(true);
+    }
+    
+    private void btnEliminarActionPerformed(ActionEvent evt) {
+    	System.out.println("btnEliminar.actionPerformed, event="+evt);
+    	OficinaDeCorreoVO oficinaSeleccionada = this.modelCentros.getOficinaDeCorreoAt(this.centrosTable.getSelectedRow());
+    	this.c.eliminarOficinaDeCorreo(oficinaSeleccionada);
+    	this.updateWindow();
+    }
+    
+    private void btnVinculosActionPerformed(ActionEvent evt) {
+    	System.out.println("btnVinculos.actionPerformed, event="+evt);
+    	OficinaDeCorreoVO oficinaSeleccionada = this.modelCentros.getOficinaDeCorreoAt(this.centrosTable.getSelectedRow());
+    	new EditTrustedLinksFrame(c,this,oficinaSeleccionada).setVisible(true);
     }
 }
