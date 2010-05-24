@@ -1,89 +1,66 @@
 package com.uade.mail.beans;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class CasillaVO implements Serializable{
-	
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 4936005102902381936L;
-	public static String SERVER_DOMAIN = "lenguajes.edu.ar";
-	public static int MAX_CHARACTERS = 20;
+	private static final long serialVersionUID = 7253711726501753324L;
+	public static final String SERVER_DOMAIN = "lenguajes.edu.ar";
+	private Long id;
 	private String nombre;
 	private String password;
 	private UsuarioVO infoUsuario;
-	private HashSet<CasillaVO> bloqueados;
-	private InboxVO inbox;
-	
+	private List<CasillaVO> bloqueados;
+	private List<EstadoMailVO> inbox;
 	
 	public CasillaVO(){
-		this.nombre="";
-		this.password="";
-		this.bloqueados = new HashSet<CasillaVO>();
-		this.inbox = new InboxVO();
+		this.bloqueados = new ArrayList<CasillaVO>();
+		this.inbox = new ArrayList<EstadoMailVO>();
 	}
 	
-	public String getPassword() {
-		return password;
+	
+
+	public Long getId() {
+		return id;
 	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public InboxVO getInbox() {
-		return inbox;
-	}
-	public void setInbox(InboxVO inbox) {
-		this.inbox = inbox;
-	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CasillaVO other = (CasillaVO) obj;
-		if (nombre == null) {
-			if (other.nombre != null)
-				return false;
-		} else if (!nombre.equals(other.nombre))
-			return false;
-		return true;
-	}
+
 	public String getNombre() {
 		return nombre;
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	public HashSet<CasillaVO> getBloqueados() {
-		return bloqueados;
+	public String getPassword() {
+		return password;
 	}
-
-	public void setBloqueados(HashSet<CasillaVO> bloqueados) {
-		this.bloqueados = bloqueados;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-
 	public UsuarioVO getInfoUsuario() {
 		return infoUsuario;
 	}
-
 	public void setInfoUsuario(UsuarioVO infoUsuario) {
 		this.infoUsuario = infoUsuario;
 	}
-
 	
+	public List<CasillaVO> getBloqueados() {
+		return bloqueados;
+	}
+	public void setBloqueados(List<CasillaVO> bloqueados) {
+		this.bloqueados = bloqueados;
+	}
 	
+	public List<EstadoMailVO> getInbox() {
+		return inbox;
+	}
+	public void setInbox(List<EstadoMailVO> inbox) {
+		this.inbox = inbox;
+	}
 	
 }

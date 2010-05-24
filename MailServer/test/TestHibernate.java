@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,10 +7,11 @@ import javax.persistence.EntityTransaction;
 import junit.framework.TestCase;
 
 import com.uade.beans.entities.Casilla;
-import com.uade.beans.entities.EstadosPosibles;
 import com.uade.beans.entities.EstadoMail;
 import com.uade.beans.entities.Mail;
+import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.beans.entities.Usuario;
+import com.uade.mail.beans.EstadosPosibles;
 import com.uade.mail.utils.HibernateUtils;
 import com.uade.mail.utils.PasswordEncrypt;
 
@@ -69,10 +69,39 @@ public class TestHibernate extends TestCase{
 		lista.add(i);
 		
 		ArrayList<EstadoMail> lista2 = new ArrayList<EstadoMail>();
-		lista.add(i1);
+		lista2.add(i1);
 		
 		c.setInbox(lista);
-		c.setInbox(lista2);
+		c2.setInbox(lista2);
+		
+		OficinaDeCorreo o1 = new OficinaDeCorreo();
+		o1.setNombreOficina("Oficina de Correo 1");
+		
+		OficinaDeCorreo o2 = new OficinaDeCorreo();
+		o2.setNombreOficina("Oficina de Correo 2");
+		
+		OficinaDeCorreo o3 = new OficinaDeCorreo();
+		o3.setNombreOficina("Oficina de Correo 3");
+		
+		List<Casilla> miembros1 = new ArrayList<Casilla>();//todos
+		miembros1.add(c);
+		miembros1.add(c1);
+		miembros1.add(c2);
+		List<Casilla> miembros2 = new ArrayList<Casilla>();//solo c1
+		miembros2.add(c1);
+		List<Casilla> miembros3 = new ArrayList<Casilla>();//c1 y c2
+		miembros3.add(c1);
+		miembros3.add(c2);
+		
+		o1.setCasillasMiembro(miembros1);
+		o2.setCasillasMiembro(miembros2);
+		o3.setCasillasMiembro(miembros3);
+		
+		List<OficinaDeCorreo> confianza1 = new ArrayList<OficinaDeCorreo>();
+		confianza1.add(o2);
+		confianza1.add(o3);
+		
+		o1.setOficinasDeConfianza(confianza1);
 		
 		
 		EntityManager em = HibernateUtils.getEntityManager();
@@ -84,11 +113,17 @@ public class TestHibernate extends TestCase{
 		{
 			em.persist(u);
 			em.persist(m);
-			em.persist(i);
-			em.persist(i1);
+
 			em.persist(c1);
 			em.persist(c2);
 			em.persist(c);
+			
+			em.persist(i);
+			em.persist(i1);
+			
+			em.persist(o1);
+			em.persist(o2);
+			em.persist(o3);
 		}
 		t.commit();
 		
