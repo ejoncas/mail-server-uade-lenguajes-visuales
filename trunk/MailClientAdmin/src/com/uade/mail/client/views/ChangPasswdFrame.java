@@ -1,10 +1,13 @@
 package com.uade.mail.client.views;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.LayoutStyle;
@@ -12,6 +15,10 @@ import javax.swing.SwingConstants;
 
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
+
+import com.uade.mail.beans.CasillaVO;
+import com.uade.mail.client.controller.MenuFrameController;
+import com.uade.mail.utils.PasswordEncrypt;
 
 
 /**
@@ -36,25 +43,19 @@ public class ChangPasswdFrame extends javax.swing.JFrame {
 	private JLabel lblPasswordNueva1;
 	private JLabel lblPassVieja;
 	private JLabel lblUsuarioSeleccionado;
+	private MenuFrameController c;
+	private MenuFrame vistaPadre;
+	private CasillaVO casillaAModificar;
 
-	/**
-	* Auto-generated main method to display this JFrame
-	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				ChangPasswdFrame inst = new ChangPasswdFrame();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
-	
-	public ChangPasswdFrame() {
+	public ChangPasswdFrame(MenuFrameController c, MenuFrame menuFrame,
+			CasillaVO casilla) {
 		super();
+		this.c = c;
+		this.vistaPadre = menuFrame;
+		this.casillaAModificar = casilla;
 		initGUI();
 	}
-	
+
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -66,7 +67,7 @@ public class ChangPasswdFrame extends javax.swing.JFrame {
 				getContentPane().add(panel, BorderLayout.CENTER);
 				{
 					lblUsuarioSeleccionado = new JLabel();
-					lblUsuarioSeleccionado.setText("[Usuario]");
+					lblUsuarioSeleccionado.setText(this.casillaAModificar.getNombre());
 				}
 				{
 					lblPassVieja = new JLabel();
@@ -92,37 +93,38 @@ public class ChangPasswdFrame extends javax.swing.JFrame {
 				{
 					btnCambiar = new JButton();
 					btnCambiar.setText("Cambiar");
+					btnCambiar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							btnCambiarActionPerformed(evt);
+						}
+					});
 				}
 				panelLayout.setHorizontalGroup(panelLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(panelLayout.createParallelGroup()
+					    .addComponent(lblUsuarioSeleccionado, GroupLayout.Alignment.LEADING, 0, 292, Short.MAX_VALUE)
 					    .addGroup(GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
-					        .addComponent(lblUsuarioSeleccionado, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
-					        .addGap(100))
-					    .addComponent(lblPassVieja, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(lblPasswordNueva1, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(lblPasswordNueva2, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE))
-					.addGap(57)
+					        .addComponent(lblPassVieja, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+					        .addGap(0, 53, Short.MAX_VALUE))
+					    .addGroup(GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
+					        .addComponent(lblPasswordNueva1, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+					        .addGap(0, 53, Short.MAX_VALUE))
+					    .addGroup(GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
+					        .addComponent(lblPasswordNueva2, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE)
+					        .addGap(0, 53, Short.MAX_VALUE)))
 					.addGroup(panelLayout.createParallelGroup()
-					    .addGroup(panelLayout.createSequentialGroup()
-					        .addGap(0, 0, Short.MAX_VALUE)
-					        .addComponent(txtPassordVieja, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE))
-					    .addGroup(panelLayout.createSequentialGroup()
-					        .addGap(0, 0, Short.MAX_VALUE)
-					        .addComponent(txtPassword1, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE))
-					    .addGroup(panelLayout.createSequentialGroup()
-					        .addGap(0, 0, Short.MAX_VALUE)
-					        .addComponent(txtPassword2, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE))
+					    .addComponent(txtPassword2, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
+					    .addComponent(txtPassword1, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
+					    .addComponent(txtPassordVieja, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
 					    .addGroup(GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
-					        .addGap(0, 87, Short.MAX_VALUE)
+					        .addGap(87)
 					        .addComponent(btnCambiar, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap());
-				panelLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {txtPassword2, txtPassordVieja, txtPassword1});
 				panelLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {lblPasswordNueva2, lblPasswordNueva1, lblPassVieja});
+				panelLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {txtPassword2, txtPassordVieja, txtPassword1});
 				panelLayout.setVerticalGroup(panelLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblUsuarioSeleccionado, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(9)
+					.addComponent(lblUsuarioSeleccionado, 0, 21, Short.MAX_VALUE)
+					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 					.addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					    .addComponent(txtPassordVieja, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 					    .addComponent(lblPassVieja, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -135,13 +137,35 @@ public class ChangPasswdFrame extends javax.swing.JFrame {
 					    .addComponent(txtPassword2, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 					    .addComponent(lblPasswordNueva2, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(41)
-					.addComponent(btnCambiar, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(38, Short.MAX_VALUE));
+					.addComponent(btnCambiar, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(35, 35));
 			}
 			pack();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void btnCambiarActionPerformed(ActionEvent evt) {
+		System.out.println("btnCambiar.actionPerformed, event="+evt);
+		if(!PasswordEncrypt.generateMD5(txtPassordVieja.getPassword()).equals(casillaAModificar.getPassword()))
+			JOptionPane.showMessageDialog(null, "Password Vieja no coincide");
+		else if(!comparePasswordsEquals(txtPassword1.getPassword(), txtPassword2.getPassword()))
+			JOptionPane.showMessageDialog(null, "El reingreso de password no coincide");
+		else{
+			this.c.cambiarPassword(this.casillaAModificar, PasswordEncrypt.generateMD5(txtPassword1.getPassword()));
+			JOptionPane.showMessageDialog(null, "Password Cambiado!");
+			this.dispose();
+		}
+			
+	}
+	
+	private boolean comparePasswordsEquals(char[] a, char[] b){
+		for(int i=0; i< a.length; i++){
+			if(a[i]!=b[i])
+				return false;
+		}
+		return true;
 	}
 
 }

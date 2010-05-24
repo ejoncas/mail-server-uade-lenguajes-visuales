@@ -20,6 +20,7 @@ import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
 import com.sun.xml.internal.ws.util.StringUtils;
+import com.uade.mail.beans.UsuarioVO;
 import com.uade.mail.client.controller.MenuFrameController;
 
 
@@ -46,11 +47,14 @@ public class NewAccountFrame extends javax.swing.JFrame {
 	private JLabel txtNombreCuenta;
 	private MenuFrameController c;
 	private MenuFrame vistaPadre;
-
-	public NewAccountFrame(MenuFrameController c, MenuFrame vistaPadre) {
+	private UsuarioVO userSelected;
+	
+	
+	public NewAccountFrame(MenuFrameController c, MenuFrame selectUserFrame, UsuarioVO user) {
 		super();
 		this.c=c;
-		this.vistaPadre = vistaPadre;
+		this.vistaPadre = selectUserFrame;
+		this.userSelected = user;
 		initGUI();
 	}
 	
@@ -142,7 +146,7 @@ public class NewAccountFrame extends javax.swing.JFrame {
 	
 	private void btnCrearActionPerformed(ActionEvent evt) {
 		System.out.println("btnCrear.actionPerformed, event="+evt);
-		//c.crearCuenta(inputNombreCasilla.getText(), inputNombre.getText()+" "+inputApellido.getText(), inputPasswd1.getPassword());
+		c.crearCuenta(inputNombreCasilla.getText(), inputPasswd1.getPassword(),this.userSelected);
 		dispose();
 		this.vistaPadre.updateWindow();
 	}

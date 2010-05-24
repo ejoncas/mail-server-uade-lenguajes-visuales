@@ -20,6 +20,7 @@ import javax.swing.table.TableModel;
 import javax.swing.SwingUtilities;
 
 import com.uade.mail.beans.CasillaVO;
+import com.uade.mail.beans.OficinaDeCorreoVO;
 import com.uade.mail.client.controller.MenuFrameController;
 
 
@@ -35,7 +36,7 @@ import com.uade.mail.client.controller.MenuFrameController;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class NewOfficeFrame extends javax.swing.JFrame {
+public class EditOfficeFrame extends javax.swing.JFrame {
 	private JPanel panel;
 	private JButton btnCrear;
 	private JScrollPane jScrollPane1;
@@ -47,19 +48,21 @@ public class NewOfficeFrame extends javax.swing.JFrame {
 	private MenuFrameController c;
 	private CasillaTableModel modelCasilla;
 	private MenuFrame vistaPadre;
+	private OficinaDeCorreoVO oficinaAModificar;
 
 	
-	public NewOfficeFrame(MenuFrameController c, MenuFrame menuFrame) {
+	public EditOfficeFrame(MenuFrameController c, MenuFrame menuFrame, OficinaDeCorreoVO oficinaAModificar) {
 		super();
 		this.c=c;
 		this.vistaPadre = menuFrame;
+		this.oficinaAModificar = oficinaAModificar;
 		initGUI();
 	}
 	
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			this.setTitle("Nueva Oficina de Correo");
+			this.setTitle("Editar Oficina de Correo");
 			{
 				panel = new JPanel();
 				GroupLayout panelLayout = new GroupLayout((JComponent)panel);
@@ -72,6 +75,7 @@ public class NewOfficeFrame extends javax.swing.JFrame {
 				}
 				{
 					txtNombreOficina = new JTextField();
+					txtNombreOficina.setText(this.oficinaAModificar.getNombreOficina());
 				}
 				{
 					lblSeleccion = new JLabel();
@@ -85,11 +89,13 @@ public class NewOfficeFrame extends javax.swing.JFrame {
 						tableCasillas = new JTable();
 						jScrollPane1.setViewportView(tableCasillas);
 						tableCasillas.setModel(modelCasilla);
+						
+						
 					}
 				}
 				{
 					btnCrear = new JButton();
-					btnCrear.setText("Crear");
+					btnCrear.setText("Modificar");
 					btnCrear.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							btnCrearActionPerformed(evt);
@@ -139,7 +145,8 @@ public class NewOfficeFrame extends javax.swing.JFrame {
 		System.out.println("btnCrear.actionPerformed, event="+evt);
 		
 		ArrayList<CasillaVO> seleccionadas = armarCasillasSeleccionadas(this.tableCasillas.getSelectedRows());
-		this.c.crearOficinaDeCorreo(txtNombreOficina.getText(), seleccionadas);
+		
+		this.c.modifOficinaDeCorreo(this.oficinaAModificar,txtNombreOficina.getText(), seleccionadas);
 		this.vistaPadre.updateWindow();
 		this.dispose();
 	}
