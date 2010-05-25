@@ -1,6 +1,9 @@
 package com.uade.beans.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,13 +13,16 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import com.uade.mail.beans.EstadoMailVO;
 
 
 @Entity
 @Table(name="estadomail")
-public class EstadoMail{
+public class EstadoMail implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2291240811330284636L;
 	private Long id;
 	private Mail mail;
 	private String estado;
@@ -31,7 +37,7 @@ public class EstadoMail{
 	}
 
 	@ManyToOne
-	@Cascade(CascadeType.ALL)
+	@Cascade(value=CascadeType.DELETE_ORPHAN)
 	public Mail getMail() {
 		return mail;
 	}
@@ -49,15 +55,6 @@ public class EstadoMail{
 	}
 	
 	
-	public EstadoMailVO dameValueObject(){
-		return new EstadoMailVO(this);
-	}
-	
-	public EstadoMail(EstadoMailVO e){
-		this.estado = e.getEstado();
-		this.mail = new Mail(e.getMail());
-	}
-
 	public EstadoMail() {
 	}
 	

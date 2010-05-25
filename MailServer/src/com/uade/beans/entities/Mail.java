@@ -1,19 +1,28 @@
 package com.uade.beans.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.uade.mail.beans.MailVO;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 
 @Entity
 @Table(name="mails")
-public class Mail{
+public class Mail implements Serializable{
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3219938078669098296L;
 	private Long id;
 	private Casilla from;
 	private Casilla to;
@@ -28,14 +37,18 @@ public class Mail{
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	@OneToOne
+	@Cascade(value=CascadeType.SAVE_UPDATE)
 	public Casilla getFrom() {
 		return from;
 	}
 	public void setFrom(Casilla from) {
 		this.from = from;
 	}
+	
 	@OneToOne
+	@Cascade(value=CascadeType.SAVE_UPDATE)
 	public Casilla getTo() {
 		return to;
 	}
@@ -55,16 +68,6 @@ public class Mail{
 		this.message = message;
 	}
 	
-	public MailVO dameValueObject(){
-		return new MailVO(this);
-	}
-	
-	public Mail(MailVO m){
-		this.from = new Casilla(m.getFrom());
-		this.to = new Casilla(m.getTo());
-		this.message = m.getMessage();
-		this.subject = m.getSubject();
-	}
 	public Mail() {
 	}
 	
