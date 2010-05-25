@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -11,12 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
-
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
 
-import com.uade.mail.beans.OficinaDeCorreoVO;
-import com.uade.mail.beans.UsuarioVO;
+import com.uade.beans.entities.Usuario;
 import com.uade.mail.client.controller.MenuFrameController;
 
 
@@ -45,10 +43,10 @@ public class EditUserFrame extends javax.swing.JFrame {
 	private JLabel lblNombre;
 	private MenuFrameController c;
 	private MenuFrame vistaPadre;
-	private UsuarioVO usuarioAModificar;
+	private Usuario usuarioAModificar;
 	
 	
-	public EditUserFrame(MenuFrameController c, MenuFrame menuFrame, UsuarioVO usuarioAModificar) {
+	public EditUserFrame(MenuFrameController c, MenuFrame menuFrame, Usuario usuarioAModificar) {
 		this.c = c;
 		this.vistaPadre = menuFrame;
 		this.usuarioAModificar = usuarioAModificar;

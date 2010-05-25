@@ -2,13 +2,11 @@ package com.uade.mail.client.controller;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
-import com.uade.mail.beans.CasillaVO;
-import com.uade.mail.beans.OficinaDeCorreoVO;
-import com.uade.mail.beans.UsuarioVO;
+import com.uade.beans.entities.Casilla;
+import com.uade.beans.entities.OficinaDeCorreo;
+import com.uade.beans.entities.Usuario;
 import com.uade.mail.client.main.MailClient;
 import com.uade.mail.client.views.MenuFrame;
 import com.uade.mail.interfaces.MailService;
@@ -40,7 +38,7 @@ public class MenuFrameController {
 		this.frame = frame;
 	}
 
-	public ArrayList<CasillaVO> getAccounts() {
+	public List<Casilla> getAccounts() {
 		try {
 			return this.model.getAllAccounts();
 		} catch (RemoteException e) {
@@ -50,9 +48,10 @@ public class MenuFrameController {
 		}
 	}
 
-	public ArrayList<OficinaDeCorreoVO> getOffices() {
+	public List<OficinaDeCorreo> getOffices() {
 		try {
-			return this.model.getAllOfices();
+			List<OficinaDeCorreo> oficinas = this.model.getAllOfices();
+			return oficinas;
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			System.out.println("No se pudo obtener todas las oficinas");
@@ -60,7 +59,7 @@ public class MenuFrameController {
 		}
 	}
 
-	public ArrayList<UsuarioVO> getUsuarios() {
+	public List<Usuario> getUsuarios() {
 		try {
 			return this.model.getAllUsers();
 		} catch (RemoteException e) {
@@ -71,15 +70,15 @@ public class MenuFrameController {
 	}
 
 	public void crearCuenta(String nombreCuenta, char[] password,
-			UsuarioVO usuarioVO) {
-		CasillaVO c = new CasillaVO();
+			Usuario usuario) {
+		Casilla c = new Casilla();
 		// TODO - Verificar el max de caracteres - Preferentemente en la ventana
 		// TODO - Adaptar a la nueva clase usuario. Dbeeria preguntar cuando
 		// crees crear una cuenta si es para un usuario nuevo o un usuario
 		// existente... De ahi saldrían dos metodos al controlador, uno que
 		// reciba un usuario, y otro que reciba la data del usuario para crearlo
-		c.setNombre(nombreCuenta + "@" + CasillaVO.SERVER_DOMAIN);
-		c.setInfoUsuario(usuarioVO);
+		c.setNombre(nombreCuenta + "@" + Casilla.SERVER_DOMAIN);
+		c.setInfoUsuario(usuario);
 		c.setPassword(PasswordEncrypt.generateMD5(password));
 		try {
 			model.newAccout(c);
@@ -92,7 +91,7 @@ public class MenuFrameController {
 
 	public void crearUsuario(String nombre, String apellido, String direccion,
 			String dni) {
-		UsuarioVO u = new UsuarioVO(nombre, apellido, direccion, dni);
+		Usuario u = new Usuario(nombre, apellido, direccion, dni);
 		try {
 			this.model.addNewUser(u);
 		} catch (RemoteException e) {
@@ -102,7 +101,7 @@ public class MenuFrameController {
 
 	}
 
-	public void cambiarPassword(CasillaVO casillaAModificar, String generateMD5) {
+	public void cambiarPassword(Casilla casillaAModificar, String generateMD5) {
 
 		try {
 			this.model.modifPassword(casillaAModificar, generateMD5);
@@ -112,7 +111,7 @@ public class MenuFrameController {
 		}
 	}
 
-	public void eliminarCasilla(CasillaVO casilla) {
+	public void eliminarCasilla(Casilla casilla) {
 		try {
 			this.model.deleteAccount(casilla);
 		} catch (RemoteException e) {
@@ -121,7 +120,7 @@ public class MenuFrameController {
 		}
 	}
 
-	public void modificarUsuario(UsuarioVO infoUsuario, String nombre,
+	public void modificarUsuario(Usuario infoUsuario, String nombre,
 			String apellido, String direccion, String dni) {
 
 		try {
@@ -139,11 +138,11 @@ public class MenuFrameController {
 	}
 
 	public void crearOficinaDeCorreo(String text,
-			ArrayList<CasillaVO> seleccionadas) {
+			ArrayList<Casilla> seleccionadas) {
 		try {
-			OficinaDeCorreoVO nuevaOficina = new OficinaDeCorreoVO();
+			OficinaDeCorreo nuevaOficina = new OficinaDeCorreo();
 			nuevaOficina.setNombreOficina(text);
-			for (CasillaVO c : seleccionadas)
+			for (Casilla c : seleccionadas)
 				nuevaOficina.addCasillaMiembro(c);
 			this.model.newOffice(nuevaOficina);
 		} catch (RemoteException e) {
@@ -152,12 +151,12 @@ public class MenuFrameController {
 		}
 	}
 
-	public void modifOficinaDeCorreo(OficinaDeCorreoVO oficinaAModificar,
-			String nombreNuevo, ArrayList<CasillaVO> nuevaSeleccionCasillas) {
+	public void modifOficinaDeCorreo(OficinaDeCorreo oficinaAModificar,
+			String nombreNuevo, ArrayList<Casilla> nuevaSeleccionCasillas) {
 		try {
 			oficinaAModificar.setNombreOficina(nombreNuevo);
-			List<CasillaVO> nuevas = new ArrayList<CasillaVO>();
-			for (CasillaVO c : nuevaSeleccionCasillas)
+			List<Casilla> nuevas = new ArrayList<Casilla>();
+			for (Casilla c : nuevaSeleccionCasillas)
 				nuevas.add(c);
 			oficinaAModificar.setCasillasMiembro(nuevas);
 			this.model.modifOffice(oficinaAModificar);
@@ -167,7 +166,7 @@ public class MenuFrameController {
 		}
 	}
 
-	public void eliminarOficinaDeCorreo(OficinaDeCorreoVO oficinaSeleccionada) {
+	public void eliminarOficinaDeCorreo(OficinaDeCorreo oficinaSeleccionada) {
 		try {
 			this.model.deleteOffice(oficinaSeleccionada);
 		} catch (RemoteException e) {
@@ -177,10 +176,11 @@ public class MenuFrameController {
 	}
 
 	public void guardarVinculosDeConfianza(
-			OficinaDeCorreoVO oficinaSeleccionada,
-			List<OficinaDeCorreoVO> datalist) {
+			OficinaDeCorreo oficinaSeleccionada,
+			List<OficinaDeCorreo> datalist) {
 		try {
-			for (OficinaDeCorreoVO o : datalist)
+			this.model.clearTrustedLink(oficinaSeleccionada);
+			for (OficinaDeCorreo o : datalist)
 				this.model.addTrustedLink(oficinaSeleccionada, o);
 		} catch (RemoteException e) {
 			System.out.println("No se pudo guardar las nuevas oficinas de correo");

@@ -2,7 +2,7 @@ package com.uade.mail.client.views;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.DefaultComboBoxModel;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -11,14 +11,11 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle;
-import javax.swing.ListModel;
-
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.event.ListDataListener;
 
-import com.uade.mail.beans.OficinaDeCorreoVO;
+import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.mail.client.controller.MenuFrameController;
+import com.uade.mail.client.controller.RMIHelper;
 
 
 /**
@@ -48,13 +45,13 @@ public class EditTrustedLinksFrame extends javax.swing.JFrame {
 	private JLabel lbl1;
 	private MenuFrameController c;
 	private MenuFrame vistaPadre;
-	private OficinaDeCorreoVO oficinaSeleccionada;
+	private OficinaDeCorreo oficinaSeleccionada;
 	private OficinaListModel listTodasModel;
 	private OficinaListModel listConfianzaModel;
 
 	
 	public EditTrustedLinksFrame(MenuFrameController c, MenuFrame menuFrame,
-			OficinaDeCorreoVO oficinaSeleccionada) {
+			OficinaDeCorreo oficinaSeleccionada) {
 		super();
 		this.c=c;
 		this.vistaPadre=menuFrame;
@@ -87,7 +84,7 @@ public class EditTrustedLinksFrame extends javax.swing.JFrame {
 				{
 					jScrollPane1 = new JScrollPane();
 					{
-						listConfianzaModel = new OficinaListModel(oficinaSeleccionada.getOficinasDeConfianza());
+						listConfianzaModel = new OficinaListModel(RMIHelper.getOficinasDeConfianza(oficinaSeleccionada));
 						listConfianza = new JList();
 						jScrollPane1.setViewportView(listConfianza);
 						listConfianza.setModel(listConfianzaModel);
@@ -197,7 +194,7 @@ public class EditTrustedLinksFrame extends javax.swing.JFrame {
 	
 	private void btnAgregarActionPerformed(ActionEvent evt) {
 		System.out.println("btnAgregar.actionPerformed, event="+evt);
-		OficinaDeCorreoVO oficinaSeleccionada = (OficinaDeCorreoVO) listTodasModel.getElementAt(listTodas.getSelectedIndex());
+		OficinaDeCorreo oficinaSeleccionada = (OficinaDeCorreo) listTodasModel.getElementAt(listTodas.getSelectedIndex());
 		listConfianzaModel.addOficinaDeCorreo(oficinaSeleccionada);
 		listConfianza.updateUI();
 
@@ -205,7 +202,7 @@ public class EditTrustedLinksFrame extends javax.swing.JFrame {
 	
 	private void btnEliminarActionPerformed(ActionEvent evt) {
 		System.out.println("btnEliminar.actionPerformed, event="+evt);
-		OficinaDeCorreoVO oficinaSeleccionada = (OficinaDeCorreoVO) listConfianzaModel.getElementAt(listConfianza.getSelectedIndex());
+		OficinaDeCorreo oficinaSeleccionada = (OficinaDeCorreo) listConfianzaModel.getElementAt(listConfianza.getSelectedIndex());
 		listConfianzaModel.delOficinaDeCorreo(oficinaSeleccionada);
 		listConfianza.updateUI();
 	}

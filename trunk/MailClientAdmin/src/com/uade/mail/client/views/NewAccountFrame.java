@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -15,12 +16,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
-
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
 
-import com.sun.xml.internal.ws.util.StringUtils;
-import com.uade.mail.beans.UsuarioVO;
+import com.uade.beans.entities.Usuario;
 import com.uade.mail.client.controller.MenuFrameController;
 
 
@@ -47,10 +45,10 @@ public class NewAccountFrame extends javax.swing.JFrame {
 	private JLabel txtNombreCuenta;
 	private MenuFrameController c;
 	private MenuFrame vistaPadre;
-	private UsuarioVO userSelected;
+	private Usuario userSelected;
 	
 	
-	public NewAccountFrame(MenuFrameController c, MenuFrame selectUserFrame, UsuarioVO user) {
+	public NewAccountFrame(MenuFrameController c, MenuFrame selectUserFrame, Usuario user) {
 		super();
 		this.c=c;
 		this.vistaPadre = selectUserFrame;
