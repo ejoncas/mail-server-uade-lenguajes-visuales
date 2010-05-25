@@ -1,28 +1,40 @@
 package com.uade.beans.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.uade.mail.beans.CasillaVO;
-import com.uade.mail.beans.OficinaDeCorreoVO;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.FetchMode;
+
 
 @Entity
 @Table(name="oficinas")
-public class OficinaDeCorreo{
+public class OficinaDeCorreo implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3428629613271626188L;
 	private Long id;
 	private String nombreOficina;
 	private List<Casilla> casillasMiembro;
 	private List<OficinaDeCorreo> oficinasDeConfianza;
 
+	
+	public String toString(){
+		return this.nombreOficina;
+	}
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	public Long getId() {
 		return id;
@@ -36,7 +48,7 @@ public class OficinaDeCorreo{
 	public void setNombreOficina(String nombreOficina) {
 		this.nombreOficina = nombreOficina;
 	}
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	public List<Casilla> getCasillasMiembro() {
 		return casillasMiembro;
 	}
@@ -44,7 +56,7 @@ public class OficinaDeCorreo{
 		this.casillasMiembro = casillasMiembro;
 	}
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
 	public List<OficinaDeCorreo> getOficinasDeConfianza() {
 		return oficinasDeConfianza;
 	}
@@ -52,23 +64,27 @@ public class OficinaDeCorreo{
 		this.oficinasDeConfianza = oficinasDeConfianza;
 	}
 	
-	public OficinaDeCorreoVO dameValueObject(){
-		return new OficinaDeCorreoVO(this);
-	}
 	
-	public OficinaDeCorreo(OficinaDeCorreoVO o){
-		List<Casilla> miembros = new ArrayList<Casilla>();
-		for(CasillaVO c : o.getCasillasMiembro())
-			miembros.add(new Casilla(c));
-		this.casillasMiembro = miembros;
-		this.nombreOficina = o.getNombreOficina();
-		List<OficinaDeCorreo> of = new ArrayList<OficinaDeCorreo>();
-		for(OficinaDeCorreoVO oo: o.getOficinasDeConfianza())
-			of.add(new OficinaDeCorreo(oo));
-		this.oficinasDeConfianza = of;
-	}
 	
 	public OficinaDeCorreo() {
+		this.oficinasDeConfianza = new ArrayList<OficinaDeCorreo>();
+		this.casillasMiembro = new ArrayList<Casilla>();
+	}
+	
+	public void addCasillaMiembro(Casilla c1) {
+		this.casillasMiembro.add(c1);
+	}
+	
+	public void addOficinaDeConfianza(OficinaDeCorreo o){
+		this.oficinasDeConfianza.add(o);
+	}
+	
+	public void removeCasillaMiembro(Casilla c){
+		this.casillasMiembro.remove(c);
+	}
+	
+	public void removeOficinaDeConfianza(OficinaDeCorreo o){
+		this.oficinasDeConfianza.remove(o);
 	}
 	
 }
