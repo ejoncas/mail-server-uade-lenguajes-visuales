@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 
-import com.uade.mail.beans.UsuarioVO;
+import com.uade.beans.entities.Usuario;
 import com.uade.mail.client.controller.MenuFrameController;
 
 
@@ -41,6 +41,7 @@ public class SelectUserFrame extends javax.swing.JFrame {
 	private JLabel labelUsr;
 	private MenuFrameController c;
 	private MenuFrame vistaPadre;
+	private ComboBoxModel cmbUsuariosModel;
 
 	
 	public SelectUserFrame(MenuFrameController c, MenuFrame menuFrame) {
@@ -85,8 +86,7 @@ public class SelectUserFrame extends javax.swing.JFrame {
 					lblCombo.setText("Usuario:");
 				}
 				{
-					ComboBoxModel cmbUsuariosModel = 
-						new DefaultComboBoxModel(this.c.getUsuarios().toArray());
+					cmbUsuariosModel = new DefaultComboBoxModel(this.c.getUsuarios().toArray());
 					cmbUsuarios = new JComboBox();
 					cmbUsuarios.setModel(cmbUsuariosModel);
 				}
@@ -147,8 +147,16 @@ public class SelectUserFrame extends javax.swing.JFrame {
 	
 	private void btnCrearCuentaActionPerformed(ActionEvent evt) {
 		System.out.println("btnCrearCuenta.actionPerformed, event="+evt);
-		new NewAccountFrame(c,vistaPadre, (UsuarioVO)this.cmbUsuarios.getSelectedItem()).setVisible(true);
+		new NewAccountFrame(c,vistaPadre, (Usuario)this.cmbUsuarios.getSelectedItem()).setVisible(true);
 		this.dispose();
+	}
+
+
+
+	public void actualizarCombo() {
+		this.cmbUsuariosModel = new DefaultComboBoxModel(this.c.getUsuarios().toArray());
+		this.cmbUsuarios.setModel(cmbUsuariosModel);
+		
 	}
 
 }

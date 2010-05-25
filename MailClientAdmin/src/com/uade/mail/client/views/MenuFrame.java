@@ -3,12 +3,13 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,8 +20,8 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import com.uade.mail.beans.CasillaVO;
-import com.uade.mail.beans.OficinaDeCorreoVO;
+import com.uade.beans.entities.Casilla;
+import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.mail.client.controller.MenuFrameController;
 
 /**
@@ -86,6 +87,11 @@ public class MenuFrame extends javax.swing.JDialog {
 		try {
 			{
 				this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+				this.addWindowListener(new WindowAdapter() {
+					public void windowClosed(WindowEvent evt) {
+						thisWindowClosed(evt);
+					}
+				});
 			}
 			//Icons
 			ImageIcon groups = createImageIcon("resources/groups.png");
@@ -158,20 +164,19 @@ public class MenuFrame extends javax.swing.JDialog {
 						.addGroup(tab1Layout.createParallelGroup()
 						    .addGroup(GroupLayout.Alignment.LEADING, tab1Layout.createSequentialGroup()
 						        .addComponent(nuevoBtn, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
-						        .addGap(0, 221, GroupLayout.PREFERRED_SIZE)
+						        .addGap(0, 209, Short.MAX_VALUE)
 						        .addComponent(btnContrasenia, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
-						        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+						        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 						        .addComponent(eliminarBtn, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
-						        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-						        .addComponent(modificarBtn, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
-						        .addGap(0, 0, Short.MAX_VALUE))
+						        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+						        .addComponent(modificarBtn, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))
 						    .addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, 0, 695, Short.MAX_VALUE))
 						.addContainerGap());
 					tab1Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnContrasenia, eliminarBtn, modificarBtn});
 					tab1Layout.setVerticalGroup(tab1Layout.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 1, Short.MAX_VALUE)
+						.addComponent(jScrollPane1, 0, 367, Short.MAX_VALUE)
+						.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 						.addGroup(tab1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						    .addComponent(nuevoBtn, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 						    .addComponent(btnContrasenia, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -239,28 +244,26 @@ public class MenuFrame extends javax.swing.JDialog {
 					tab2Layout.setHorizontalGroup(tab2Layout.createSequentialGroup()
 						.addContainerGap()
 						.addGroup(tab2Layout.createParallelGroup()
-						    .addGroup(tab2Layout.createSequentialGroup()
-						        .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 695, GroupLayout.PREFERRED_SIZE)
-						        .addGap(0, 0, Short.MAX_VALUE))
 						    .addGroup(GroupLayout.Alignment.LEADING, tab2Layout.createSequentialGroup()
 						        .addComponent(btnNuevo, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-						        .addGap(0, 204, Short.MAX_VALUE)
+						        .addGap(0, 203, Short.MAX_VALUE)
 						        .addComponent(btnVinculos, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-						        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 1, GroupLayout.PREFERRED_SIZE)
+						        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 						        .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
 						        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-						        .addComponent(btnModificar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)))
+						        .addComponent(btnModificar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE))
+						    .addComponent(jScrollPane2, GroupLayout.Alignment.LEADING, 0, 695, Short.MAX_VALUE))
 						.addContainerGap());
 					tab2Layout.setVerticalGroup(tab2Layout.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 361, GroupLayout.PREFERRED_SIZE)
-						.addGap(23)
+						.addComponent(jScrollPane2, 0, 372, Short.MAX_VALUE)
+						.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 						.addGroup(tab2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						    .addComponent(btnEliminar, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-						    .addComponent(btnModificar, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(btnNuevo, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 						    .addComponent(btnVinculos, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-						    .addComponent(btnNuevo, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap());
+						    .addComponent(btnEliminar, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(btnModificar, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGap(6));
 					tab2Layout.linkSize(SwingConstants.VERTICAL, new Component[] {btnNuevo, btnVinculos, btnEliminar, btnModificar});
 				}
 			}
@@ -294,7 +297,7 @@ public class MenuFrame extends javax.swing.JDialog {
     
     private void btnContraseniaActionPerformed(ActionEvent evt) {
     	System.out.println("btnContrasenia.actionPerformed, event="+evt);
-    	CasillaVO casilla = this.modelCasilla.getCasillAt(this.usuariosTable.getSelectedRow());
+    	Casilla casilla = this.modelCasilla.getCasillAt(this.usuariosTable.getSelectedRow());
     	if(casilla!=null)
     		new ChangPasswdFrame(c,this,casilla).setVisible(true);
     	else
@@ -304,7 +307,7 @@ public class MenuFrame extends javax.swing.JDialog {
     
     private void eliminarBtnActionPerformed(ActionEvent evt) {
     	System.out.println("eliminarBtn.actionPerformed, event="+evt);
-    	CasillaVO casilla = this.modelCasilla.getCasillAt(this.usuariosTable.getSelectedRow());
+    	Casilla casilla = this.modelCasilla.getCasillAt(this.usuariosTable.getSelectedRow());
     	if(casilla!=null){
     		this.c.eliminarCasilla(casilla);
     		this.updateWindow();
@@ -315,7 +318,7 @@ public class MenuFrame extends javax.swing.JDialog {
     
     private void modificarBtnActionPerformed(ActionEvent evt) {
     	System.out.println("modificarBtn.actionPerformed, event="+evt);
-    	CasillaVO casilla = this.modelCasilla.getCasillAt(this.usuariosTable.getSelectedRow());
+    	Casilla casilla = this.modelCasilla.getCasillAt(this.usuariosTable.getSelectedRow());
     	if(casilla!=null){
     		new EditUserFrame(c,this,casilla.getInfoUsuario()).setVisible(true);
     	}
@@ -328,20 +331,25 @@ public class MenuFrame extends javax.swing.JDialog {
     
     private void btnModificarActionPerformed(ActionEvent evt) {
     	System.out.println("btnModificar.actionPerformed, event="+evt);
-    	OficinaDeCorreoVO oficinaSelected = this.modelCentros.getOficinaDeCorreoAt(this.centrosTable.getSelectedRow());
+    	OficinaDeCorreo oficinaSelected = this.modelCentros.getOficinaDeCorreoAt(this.centrosTable.getSelectedRow());
     	new EditOfficeFrame(c,this,oficinaSelected).setVisible(true);
     }
     
     private void btnEliminarActionPerformed(ActionEvent evt) {
     	System.out.println("btnEliminar.actionPerformed, event="+evt);
-    	OficinaDeCorreoVO oficinaSeleccionada = this.modelCentros.getOficinaDeCorreoAt(this.centrosTable.getSelectedRow());
+    	OficinaDeCorreo oficinaSeleccionada = this.modelCentros.getOficinaDeCorreoAt(this.centrosTable.getSelectedRow());
     	this.c.eliminarOficinaDeCorreo(oficinaSeleccionada);
     	this.updateWindow();
     }
     
     private void btnVinculosActionPerformed(ActionEvent evt) {
     	System.out.println("btnVinculos.actionPerformed, event="+evt);
-    	OficinaDeCorreoVO oficinaSeleccionada = this.modelCentros.getOficinaDeCorreoAt(this.centrosTable.getSelectedRow());
+    	OficinaDeCorreo oficinaSeleccionada = this.modelCentros.getOficinaDeCorreoAt(this.centrosTable.getSelectedRow());
     	new EditTrustedLinksFrame(c,this,oficinaSeleccionada).setVisible(true);
+    }
+    
+    private void thisWindowClosed(WindowEvent evt) {
+    	System.out.println("this.windowClosed, event="+evt);
+    	setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 }

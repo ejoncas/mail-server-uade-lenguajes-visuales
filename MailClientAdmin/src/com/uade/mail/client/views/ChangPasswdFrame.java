@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -12,11 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
-
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
 
-import com.uade.mail.beans.CasillaVO;
+import com.uade.beans.entities.Casilla;
 import com.uade.mail.client.controller.MenuFrameController;
 import com.uade.mail.utils.PasswordEncrypt;
 
@@ -45,10 +44,10 @@ public class ChangPasswdFrame extends javax.swing.JFrame {
 	private JLabel lblUsuarioSeleccionado;
 	private MenuFrameController c;
 	private MenuFrame vistaPadre;
-	private CasillaVO casillaAModificar;
+	private Casilla casillaAModificar;
 
 	public ChangPasswdFrame(MenuFrameController c, MenuFrame menuFrame,
-			CasillaVO casilla) {
+			Casilla casilla) {
 		super();
 		this.c = c;
 		this.vistaPadre = menuFrame;
@@ -155,6 +154,7 @@ public class ChangPasswdFrame extends javax.swing.JFrame {
 		else{
 			this.c.cambiarPassword(this.casillaAModificar, PasswordEncrypt.generateMD5(txtPassword1.getPassword()));
 			JOptionPane.showMessageDialog(null, "Password Cambiado!");
+			this.vistaPadre.updateWindow();
 			this.dispose();
 		}
 			

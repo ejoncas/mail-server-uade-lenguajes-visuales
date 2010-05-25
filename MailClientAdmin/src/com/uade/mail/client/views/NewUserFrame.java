@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -11,11 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
-
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
 
-import com.uade.mail.beans.UsuarioVO;
+import com.uade.beans.entities.Usuario;
 import com.uade.mail.client.controller.MenuFrameController;
 
 
@@ -155,8 +154,9 @@ public class NewUserFrame extends javax.swing.JFrame {
 		System.out.println("btnCrear.actionPerformed, event="+evt);
 		this.c.crearUsuario(txtNombre.getText(), txtApellido.getText(), txtDireccion.getText(), txtDni.getText());
 		
-		this.vistaPadre.getCmbUsuarios().addItem(new UsuarioVO(txtNombre.getText(), txtApellido.getText(), txtDireccion.getText(), txtDni.getText()));
+		this.vistaPadre.getCmbUsuarios().addItem(new Usuario(txtNombre.getText(), txtApellido.getText(), txtDireccion.getText(), txtDni.getText()));
 		this.vistaPadre.setVisible(true);
+		this.vistaPadre.actualizarCombo();
 		this.dispose();
 	}
 

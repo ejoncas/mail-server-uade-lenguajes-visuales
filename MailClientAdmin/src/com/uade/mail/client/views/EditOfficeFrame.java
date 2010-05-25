@@ -12,15 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle;
-
 import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.SwingUtilities;
 
-import com.uade.mail.beans.CasillaVO;
-import com.uade.mail.beans.OficinaDeCorreoVO;
+import com.uade.beans.entities.Casilla;
+import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.mail.client.controller.MenuFrameController;
 
 
@@ -48,10 +43,10 @@ public class EditOfficeFrame extends javax.swing.JFrame {
 	private MenuFrameController c;
 	private CasillaTableModel modelCasilla;
 	private MenuFrame vistaPadre;
-	private OficinaDeCorreoVO oficinaAModificar;
+	private OficinaDeCorreo oficinaAModificar;
 
 	
-	public EditOfficeFrame(MenuFrameController c, MenuFrame menuFrame, OficinaDeCorreoVO oficinaAModificar) {
+	public EditOfficeFrame(MenuFrameController c, MenuFrame menuFrame, OficinaDeCorreo oficinaAModificar) {
 		super();
 		this.c=c;
 		this.vistaPadre = menuFrame;
@@ -144,15 +139,15 @@ public class EditOfficeFrame extends javax.swing.JFrame {
 	private void btnCrearActionPerformed(ActionEvent evt) {
 		System.out.println("btnCrear.actionPerformed, event="+evt);
 		
-		ArrayList<CasillaVO> seleccionadas = armarCasillasSeleccionadas(this.tableCasillas.getSelectedRows());
+		ArrayList<Casilla> seleccionadas = armarCasillasSeleccionadas(this.tableCasillas.getSelectedRows());
 		
 		this.c.modifOficinaDeCorreo(this.oficinaAModificar,txtNombreOficina.getText(), seleccionadas);
 		this.vistaPadre.updateWindow();
 		this.dispose();
 	}
 
-	private ArrayList<CasillaVO> armarCasillasSeleccionadas(int[] selectedRows) {
-		ArrayList<CasillaVO> result = new ArrayList<CasillaVO>();
+	private ArrayList<Casilla> armarCasillasSeleccionadas(int[] selectedRows) {
+		ArrayList<Casilla> result = new ArrayList<Casilla>();
 		for(int i : selectedRows){
 			result.add(this.modelCasilla.getCasillAt(i));
 		}
