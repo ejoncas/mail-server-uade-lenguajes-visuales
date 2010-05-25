@@ -2,16 +2,23 @@ package com.uade.mail.server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.uade.mail.beans.CasillaVO;
-import com.uade.mail.beans.EstadoMailVO;
-import com.uade.mail.beans.EstadosPosibles;
-import com.uade.mail.beans.MailVO;
-import com.uade.mail.beans.OficinaDeCorreoVO;
-import com.uade.mail.beans.UsuarioVO;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+
+import com.uade.beans.entities.Casilla;
+import com.uade.beans.entities.EstadoMail;
+import com.uade.beans.entities.EstadosPosibles;
+import com.uade.beans.entities.Mail;
+import com.uade.beans.entities.OficinaDeCorreo;
+import com.uade.beans.entities.Usuario;
 import com.uade.mail.interfaces.MailService;
+import com.uade.mail.utils.HibernateSession;
 
+@SuppressWarnings("unchecked")	
 public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	
 	/**
@@ -24,98 +31,209 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	/**
 	 * Model
 	 */
-	private ArrayList<CasillaVO> usuarios;
-	private ArrayList<UsuarioVO> infoUsuarios;
-	private ArrayList<OficinaDeCorreoVO> oficinas;
 	
 	
 	protected MailServiceImpl() throws RemoteException {
 		super();
-		usuarios = new ArrayList<CasillaVO>();
-		oficinas = new ArrayList<OficinaDeCorreoVO>();
-		infoUsuarios = new ArrayList<UsuarioVO>();
+	
 	}
 	
 	
 	@Override
-	public void addTrustedLink(OficinaDeCorreoVO o1, OficinaDeCorreoVO o2)
+	public void addTrustedLink(OficinaDeCorreo o1, OficinaDeCorreo o2)
 			throws RemoteException {
 		System.out.println("Method invocation [addTrustedLink]");
-		for(OficinaDeCorreoVO o:oficinas)
-			if(o.equals(o1))
-				o.addOficinaDeCorreo(o2);
+
+		//UPDATE
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		{
+
+			OficinaDeCorreo oficina1 = em.find(OficinaDeCorreo.class, o1.getId());
+			OficinaDeCorreo oficina2 = em.find(OficinaDeCorreo.class, o2.getId());
+			
+			oficina1.addOficinaDeConfianza(oficina2);
+			//Es bidireccional?
+			//oficina2.addOficinaDeConfianza(oficina1);
+
+			em.persist(oficina1);
+			em.persist(oficina2);
+		}
+		tx.commit();
+		
+		
 	}
 	
 	@Override
-	public void deleteTrustedLink(OficinaDeCorreoVO o1, OficinaDeCorreoVO o2)
+	public void deleteTrustedLink(OficinaDeCorreo o1, OficinaDeCorreo o2)
 			throws RemoteException {
-		//TODO
 		System.out.println("Method invocation [deleteTrutedLink]");
+		
+		//UPDATE
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		{
+
+			OficinaDeCorreo oficina1 = em.find(OficinaDeCorreo.class, o1.getId());
+			OficinaDeCorreo oficina2 = em.find(OficinaDeCorreo.class, o2.getId());
+			
+			oficina1.removeOficinaDeConfianza(oficina2);
+			//Es bidireccional?
+			//oficina2.removeOficinaDeConfianza(oficina1);
+
+			em.persist(oficina1);
+			em.persist(oficina2);
+		}
+		tx.commit();
+		
 		
 	}
 
 	@Override
-	public void deleteAccount(CasillaVO c) throws RemoteException {
+	public void deleteAccount(Casilla c) throws RemoteException {
 		System.out.println("Method invocation [deleteAccount]");
-		this.usuarios.remove(c);
-	}
-
-	@Override
-	public void deleteOffice(OficinaDeCorreoVO o) throws RemoteException {
-		System.out.println("Method invocation [deleteOffice]");
-		this.oficinas.remove(o);
-	}
-
-
-	@Override
-	public void modifAccout(CasillaVO c) throws RemoteException {
-		System.out.println("Method invocation [modifAccount]");
-		if(this.usuarios.contains(c)){//si la casilla ya existe
-			this.usuarios.remove(c);//borramos el viejo
-			this.usuarios.add(c);//agregamos el nuevo
-			//esto solo funciona si tienen el hashcode y el 
-			//equals con el id que va a usar en la base
-		}
-	}
-
-	@Override
-	public void modifOffice(OficinaDeCorreoVO o) throws RemoteException {
-		System.out.println("Method invocation [modifOffice]");
-		if(this.oficinas.contains(o)){
-			this.oficinas.remove(o);
-			this.oficinas.add(o);
-		}
+		//DELETE
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+		{
+			Casilla casillaAEliminar = em.find(Casilla.class, c.getId());
+			//Remuevo el usuario si queda huerfano
+			List<Casilla> casillasDeUsuario = this.getCasillasParaUsuario(casillaAEliminar.getInfoUsuario());
+			if(casillasDeUsuario !=null){
+				casillasDeUsuario.remove(casillaAEliminar);
+				if(casillasDeUsuario.isEmpty())
+					em.remove(casillaAEliminar.getInfoUsuario());
+			}
+			//Remuevo de las oficinas existentes este miembro
+			List<OficinaDeCorreo> oficinasParaCasilla = this.getOficinasParaCasilla(casillaAEliminar);
+			for(OficinaDeCorreo o : oficinasParaCasilla){
+				o.removeCasillaMiembro(casillaAEliminar);
+				em.persist(o);
+			}
 			
+			//TODO - Cuando existan mails y bloqueados hay que modificar las referencias
+			
+			em.remove(casillaAEliminar);
+		}
+		t.commit();
+
+	}
+
+
+
+	@Override
+	public void deleteOffice(OficinaDeCorreo o) throws RemoteException {
+		System.out.println("Method invocation [deleteOffice]");
+		//DELETE
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+		{
+			OficinaDeCorreo oficinaAEliminar = em.find(OficinaDeCorreo.class, o.getId());
+			em.remove(oficinaAEliminar);
+			
+		}
+		t.commit();
+
+	}
+
+
+	@Override
+	public void modifAccout(Casilla c) throws RemoteException {
+		System.out.println("Method invocation [modifAccount]");
+		//UPDATE
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		{
+			Casilla casillaAModificar = em.find(Casilla.class, c.getId());
+			//casillaAModificar.setPassword(p);//No cambiamos la password - para eso utilizamos el metodo modifpassword
+			casillaAModificar.setBloqueados(c.getBloqueados());
+			casillaAModificar.setInbox(c.getInbox());
+			casillaAModificar.setInfoUsuario(c.getInfoUsuario());
+			casillaAModificar.setNombre(c.getNombre());
+			em.persist(casillaAModificar);
+		}
+		tx.commit();
+
 	}
 
 	@Override
-	public void modifPassword(CasillaVO c, String p) throws RemoteException {
+	public void modifOffice(OficinaDeCorreo o) throws RemoteException {
+		System.out.println("Method invocation [modifOffice]");
+		//UPDATE
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		{
+			OficinaDeCorreo oficinaAModificar = em.find(OficinaDeCorreo.class, o.getId());
+			oficinaAModificar.setCasillasMiembro(o.getCasillasMiembro());
+			oficinaAModificar.setNombreOficina(o.getNombreOficina());
+			//Estas se editan desde la seccion "Editar Trusted Links"
+			//oficinaAModificar.setOficinasDeConfianza(o.getOficinasDeConfianza());
+			em.persist(oficinaAModificar);
+		}
+		tx.commit();
+	}
+
+	@Override
+	public void modifPassword(Casilla c, String p) throws RemoteException {
 		System.out.println("Method invocation [modifPassword]");
-		this.usuarios.get(this.usuarios.indexOf(c)).setPassword(p);
+		//UPDATE
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		{
+			Casilla casillaAModificar = em.find(Casilla.class, c.getId());
+			casillaAModificar.setPassword(p);
+			em.persist(casillaAModificar);
+		}
+		tx.commit();
 	}
 
 	@Override
-	public void newAccout(CasillaVO c) throws RemoteException {
+	public void newAccout(Casilla c) throws RemoteException {
 		System.out.println("Method invocation [newAccount]");
-		this.usuarios.add(c);
+		//INSERT
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		{
+			Usuario infoUsuario = em.find(Usuario.class, c.getInfoUsuario().getId());
+			c.setInfoUsuario(infoUsuario);
+			em.persist(c);
+		}
+		tx.commit();
 	}
 
 	@Override
-	public void newOffice(OficinaDeCorreoVO o) throws RemoteException {
+	public void newOffice(OficinaDeCorreo o) throws RemoteException {
 		System.out.println("Method invocation [newOffice]");
-		this.oficinas.add(o);
+		//INSERT
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		{
+			em.persist(o);
+		}
+		tx.commit();
+		
 	}
 
 	@Override
-	public void sendEmail(MailVO m) throws RemoteException {
+	public void sendEmail(Mail m) throws RemoteException {
 		System.out.println("Method invocation [sendEmail]");
+		//TODO - Para interfaz web
 		//SEND MAIL
-		CasillaVO from = m.getFrom();
-		CasillaVO to = m.getTo();
-		EstadoMailVO estado1 = new EstadoMailVO();
+		Casilla from = m.getFrom();
+		Casilla to = m.getTo();
+		EstadoMail estado1 = new EstadoMail();
 		estado1.setMail(m);
 		estado1.setEstado(EstadosPosibles.SENT);
-		EstadoMailVO estado2 = new EstadoMailVO();
+		EstadoMail estado2 = new EstadoMail();
 		estado2.setMail(m);
 		estado2.setEstado(EstadosPosibles.UNREAD);
 		
@@ -126,60 +244,175 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	}
 
 	@Override
-	public ArrayList<MailVO> updateInbox(CasillaVO c) throws RemoteException {
+	public List<Mail> updateInbox(Casilla c) throws RemoteException {
 		System.out.println("Method invocation [updateInbox]");
 		return null;
 	}
 
 	@Override
-	public ArrayList<CasillaVO> getContacts(CasillaVO c) throws RemoteException {
+	public List<Casilla> getContacts(Casilla c) throws RemoteException {
 		System.out.println("Method invocation [getContacts]");
+		EntityManager em = HibernateSession.getEntityManager();
+		Query query = em.createQuery("SELECT c from Casilla c");
+		List<Casilla> casillas= query.getResultList();
+		//Filtrar las casillas a las que le puede mandar mensajes
+		List<Casilla> r = new ArrayList<Casilla>();
+		//Oficinas a las que pertenece
+		List<OficinaDeCorreo> oficinas = this.getOficinasParaCasilla(c);
+		
+		for(Casilla casilla : casillas){
+			if(!casilla.getBloqueados().contains(c)){//Si no lo tienen bloqueado
+				for(OficinaDeCorreo o: oficinas){
+					if(o.getCasillasMiembro().contains(casilla))//SI pertenece a alguna de sus oficinas
+						r.add(casilla);
+					//TODO - Verificar Vinculos de Confianza
+				}
+			}
+		}
+		
 		return null;
 	}
-
-
-	@Override
-	public ArrayList<CasillaVO> getAllAccounts() throws RemoteException {
-		System.out.println("Method invocation [getAllAccounts]");
-		return this.usuarios;
-	}
-
-
-	@Override
-	public ArrayList<OficinaDeCorreoVO> getAllOfices() throws RemoteException {
-		System.out.println("Method invocation [getAllOfices]");
-		return this.oficinas;
-	}
-
-
-	@Override
-	public void addNewUser(UsuarioVO user) throws RemoteException {
-		System.out.println("Method invocation [addNewUser]");
-		this.infoUsuarios.add(user);
-	}
-
-
-	@Override
-	public ArrayList<UsuarioVO> getAllUsers() throws RemoteException {
-		System.out.println("Method invocation [getAllUsers]");
-		return this.infoUsuarios;
-	}
-
-
-	@Override
-	public void modifUser(UsuarioVO user) throws RemoteException {
-		//TODO - Update
-		System.out.println("Method invocation [modifUser]");
-	}
-
-
-	@Override
-	public void removeUser(UsuarioVO user) throws RemoteException {
-		// TODO Delete
-		System.out.println("Method invocation [removeUser]");
-		this.infoUsuarios.remove(user);
-	}
 	
+	private List<OficinaDeCorreo> getOficinasParaCasilla(Casilla c){//Devuelve todas las oficinas de confianza donde se encuentra la casilla
+		List<OficinaDeCorreo> r = new ArrayList<OficinaDeCorreo>();
+		List<OficinaDeCorreo> todas;
+		EntityManager em = HibernateSession.getEntityManager();
+		Query query = em.createQuery("SELECT o from OficinaDeCorreo o");
+		todas= query.getResultList();
+		for(OficinaDeCorreo o : todas){
+			if(o.getCasillasMiembro().contains(c))
+				r.add(o);
+		}
+		return r;
+	}
 
+	private List<Casilla> getCasillasParaUsuario(Usuario u) {
+		List<Casilla> r = new ArrayList<Casilla>();
+		List<Casilla> todas=null;
+		EntityManager em = HibernateSession.getEntityManager();
+		Query query = em.createQuery("SELECT c from Casilla c");
+		todas= query.getResultList();
+		for(Casilla o : todas){
+			if(o.getInfoUsuario().getId().equals(u.getId()))
+				r.add(o);
+		}
+		return r;
+	}
+
+
+	@Override
+	public List<Casilla> getAllAccounts() throws RemoteException {
+		System.out.println("Method invocation [getAllAccounts]");
+		//SELECT
+		EntityManager em = HibernateSession.getEntityManager();
+		Query query = em.createQuery("SELECT c from Casilla c");
+		List<Casilla> casillas= query.getResultList();
+		return casillas;
+	}
+
+
+	@Override
+	public List<OficinaDeCorreo> getAllOfices() throws RemoteException {
+		System.out.println("Method invocation [getAllOfices]");
+		//SELECT
+		EntityManager em = HibernateSession.getEntityManager();
+		Query query = em.createQuery("SELECT o from OficinaDeCorreo o");
+		List<OficinaDeCorreo> oficinas = query.getResultList();
+		return oficinas;
+	}
+
+
+	@Override
+	public void addNewUser(Usuario user) throws RemoteException {
+		System.out.println("Method invocation [addNewUser]");
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		{
+			
+			em.persist(user);
+		}
+		tx.commit();
+	}
+
+
+	@Override
+	public List<Usuario> getAllUsers() throws RemoteException {
+		System.out.println("Method invocation [getAllUsers]");
+		//SELECT
+		EntityManager em = HibernateSession.getEntityManager();
+		Query query = em.createQuery("SELECT u from Usuario u");
+		List<Usuario> usuarios = query.getResultList();
+		return usuarios;
+	}
+
+	@Override
+	public void modifUser(Usuario user) throws RemoteException {
+		System.out.println("Method invocation [modifUser]");
+		//UPDATE
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		{
+			Usuario usuarioAModificar = em.find(Usuario.class, user.getId());
+			usuarioAModificar.setApellido(user.getApellido());
+			usuarioAModificar.setDireccion(user.getDireccion());
+			usuarioAModificar.setDni(user.getDni());
+			usuarioAModificar.setNombre(user.getNombre());
+			em.persist(usuarioAModificar);
+		}
+		tx.commit();
+		
+	}
+
+	@Override
+	public void removeUser(Usuario user) throws RemoteException {
+		System.out.println("Method invocation [removeUser]");
+		//DELETE
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+		{
+			Usuario usuarioAEliminar = em.find(Usuario.class, user.getId());
+			em.remove(usuarioAEliminar);
+		}
+		t.commit();
+	}
+
+
+	@Override
+	public List<OficinaDeCorreo> getTrustedOffices(OficinaDeCorreo o)
+			throws RemoteException {
+		//SELECT
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		List<OficinaDeCorreo> oficinas=new ArrayList<OficinaDeCorreo>();
+		t.begin();
+		{
+			OficinaDeCorreo oficina = em.find(OficinaDeCorreo.class, o.getId());
+			List<OficinaDeCorreo> todas =  this.getAllOfices();
+			for(OficinaDeCorreo of : todas)
+				if(oficina.getOficinasDeConfianza().contains(of))
+					oficinas.add(of);
+		}
+		t.commit();
+		return oficinas;
+	}
+
+
+	@Override
+	public void clearTrustedLink(OficinaDeCorreo o) throws RemoteException{
+		//DELETE
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		t.begin();
+		{
+			OficinaDeCorreo oficinaAModificar = em.find(OficinaDeCorreo.class, o.getId());
+			List<OficinaDeCorreo> aEliminar = oficinaAModificar.getOficinasDeConfianza();
+			oficinaAModificar.getOficinasDeConfianza().removeAll(aEliminar);
+			em.persist(oficinaAModificar);
+		}
+		t.commit();
+	}
 	
 }

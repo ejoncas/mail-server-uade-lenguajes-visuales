@@ -2,13 +2,12 @@ package com.uade.mail.interfaces;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
+import java.util.List;
 
-
-import com.uade.mail.beans.CasillaVO;
-import com.uade.mail.beans.MailVO;
-import com.uade.mail.beans.OficinaDeCorreoVO;
-import com.uade.mail.beans.UsuarioVO;
+import com.uade.beans.entities.Casilla;
+import com.uade.beans.entities.Mail;
+import com.uade.beans.entities.OficinaDeCorreo;
+import com.uade.beans.entities.Usuario;
 
 
 public interface MailService extends Remote{
@@ -20,7 +19,7 @@ public interface MailService extends Remote{
 	 * @return
 	 * @throws RemoteException
 	 */
-	public ArrayList<MailVO> updateInbox(CasillaVO c) throws RemoteException;
+	public List<Mail> updateInbox(Casilla c) throws RemoteException;
 	
 	/**
 	 * Realiza el envio de un mensaje. Toda la info relevante para realizar 
@@ -28,56 +27,56 @@ public interface MailService extends Remote{
 	 * @param m
 	 * @throws RemoteException
 	 */
-	public void sendEmail(MailVO m) throws RemoteException;
+	public void sendEmail(Mail m) throws RemoteException;
 	
 	/**
 	 * Se encarga de crear una nueva cuenta de mail.
 	 * @param c
 	 * @throws RemoteException
 	 */
-	public void newAccout(CasillaVO c) throws RemoteException;
+	public void newAccout(Casilla c) throws RemoteException;
 	/**
 	 * Modifica la password de un usuario
 	 * @param c
 	 * @param p
 	 * @throws RemoteException
 	 */
-	public void modifPassword(CasillaVO c, String p) throws RemoteException;
+	public void modifPassword(Casilla c, String p) throws RemoteException;
 	
 	/**
 	 * Elimina una cuenta
 	 * @param c
 	 * @throws RemoteException
 	 */
-	public void deleteAccount(CasillaVO c) throws RemoteException;
+	public void deleteAccount(Casilla c) throws RemoteException;
 	
 	/**
 	 * Modifica una cuenta de correo (La pisa)
 	 * @param c
 	 * @throws RemoteException
 	 */
-	public void modifAccout(CasillaVO c) throws RemoteException;
+	public void modifAccout(Casilla c) throws RemoteException;
 	
 	/**
 	 * Crea una oficina de correo
 	 * @param o
 	 * @throws RemoteException
 	 */
-	public void newOffice(OficinaDeCorreoVO o) throws RemoteException;
+	public void newOffice(OficinaDeCorreo o) throws RemoteException;
 	
 	/**
 	 * Elimina una oficina de correo
 	 * @param o
 	 * @throws RemoteException
 	 */
-	public void deleteOffice(OficinaDeCorreoVO o) throws RemoteException;
+	public void deleteOffice(OficinaDeCorreo o) throws RemoteException;
 	
 	/**
 	 * Modifica una Oficina de Correo
 	 * @param o
 	 * @throws RemoteException
 	 */
-	public void modifOffice(OficinaDeCorreoVO o) throws RemoteException;
+	public void modifOffice(OficinaDeCorreo o) throws RemoteException;
 	
 	/**
 	 * Agrega una relacion de confianza entre un par de Oficinas de Correo
@@ -85,7 +84,7 @@ public interface MailService extends Remote{
 	 * @param o2
 	 * @throws RemoteException
 	 */
-	public void addTrustedLink(OficinaDeCorreoVO o1, OficinaDeCorreoVO o2) throws RemoteException;
+	public void addTrustedLink(OficinaDeCorreo o1, OficinaDeCorreo o2) throws RemoteException;
 	
 	/**
 	 * Elimina una relacion de confianza entre un par de Oficinas de Correo, si no
@@ -94,7 +93,7 @@ public interface MailService extends Remote{
 	 * @param o2
 	 * @throws RemoteException
 	 */
-	public void deleteTrustedLink(OficinaDeCorreoVO o1, OficinaDeCorreoVO o2) throws RemoteException;
+	public void deleteTrustedLink(OficinaDeCorreo o1, OficinaDeCorreo o2) throws RemoteException;
 	
 	
 	/**
@@ -104,19 +103,23 @@ public interface MailService extends Remote{
 	 * @param c
 	 * @throws RemoteException
 	 */
-	public ArrayList<CasillaVO> getContacts(CasillaVO c) throws RemoteException;
+	public List<Casilla> getContacts(Casilla c) throws RemoteException;
 	
-	public ArrayList<CasillaVO> getAllAccounts() throws RemoteException;
+	public List<Casilla> getAllAccounts() throws RemoteException;
 	
-	public ArrayList<OficinaDeCorreoVO> getAllOfices() throws RemoteException;
+	public List<OficinaDeCorreo> getAllOfices() throws RemoteException;
 	
-	public ArrayList<UsuarioVO> getAllUsers() throws RemoteException;
+	public List<Usuario> getAllUsers() throws RemoteException;
 	
-	public void addNewUser(UsuarioVO user) throws RemoteException;
+	public void addNewUser(Usuario user) throws RemoteException;
 
-	public void modifUser(UsuarioVO user) throws RemoteException;
+	public void modifUser(Usuario user) throws RemoteException;
 	
-	public void removeUser(UsuarioVO user) throws RemoteException;
+	public void removeUser(Usuario user) throws RemoteException;
+	
+	public List<OficinaDeCorreo> getTrustedOffices(OficinaDeCorreo o) throws RemoteException;
+
+	public void clearTrustedLink(OficinaDeCorreo o) throws RemoteException;
 	
 	
 	//TODO - Log Interface
