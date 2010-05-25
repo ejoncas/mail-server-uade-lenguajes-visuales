@@ -3,26 +3,25 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import com.uade.mail.beans.CasillaVO;
-import com.uade.mail.beans.MailVO;
-import com.uade.mail.beans.OficinaDeCorreoVO;
+import junit.framework.TestCase;
+
+import com.uade.beans.entities.Casilla;
+import com.uade.beans.entities.Mail;
+import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.mail.interfaces.MailService;
 import com.uade.mail.server.LogMensajes;
 import com.uade.mail.server.MailServer;
-import com.uade.mail.server.MailServiceImpl;
-
-import junit.framework.TestCase;
 
 
 public class Test extends TestCase{
 	
 	public void testLog(){
 		
-		CasillaVO c1 = new CasillaVO();
+		Casilla c1 = new Casilla();
 		c1.setNombre("joncas@arnet.com.ar");
-		CasillaVO c2 = new CasillaVO();
+		Casilla c2 = new Casilla();
 		c2.setNombre("lalala@lalal.com");
-		MailVO m = new MailVO();
+		Mail m = new Mail();
 		m.setFrom(c1);
 		m.setTo(c2);
 		m.setSubject("sujeto 1");
@@ -37,19 +36,16 @@ public class Test extends TestCase{
 		try {
 			serviceInterface = (MailService) Naming.lookup(MailServer.SERVICE_URL);
 			
+			Casilla c1 = new Casilla();
+			Casilla c2 = new Casilla();
+			Casilla c3 = new Casilla();
+			c1.setNombre("cuenta1@"+Casilla.SERVER_DOMAIN);
+			c2.setNombre("cuenta2@"+Casilla.SERVER_DOMAIN);
+			c3.setNombre("cuenta3@"+Casilla.SERVER_DOMAIN);
 			
 			
-			
-			CasillaVO c1 = new CasillaVO();
-			CasillaVO c2 = new CasillaVO();
-			CasillaVO c3 = new CasillaVO();
-			c1.setNombre("cuenta1@"+CasillaVO.SERVER_DOMAIN);
-			c2.setNombre("cuenta2@"+CasillaVO.SERVER_DOMAIN);
-			c3.setNombre("cuenta3@"+CasillaVO.SERVER_DOMAIN);
-			
-			
-			OficinaDeCorreoVO o1 = new OficinaDeCorreoVO();
-			OficinaDeCorreoVO o2 = new OficinaDeCorreoVO();
+			OficinaDeCorreo o1 = new OficinaDeCorreo();
+			OficinaDeCorreo o2 = new OficinaDeCorreo();
 			o1.setNombreOficina("Oficina Loca 1");
 			o2.setNombreOficina("Oficina Uade");
 			
@@ -59,7 +55,7 @@ public class Test extends TestCase{
 			o2.addCasillaMiembro(c3);
 			
 			
-			MailVO m = new MailVO();
+			Mail m = new Mail();
 			m.setFrom(c1);
 			m.setTo(c2);
 			m.setSubject("Llamado desde la interfaz");

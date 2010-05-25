@@ -3,16 +3,17 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
 import junit.framework.TestCase;
 
 import com.uade.beans.entities.Casilla;
 import com.uade.beans.entities.EstadoMail;
+import com.uade.beans.entities.EstadosPosibles;
 import com.uade.beans.entities.Mail;
 import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.beans.entities.Usuario;
-import com.uade.mail.beans.EstadosPosibles;
-import com.uade.mail.utils.HibernateUtils;
+import com.uade.mail.utils.HibernateSession;
 import com.uade.mail.utils.PasswordEncrypt;
 
 
@@ -104,7 +105,7 @@ public class TestHibernate extends TestCase{
 		o1.setOficinasDeConfianza(confianza1);
 		
 		
-		EntityManager em = HibernateUtils.getEntityManager();
+		EntityManager em = HibernateSession.getEntityManager();
 		
 		EntityTransaction t = em.getTransaction();
 		
@@ -127,6 +128,13 @@ public class TestHibernate extends TestCase{
 		}
 		t.commit();
 		
+		Query query = em.createQuery("SELECT c from Casilla c");
+		
+		List<Casilla> casillas = query.getResultList();
+		for(Casilla cselect : casillas)
+			System.out.println(cselect.toString());
+		
 	}
+	
 
 }
