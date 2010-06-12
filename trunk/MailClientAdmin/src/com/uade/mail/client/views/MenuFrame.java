@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -106,7 +105,7 @@ public class MenuFrame extends javax.swing.JDialog {
 					tab1 = new JPanel();
 					GroupLayout tab1Layout = new GroupLayout((JComponent)tab1);
 					tab1.setLayout(tab1Layout);
-					tabbedPane.addTab("Usuarios", groups, tab1, "Administracion de Usuarios");
+					tabbedPane.addTab("Usuarios", groups, tab1, "Administración de usuarios");
 					tab1.setPreferredSize(new java.awt.Dimension(721, 432));
 					{
 						jScrollPane1 = new JScrollPane();
@@ -120,7 +119,7 @@ public class MenuFrame extends javax.swing.JDialog {
 					}
 					{
 						btnContrasenia = new JButton();
-						btnContrasenia.setText("ContraseÃ±a");
+						btnContrasenia.setText("Contraseña");
 						btnContrasenia.setIcon(passwd);
 						btnContrasenia.setFont(new java.awt.Font("AlArabiya",0,10));
 						btnContrasenia.addActionListener(new ActionListener() {
@@ -350,6 +349,21 @@ public class MenuFrame extends javax.swing.JDialog {
     
     private void thisWindowClosed(WindowEvent evt) {
     	System.out.println("this.windowClosed, event="+evt);
-    	setDefaultCloseOperation(EXIT_ON_CLOSE);
+    	
+    	
+    	//setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    	
+    	//Sergio: Da error al cerrar, por alguna razon no reconoce
+    	//ese parametro como valido. Lo correcto sería:
+    	//setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    	//Pero cierra la ventana y no la aplicacion. Eso es porque deben quedar
+    	//eventos referenciados, por ejemplo, todo el proceso de baja de
+    	//de los controladores, vistas, etc.
+    	   	
+    	//Con esto lo cierro si o si al programa, pero de todas formas
+    	//No es lo correcto.
+    	
+    	System.exit(0);
+
     }
 }
