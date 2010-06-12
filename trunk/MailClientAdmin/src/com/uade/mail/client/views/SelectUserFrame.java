@@ -61,7 +61,7 @@ public class SelectUserFrame extends javax.swing.JFrame {
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			this.setTitle("Seleccion de Usuario");
+			this.setTitle("Selección de usuario");
 			{
 				panel = new JPanel();
 				GroupLayout panelLayout = new GroupLayout((JComponent)panel);
