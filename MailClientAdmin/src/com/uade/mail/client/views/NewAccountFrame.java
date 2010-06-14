@@ -1,11 +1,11 @@
 package com.uade.mail.client.views;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -17,24 +17,15 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-
 import com.uade.beans.entities.Usuario;
 import com.uade.mail.client.controller.MenuFrameController;
 
 
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
+
 public class NewAccountFrame extends javax.swing.JFrame {
+
+	private static final long serialVersionUID = -1859427660881419405L;
+	
 	private JPanel panel;
 	private JTextField inputNombreCasilla;
 	private JButton btnCrear;
@@ -69,15 +60,15 @@ public class NewAccountFrame extends javax.swing.JFrame {
 				panel.setPreferredSize(new java.awt.Dimension(484, 172));
 				{
 					txtNombreCuenta = new JLabel();
-					txtNombreCuenta.setText("Nombre de Cuenta:");
+					txtNombreCuenta.setText("Nombre de cuenta:");
 				}
 				{
 					txtContrasenia = new JLabel();
-					txtContrasenia.setText("ContraseÃ±a");
+					txtContrasenia.setText("Contraseña");
 				}
 				{
 					txtContrasenia2 = new JLabel();
-					txtContrasenia2.setText("Repita su ContraseÃ±a");
+					txtContrasenia2.setText("Repita su contraseña");
 				}
 				{
 					inputNombreCasilla = new JTextField();
