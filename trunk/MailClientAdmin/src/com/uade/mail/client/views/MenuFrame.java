@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -49,14 +50,7 @@ public class MenuFrame extends javax.swing.JFrame {
 	/**
 	* Auto-generated main method to display this JDialog
 	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				MenuFrame inst = new MenuFrame(new MenuFrameController());
-				inst.setVisible(true);
-			}
-		});
-	}
+	
 	
 	public MenuFrame(MenuFrameController controller) {
 		super();
@@ -92,7 +86,7 @@ public class MenuFrame extends javax.swing.JFrame {
 					tab1 = new JPanel();
 					GroupLayout tab1Layout = new GroupLayout((JComponent)tab1);
 					tab1.setLayout(tab1Layout);
-					tabbedPane.addTab("Usuarios", groups, tab1, "Administración de usuarios");
+					tabbedPane.addTab("Usuarios", groups, tab1, "Administracion de Usuarios");
 					tab1.setPreferredSize(new java.awt.Dimension(721, 432));
 					{
 						jScrollPane1 = new JScrollPane();
@@ -106,7 +100,7 @@ public class MenuFrame extends javax.swing.JFrame {
 					}
 					{
 						btnContrasenia = new JButton();
-						btnContrasenia.setText("Contraseña");
+						btnContrasenia.setText("ContraseÃ±a");
 						btnContrasenia.setIcon(passwd);
 						btnContrasenia.setFont(new java.awt.Font("AlArabiya",0,10));
 						btnContrasenia.addActionListener(new ActionListener() {
@@ -341,7 +335,7 @@ public class MenuFrame extends javax.swing.JFrame {
     	//setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     	
     	//Sergio: Da error al cerrar, por alguna razon no reconoce
-    	//ese parametro como valido. Lo correcto sería:
+    	//ese parametro como valido. Lo correcto serï¿½a:
     	//setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     	//Pero cierra la ventana y no la aplicacion. Eso es porque deben quedar
     	//eventos referenciados, por ejemplo, todo el proceso de baja de
