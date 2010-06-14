@@ -14,9 +14,6 @@ import javax.persistence.Table;
 public class Usuario implements Serializable{
 
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4506964945075697615L;
 	private Long id;
 	private String nombre;

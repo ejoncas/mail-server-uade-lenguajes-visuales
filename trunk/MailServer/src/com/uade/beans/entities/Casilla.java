@@ -2,9 +2,7 @@ package com.uade.beans.entities;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,19 +11,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.Fetch;
 
 @Entity
 @Table(name="casillas")
 public class Casilla implements Serializable{
 
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8144608022288769195L;
 	public static final String SERVER_DOMAIN = "lenguajes.edu.ar";
 	private Long id;
@@ -82,8 +75,12 @@ public class Casilla implements Serializable{
 		this.inbox = inbox;
 	}
 	
-	public Casilla() {
+	public String toString(){
+		return this.nombre;
 	}
 	
+	public Casilla() {
+	}
+
 }
 
