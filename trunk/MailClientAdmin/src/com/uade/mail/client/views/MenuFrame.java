@@ -23,22 +23,8 @@ import com.uade.beans.entities.Casilla;
 import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.mail.client.controller.MenuFrameController;
 
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
-public class MenuFrame extends javax.swing.JDialog {
-	/**
-	 * 
-	 */
+public class MenuFrame extends javax.swing.JFrame {
+
 	private static final long serialVersionUID = 7263844117190098177L;
 	private JTabbedPane tabbedPane;
 	private JPanel tab1;
@@ -55,7 +41,6 @@ public class MenuFrame extends javax.swing.JDialog {
 	private JButton nuevoBtn;
 	private JTable usuariosTable;
 	private JTable centrosTable;
-
 	private CasillaTableModel modelCasilla;
 	private CentroTableModel modelCentros;
 	//Controller
@@ -86,6 +71,8 @@ public class MenuFrame extends javax.swing.JDialog {
 		try {
 			{
 				this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+				javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+				
 				this.addWindowListener(new WindowAdapter() {
 					public void windowClosed(WindowEvent evt) {
 						thisWindowClosed(evt);

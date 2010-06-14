@@ -3,7 +3,6 @@ package com.uade.mail.client.controller;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.uade.beans.entities.Casilla;
 import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.beans.entities.Usuario;
@@ -14,7 +13,7 @@ import com.uade.mail.utils.PasswordEncrypt;
 
 public class MenuFrameController {
 
-	private MailService model = null;
+	private MailService model;
 	private MenuFrame frame;
 
 	public MenuFrameController() {
