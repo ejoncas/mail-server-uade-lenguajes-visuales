@@ -8,8 +8,7 @@
 	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate 3.5.1"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MySQL Connector 5"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SL4J"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

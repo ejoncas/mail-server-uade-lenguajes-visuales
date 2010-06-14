@@ -197,11 +197,16 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	@Override
 	public void newAccout(Casilla c) throws RemoteException {
 		System.out.println("Method invocation [newAccount]");
-		//INSERT
+		
 		EntityManager em = HibernateSession.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
+		
 		tx.begin();
 		{
+			//Sergio: BUG: Si no hay usuarios, la aplicacion pincha porque da un
+			//nullpointer exception. hay que implementar algo que si no existen
+			//usuarios, no ejecute este punto.
+			
 			Usuario infoUsuario = em.find(Usuario.class, c.getInfoUsuario().getId());
 			c.setInfoUsuario(infoUsuario);
 			em.persist(c);
