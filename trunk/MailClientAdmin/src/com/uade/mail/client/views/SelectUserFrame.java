@@ -2,9 +2,6 @@ package com.uade.mail.client.views;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -15,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
-
 import com.uade.beans.entities.Usuario;
 import com.uade.mail.client.controller.MenuFrameController;
 
@@ -63,7 +59,7 @@ public class SelectUserFrame extends javax.swing.JFrame {
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			this.setTitle("Selección de usuario");
+			this.setTitle("Selecciï¿½n de usuario");
 			{
 				panel = new JPanel();
 				GroupLayout panelLayout = new GroupLayout((JComponent)panel);
