@@ -19,12 +19,25 @@ import javax.swing.WindowConstants;
 import com.uade.beans.entities.Usuario;
 import com.uade.mail.client.controller.MenuFrameController;
 
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 public class SelectUserFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 3602910491614355455L;
 	private JPanel panel;
 	private JButton btnCrearCuenta;
-	private JLabel lblUsuarioNuevo;
+	private JButton btnUsuarioNuevo;
 	private JComboBox cmbUsuarios;
 	private JLabel lblCombo;
 	private JLabel labelUsr;
@@ -80,12 +93,11 @@ public class SelectUserFrame extends javax.swing.JFrame {
 					cmbUsuarios.setModel(cmbUsuariosModel);
 				}
 				{
-					lblUsuarioNuevo = new JLabel();
-					lblUsuarioNuevo.setText("Usuario Nuevo?");
-					lblUsuarioNuevo.setFont(new java.awt.Font("AlArabiya",3,12));
-					lblUsuarioNuevo.addMouseListener(new MouseAdapter() {
-						public void mouseClicked(MouseEvent evt) {
-							lblUsuarioNuevoMouseClicked(evt);
+					btnUsuarioNuevo = new JButton();
+					btnUsuarioNuevo.setText("Nuevo Usuario");
+					btnUsuarioNuevo.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							btnUsuarioNuevoActionPerformed(evt);
 						}
 					});
 				}
@@ -98,14 +110,12 @@ public class SelectUserFrame extends javax.swing.JFrame {
 					        .addGroup(panelLayout.createParallelGroup()
 					            .addComponent(cmbUsuarios, GroupLayout.Alignment.LEADING, 0, 349, Short.MAX_VALUE)
 					            .addGroup(panelLayout.createSequentialGroup()
-					                .addGap(191)
+					                .addGap(217)
 					                .addGroup(panelLayout.createParallelGroup()
 					                    .addGroup(panelLayout.createSequentialGroup()
 					                        .addGap(0, 0, Short.MAX_VALUE)
-					                        .addComponent(lblUsuarioNuevo, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE))
-					                    .addGroup(GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
-					                        .addGap(0, 26, Short.MAX_VALUE)
-					                        .addComponent(btnCrearCuenta, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)))))
+					                        .addComponent(btnCrearCuenta, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE))
+					                    .addComponent(btnUsuarioNuevo, GroupLayout.Alignment.LEADING, 0, 132, Short.MAX_VALUE))))
 					        .addGap(59))
 					    .addComponent(labelUsr, GroupLayout.Alignment.LEADING, 0, 506, Short.MAX_VALUE)));
 				panelLayout.setVerticalGroup(panelLayout.createSequentialGroup()
@@ -115,11 +125,11 @@ public class SelectUserFrame extends javax.swing.JFrame {
 					.addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 					    .addComponent(cmbUsuarios, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 					    .addComponent(lblCombo, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(19)
+					.addComponent(btnUsuarioNuevo, 0, 20, Short.MAX_VALUE)
 					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-					.addComponent(lblUsuarioNuevo, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
-					.addGap(23)
 					.addComponent(btnCrearCuenta, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(110, Short.MAX_VALUE));
+					.addContainerGap(31, 31));
 			}
 			pack();
 		} catch (Exception e) {
@@ -127,9 +137,8 @@ public class SelectUserFrame extends javax.swing.JFrame {
 		}
 	}
 	
-	private void lblUsuarioNuevoMouseClicked(MouseEvent evt) {
-		System.out.println("lblUsuarioNuevo.mouseClicked, event="+evt);
-		//TODO add your code for lblUsuarioNuevo.mouseClicked
+	private void btnUsuarioNuevoActionPerformed(ActionEvent evt) {
+		System.out.println("btnUsuarioNuevo.actionPerormed, event="+evt);
 		new NewUserFrame(c,this).setVisible(true);
 		this.setVisible(false);
 	}
