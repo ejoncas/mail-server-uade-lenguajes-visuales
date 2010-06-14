@@ -1,7 +1,5 @@
 package com.uade.mail.exceptions;
 
-import java.rmi.RemoteException;
-
 public class MailServiceException{
 
 	/**
