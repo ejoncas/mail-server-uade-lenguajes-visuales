@@ -15,7 +15,7 @@ public class CasillaTableModel extends AbstractTableModel{
 	 * 
 	 */
 	private static final long serialVersionUID = -2653781189034583870L;
-	private String [] columnNames = {"Casilla","Dueño"};
+	private String [] columnNames = {"Casilla","DueÃ±o"};
 	private Vector<Casilla> datalist = new Vector<Casilla>();
 	
 	

@@ -18,6 +18,19 @@ import com.uade.mail.client.controller.MenuFrameController;
 import com.uade.mail.utils.PasswordEncrypt;
 
 
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 public class ChangPasswdFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 416245764768143801L;
@@ -58,15 +71,15 @@ public class ChangPasswdFrame extends javax.swing.JFrame {
 				}
 				{
 					lblPassVieja = new JLabel();
-					lblPassVieja.setText("Password Anterior");
+					lblPassVieja.setText("Contraseña anterior");
 				}
 				{
 					lblPasswordNueva1 = new JLabel();
-					lblPasswordNueva1.setText("Ingrese la Nueva Password");
+					lblPasswordNueva1.setText("Ingrese una nueva contraseña");
 				}
 				{
 					lblPasswordNueva2 = new JLabel();
-					lblPasswordNueva2.setText("Ingrese Nuevamente la password");
+					lblPasswordNueva2.setText("Ingrese nuevamente la contraseña");
 				}
 				{
 					txtPassordVieja = new JPasswordField();
