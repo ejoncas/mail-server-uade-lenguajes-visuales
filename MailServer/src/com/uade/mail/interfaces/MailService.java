@@ -121,6 +121,8 @@ public interface MailService extends Remote{
 
 	public void clearTrustedLink(OficinaDeCorreo o) throws RemoteException;
 	
+	public Casilla loginAccount(String usuario, String password) throws RemoteException;
+	
 	
 	//TODO - Log Interface
 	//TODO - Alerts Interface
