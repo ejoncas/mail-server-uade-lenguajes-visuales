@@ -1,4 +1,4 @@
-package com.uade.web;
+package com.uade.web.util;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
