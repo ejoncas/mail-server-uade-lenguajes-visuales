@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-
 import com.uade.mail.interfaces.MailService;
 import com.uade.mail.server.MailServer;
 
@@ -25,13 +24,9 @@ public class MailClient {
 		}
 	}
 	
-	
-
 	public MailService getServiceInterface() {
 		return serviceInterface;
 	}
-
-
 
 	public void setServiceInterface(MailService serviceInterface) {
 		this.serviceInterface = serviceInterface;

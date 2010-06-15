@@ -6,6 +6,7 @@ import java.util.List;
 import com.uade.beans.entities.Casilla;
 import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.beans.entities.Usuario;
+import com.uade.beans.entities.UsuarioAdm;
 import com.uade.mail.client.main.MailClient;
 import com.uade.mail.client.views.MenuFrame;
 import com.uade.mail.interfaces.MailService;
@@ -188,4 +189,37 @@ public class MenuFrameController {
 
 	}
 
+	public boolean validarUsuarioAdm (String username, String clavePlana)
+	{
+		String claveMD5 = PasswordEncrypt.generateMD5(clavePlana);
+		
+		
+		try {
+			if(this.model.validoUsuarioAdm(username,claveMD5)){
+				System.out.println("Usuario validado");
+				return true;	
+			}
+			
+		} catch (RemoteException e) {
+			System.out.println("No se pudo cambiar la password");
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
+
+	public void crearUsuarioAdm(String username, String clavePlana) {
+		
+		UsuarioAdm u = new UsuarioAdm();
+		u.setPassword(PasswordEncrypt.generateMD5(clavePlana));
+		u.setUsername(username);
+		
+		try {
+			this.model.newUserAdmin(u);
+		} catch (RemoteException e) {
+			System.out.println("No se pudo crear el usuario administrador");
+			e.printStackTrace();
+		}
+
+	}
 }

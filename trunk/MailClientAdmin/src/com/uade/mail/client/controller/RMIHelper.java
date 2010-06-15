@@ -2,7 +2,6 @@ package com.uade.mail.client.controller;
 
 import java.rmi.RemoteException;
 import java.util.List;
-
 import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.mail.client.main.MailClient;
 
