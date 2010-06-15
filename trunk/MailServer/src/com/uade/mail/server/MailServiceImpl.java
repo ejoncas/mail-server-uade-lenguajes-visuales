@@ -419,5 +419,23 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		}
 		t.commit();
 	}
+
+
+	@Override
+	public Casilla loginAccount(String usuario, String password)
+			throws RemoteException {
+		//SELECT
+		try{
+			EntityManager em = HibernateSession.getEntityManager();
+			Query query = em.createQuery("SELECT c from Casilla c");
+			List<Casilla> casillas = query.getResultList();
+			for(Casilla c : casillas)
+				if(c.getNombre().equalsIgnoreCase(usuario) && c.getPassword().equalsIgnoreCase(password))
+					return c;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }
