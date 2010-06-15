@@ -10,6 +10,10 @@ public class Main {
 		MenuFrameController controlador = new MenuFrameController();
 		new MenuFrame(controlador).setVisible(true);
 		
+		controlador.crearUsuarioAdm("sergio", "clave");
+		
+		controlador.validarUsuarioAdm("sergio", "clave");
+	
 	}
 
 }
