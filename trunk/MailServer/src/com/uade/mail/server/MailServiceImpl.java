@@ -15,6 +15,7 @@ import com.uade.beans.entities.EstadosPosibles;
 import com.uade.beans.entities.Mail;
 import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.beans.entities.Usuario;
+import com.uade.beans.entities.UsuarioAdm;
 import com.uade.mail.interfaces.MailService;
 import com.uade.mail.utils.HibernateSession;
 
@@ -37,7 +38,6 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		super();
 	
 	}
-	
 	
 	@Override
 	public void addTrustedLink(OficinaDeCorreo o1, OficinaDeCorreo o2)
@@ -122,8 +122,6 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 
 	}
 
-
-
 	@Override
 	public void deleteOffice(OficinaDeCorreo o) throws RemoteException {
 		System.out.println("Method invocation [deleteOffice]");
@@ -139,7 +137,6 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		t.commit();
 
 	}
-
 
 	@Override
 	public void modifAccout(Casilla c) throws RemoteException {
@@ -304,7 +301,6 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		return r;
 	}
 
-
 	@Override
 	public List<Casilla> getAllAccounts() throws RemoteException {
 		System.out.println("Method invocation [getAllAccounts]");
@@ -315,7 +311,6 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		return casillas;
 	}
 
-
 	@Override
 	public List<OficinaDeCorreo> getAllOfices() throws RemoteException {
 		System.out.println("Method invocation [getAllOfices]");
@@ -325,7 +320,6 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		List<OficinaDeCorreo> oficinas = query.getResultList();
 		return oficinas;
 	}
-
 
 	@Override
 	public void addNewUser(Usuario user) throws RemoteException {
@@ -339,7 +333,6 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		}
 		tx.commit();
 	}
-
 
 	@Override
 	public List<Usuario> getAllUsers() throws RemoteException {
@@ -384,7 +377,6 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		t.commit();
 	}
 
-
 	@Override
 	public List<OficinaDeCorreo> getTrustedOffices(OficinaDeCorreo o)
 			throws RemoteException {
@@ -403,7 +395,6 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		t.commit();
 		return oficinas;
 	}
-
 
 	@Override
 	public void clearTrustedLink(OficinaDeCorreo o) throws RemoteException{
@@ -438,4 +429,42 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		return null;
 	}
 	
+	public boolean validoUsuarioAdm(String username, String claveMD5)	throws RemoteException {
+		System.out.println("Method invocation [validoUsuarioAdm]");
+		
+		UsuarioAdm usuarioAValidar,usuarioValidado;
+		
+		usuarioAValidar= new UsuarioAdm();
+		usuarioAValidar.setUsername(username);
+		usuarioAValidar.setPassword(claveMD5);
+		
+		//VALIDO
+		EntityManager em = HibernateSession.getEntityManager();
+		Query query = em.createQuery("SELECT u FROM UsuarioAdm u WHERE username='"+username+"'");
+		
+		usuarioValidado = (UsuarioAdm) query.getSingleResult();
+		
+		if(usuarioAValidar.getPassword().equals(usuarioValidado.getPassword())){
+			return true;
+		}else
+		{
+			return false;
+		}
+	}
+
+	@Override
+	public void newUserAdmin(UsuarioAdm u) throws RemoteException {
+		System.out.println("Method invocation [newUserAdmin]");
+		
+		EntityManager em = HibernateSession.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		
+		tx.begin();
+		{
+			em.persist(u);
+		}
+		tx.commit();
+	}
+		
 }
+
