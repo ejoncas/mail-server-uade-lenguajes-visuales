@@ -3,15 +3,18 @@ package com.uade.mail.interfaces;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
-
 import com.uade.beans.entities.Casilla;
 import com.uade.beans.entities.Mail;
 import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.beans.entities.Usuario;
+import com.uade.beans.entities.UsuarioAdm;
 
 
 public interface MailService extends Remote{
 
+	public void newUserAdmin(UsuarioAdm u) throws RemoteException;
+	
+	public boolean validoUsuarioAdm (String username, String claveMD5) throws RemoteException;
 	
 	/**
 	 * Actualizar Casilla en base a una cuenta 
