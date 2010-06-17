@@ -6,41 +6,73 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import com.uade.beans.entities.Casilla;
 import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.mail.client.controller.MenuFrameController;
 
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 public class MenuFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 7263844117190098177L;
 	private JTabbedPane tabbedPane;
 	private JPanel tab1;
 	private JPanel tab2;
+	private JPanel tab3;
 	private JScrollPane jScrollPane1;
 	private JButton modificarBtn;
+	private JButton jButton4;
+	private JButton jButton2;
+	private JButton jButton1;
 	private JButton btnNuevo;
 	private JButton btnVinculos;
+	private JLabel jLblTab3ClaveBis;
+	private JPasswordField jPswFldTab3Clave;
+	private JTextField jTxtTab3UsrAdm;
+	private JLabel jLblTab3Clave;
+	private JComboBox jComboTab3UsrAdm;
 	private JButton btnModificar;
 	private JButton btnEliminar;
 	private JButton btnContrasenia;
 	private JScrollPane jScrollPane2;
+	private JLabel jLblTab3Username;
 	private JButton eliminarBtn;
 	private JButton nuevoBtn;
 	private JTable usuariosTable;
 	private JTable centrosTable;
 	private CasillaTableModel modelCasilla;
+	private JPasswordField jPswFldTab3ClaveBis;
 	private CentroTableModel modelCentros;
 	//Controller
 	private MenuFrameController c;
@@ -63,6 +95,7 @@ public class MenuFrame extends javax.swing.JFrame {
 		try {
 			{
 				this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+				this.setTitle("Cliente de administración de Mail Server");
 				javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 				
 				this.addWindowListener(new WindowAdapter() {
@@ -141,25 +174,25 @@ public class MenuFrame extends javax.swing.JFrame {
 						.addContainerGap()
 						.addGroup(tab1Layout.createParallelGroup()
 						    .addGroup(GroupLayout.Alignment.LEADING, tab1Layout.createSequentialGroup()
-						        .addComponent(nuevoBtn, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
-						        .addGap(0, 209, Short.MAX_VALUE)
+						        .addComponent(nuevoBtn, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+						        .addGap(0, 234, Short.MAX_VALUE)
 						        .addComponent(btnContrasenia, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
 						        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 						        .addComponent(eliminarBtn, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
 						        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 						        .addComponent(modificarBtn, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))
-						    .addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, 0, 695, Short.MAX_VALUE))
+						    .addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, 0, 703, Short.MAX_VALUE))
 						.addContainerGap());
 					tab1Layout.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnContrasenia, eliminarBtn, modificarBtn});
 					tab1Layout.setVerticalGroup(tab1Layout.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(jScrollPane1, 0, 367, Short.MAX_VALUE)
+						.addComponent(jScrollPane1, 0, 371, Short.MAX_VALUE)
 						.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 						.addGroup(tab1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						    .addComponent(nuevoBtn, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(nuevoBtn, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 						    .addComponent(btnContrasenia, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-						    .addComponent(eliminarBtn, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-						    .addComponent(modificarBtn, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+						    .addComponent(eliminarBtn, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(modificarBtn, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 						.addContainerGap());
 					tab1Layout.linkSize(SwingConstants.VERTICAL, new Component[] {eliminarBtn, nuevoBtn, modificarBtn});
 				}
@@ -244,13 +277,132 @@ public class MenuFrame extends javax.swing.JFrame {
 						.addGap(6));
 					tab2Layout.linkSize(SwingConstants.VERTICAL, new Component[] {btnNuevo, btnVinculos, btnEliminar, btnModificar});
 				}
+				{
+					tab3 = new JPanel();
+					GroupLayout tab3Layout = new GroupLayout((JComponent)tab3);
+					tab3.setLayout(tab3Layout);
+					tabbedPane.addTab("Administradores", null, tab3, "Administración de usuarios administradores");
+					{
+						jButton1 = new JButton();
+						jButton1.setText("Modificar");
+						jButton1.setFont(new java.awt.Font("AlArabiya",0,10));
+						jButton1.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								jButton1ActionPerformed(evt);
+							}
+						});
+					}
+					{
+						jPswFldTab3ClaveBis = new JPasswordField();
+					}
+					{
+						jLblTab3Username = new JLabel();
+						jLblTab3Username.setText("Nombre de usuario:");
+						jLblTab3Username.setFont(new java.awt.Font("Calibri",1,14));
+					}
+					{
+						jLblTab3Clave = new JLabel();
+						jLblTab3Clave.setText("Contraseña:");
+						jLblTab3Clave.setFont(new java.awt.Font("Calibri",1,14));
+					}
+					{
+						jTxtTab3UsrAdm = new JTextField();
+					}
+					{
+						jPswFldTab3Clave = new JPasswordField();
+					}
+					{
+						jLblTab3ClaveBis = new JLabel();
+						jLblTab3ClaveBis.setText("Repetir contraseña:");
+						jLblTab3ClaveBis.setFont(new java.awt.Font("Calibri",1,14));
+					}
+					{
+						ComboBoxModel jComboUsrAdmModel = 
+							new DefaultComboBoxModel(
+									new String[] { "Item One", "Item Two" });
+						jComboTab3UsrAdm = new JComboBox();
+						jComboTab3UsrAdm.setModel(jComboUsrAdmModel);
+					}
+					{
+						jButton2 = new JButton();
+						jButton2.setText("Eliminar");
+						jButton2.setFont(new java.awt.Font("AlArabiya",0,10));
+						jButton2.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								jButton2ActionPerformed(evt);
+							}
+						});
+					}
+					{
+						jButton4 = new JButton();
+						jButton4.setText("Nuevo");
+						jButton4.setFont(new java.awt.Font("AlArabiya",0,10));
+						jButton4.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								jButton4ActionPerformed(evt);
+							}
+						});
+					}
+					tab3Layout.setHorizontalGroup(tab3Layout.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(tab3Layout.createParallelGroup()
+						    .addGroup(GroupLayout.Alignment.LEADING, tab3Layout.createSequentialGroup()
+						        .addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+						        .addGap(200))
+						    .addGroup(tab3Layout.createSequentialGroup()
+						        .addGap(26)
+						        .addGroup(tab3Layout.createParallelGroup()
+						            .addGroup(tab3Layout.createSequentialGroup()
+						                .addGroup(tab3Layout.createParallelGroup()
+						                    .addComponent(jLblTab3Username, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
+						                    .addComponent(jLblTab3Clave, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
+						                    .addComponent(jLblTab3ClaveBis, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
+						                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+						                .addGroup(tab3Layout.createParallelGroup()
+						                    .addComponent(jTxtTab3UsrAdm, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+						                    .addComponent(jPswFldTab3Clave, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+						                    .addComponent(jPswFldTab3ClaveBis, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)))
+						            .addComponent(jComboTab3UsrAdm, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 273, GroupLayout.PREFERRED_SIZE))))
+						.addGap(181)
+						.addComponent(jButton2, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+					tab3Layout.setVerticalGroup(tab3Layout.createSequentialGroup()
+						.addContainerGap(20, 20)
+						.addComponent(jComboTab3UsrAdm, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+						.addGap(18)
+						.addGroup(tab3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						    .addComponent(jLblTab3Username, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(jTxtTab3UsrAdm, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+						.addGroup(tab3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						    .addComponent(jLblTab3Clave, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(jPswFldTab3Clave, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+						.addGroup(tab3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						    .addComponent(jLblTab3ClaveBis, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(jPswFldTab3ClaveBis, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGap(232)
+						.addGroup(tab3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						    .addComponent(jButton4, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(jButton2, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(jButton1, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+						.addGap(6));
+				}
+
 			}
 			pack();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+			
 	}
 
+
+	
+	
     /** Returns an ImageIcon, or null if the path was invalid. */
     protected static ImageIcon createImageIcon(String path) {
     	try{
@@ -344,5 +496,25 @@ public class MenuFrame extends javax.swing.JFrame {
     	
     	System.exit(0);
 
+    }
+    
+    private void jButton1ActionPerformed(ActionEvent evt) {
+    	System.out.println("jButton1.actionPerformed, event="+evt);
+    	//TODO add your code for jButton1.actionPerformed
+    }
+    
+    private void jButton2ActionPerformed(ActionEvent evt) {
+    	System.out.println("jButton2.actionPerformed, event="+evt);
+    	//TODO add your code for jButton2.actionPerformed
+    }
+    
+    private void jButton3ActionPerformed(ActionEvent evt) {
+    	System.out.println("jButton3.actionPerformed, event="+evt);
+    	//TODO add your code for jButton3.actionPerformed
+    }
+    
+    private void jButton4ActionPerformed(ActionEvent evt) {
+    	System.out.println("jButton4.actionPerformed, event="+evt);
+    	//TODO add your code for jButton4.actionPerformed
     }
 }
