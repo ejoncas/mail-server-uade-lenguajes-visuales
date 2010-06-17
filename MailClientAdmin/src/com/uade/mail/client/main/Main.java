@@ -1,18 +1,23 @@
 package com.uade.mail.client.main;
 
 import com.uade.mail.client.controller.MenuFrameController;
-import com.uade.mail.client.views.MenuFrame;
+import com.uade.mail.client.views.LoginAdmin;
 
 public class Main {
 
 	public static void main(String[] args) {
 
 		MenuFrameController controlador = new MenuFrameController();
-		new MenuFrame(controlador).setVisible(true);
+		//new MenuFrame(controlador).setVisible(true);
 		
-		controlador.crearUsuarioAdm("sergio", "clave");
+		//Creo un usuario, ya que la base esta vacia...
+		//Generalmente en produccion, el "instalador" crea
+		//un usuario admin por defecto
 		
-		controlador.validarUsuarioAdm("sergio", "clave");
+		
+		controlador.crearUsuarioAdm("admin", "admin");
+		
+		new LoginAdmin(controlador).setVisible(true);
 	
 	}
 
