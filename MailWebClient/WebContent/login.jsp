@@ -14,9 +14,12 @@ $(document).ready(function(){
 			validarLogin();		
 	});
 	
+	$(":input[type=button]").button();
+	
 });
 </script>
 		<FORM id="loginForm" ACTION="Login" METHOD="POST">
+		<div align="center"">
 			<table>	
 			<thead>
 				<tr>
@@ -41,6 +44,7 @@ $(document).ready(function(){
 			</tr>
 			</tbody>
 			</table>
+		</div>
 		</FORM>
 </body>
 </html>

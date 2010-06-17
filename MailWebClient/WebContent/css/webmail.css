@@ -5,13 +5,14 @@
 input{
         width: 450px;
         border-style: solid;
-        border-color: silver;
-        border-width: 1px;
+        border-width: 1.5px;
+        background-color: #f3f3f3;
+        font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; 
 }
 
-table { font-size: .9em; border-collapse: collapse; margin:0 0 .4em; }
-th { padding: .7em .3em; text-align: center; font-weight: bold; border: 0; }
-td { border: 0; padding: 1px; }
+table { border-collapse: collapse; margin:0 0 .4em; border: 1px solid #4297d7;}
+th { font-size: 1em; padding: .7em .3em; text-align: center; font-weight: bold; border: 0; }
+td { border: 0; padding: 1px;}
 
 .error{
         border: solid 1px red;
@@ -19,3 +20,17 @@ td { border: 0; padding: 1px; }
         font-weight: bold;
         text-align: center;
 }
+
+.mailTable{
+	width: 100%;	
+}
+.mailTable td{
+	text-align: center;
+}
+
+.selected{
+	font-weight: bold;
+	color:black;
+	/*background: url(../img/selected.gif) repeat-x 0% 50%;*/ 
+}
+
