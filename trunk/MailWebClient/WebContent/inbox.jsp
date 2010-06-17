@@ -23,7 +23,9 @@
 	<td width="20%">
 		<div id="menuPanel">
 		<p style="font-size: .8em">Bienvenido!<br/>
-		<strong><%=user.getNombre()%></strong></p><br/>
+		<strong><%=user.getNombre()%></strong><br/>
+		<a href="Logout">Logout</a></p><br/>
+		
 			<ul>
 				<li><a href="nuevoMail.jsp">Nuevo Mail</a></li>
 				<li><a  class="selected" href="inbox.jsp">Recibidos</a></li>
