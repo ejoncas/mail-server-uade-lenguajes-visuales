@@ -1,12 +1,15 @@
 package com.uade.beans.entities;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -25,6 +28,7 @@ public class Mail implements Serializable{
 	private Casilla to;
 	private String subject;
 	private String message;
+	private Date sentDate;
 	
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -64,7 +68,14 @@ public class Mail implements Serializable{
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
 	
+	public Date getSentDate() {
+		return sentDate;
+	}
+	public void setSentDate(Date sentDate) {
+		this.sentDate = sentDate;
+	}
 	public Mail() {
 	}
 	
