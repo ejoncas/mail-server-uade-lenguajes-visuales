@@ -440,6 +440,10 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		
 		//VALIDO
 		EntityManager em = HibernateSession.getEntityManager();
+		
+		//si no existe el nombre de usuario, pincha con error
+		//javax.persistence.NoResultException: No entity found for query
+		
 		Query query = em.createQuery("SELECT u FROM UsuarioAdm u WHERE username='"+username+"'");
 		
 		usuarioValidado = (UsuarioAdm) query.getSingleResult();
