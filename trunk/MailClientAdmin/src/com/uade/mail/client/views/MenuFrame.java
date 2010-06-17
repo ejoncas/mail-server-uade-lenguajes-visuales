@@ -95,9 +95,11 @@ public class MenuFrame extends javax.swing.JFrame {
 		try {
 			{
 				this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+				//por favor no subas lo del look
+				//and feel de windows porque no me funciona
+				//en linux. Si queres ponele otro pero el de windows es el unico
+				//que no va
 				this.setTitle("Cliente de administración de Mail Server");
-				javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-				
 				this.addWindowListener(new WindowAdapter() {
 					public void windowClosed(WindowEvent evt) {
 						thisWindowClosed(evt);
