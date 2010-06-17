@@ -14,8 +14,8 @@ public class Main {
 		//Generalmente en produccion, el "instalador" crea
 		//un usuario admin por defecto
 		
-		
-		controlador.crearUsuarioAdm("admin", "admin");
+		//Solo con politica create-drop
+		//controlador.crearUsuarioAdm("admin", "admin");
 		
 		new LoginAdmin(controlador).setVisible(true);
 	
