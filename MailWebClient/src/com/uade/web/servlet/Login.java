@@ -39,7 +39,7 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		model = (MailService) AccesoRMI.getInstance().getServiceInterface();
 		
-		Casilla casillaLogueada = model.loginAccount(request.getParameter("usuario"), request.getParameter("passwd"));
+		Casilla casillaLogueada = model.loginAccount(request.getParameter("usuario")+request.getParameter("domain"), request.getParameter("passwd"));
 		
 		if(casillaLogueada==null){//no se pudo loguear el usuario. Redirec Login
 			request.setAttribute("error", "Usuario y o contraseña inválido");

@@ -20,6 +20,7 @@ $(document).ready(function(){
 </script>
 		<FORM id="loginForm" ACTION="Login" METHOD="POST">
 		<div align="center"">
+		<div><input type="hidden" value="@lenguajes.edu.ar" name="domain"/></div>
 			<table>	
 			<thead>
 				<tr>
@@ -33,7 +34,7 @@ $(document).ready(function(){
 			</thead>
 			<tbody>
 			<tr>
-			<td>Usuario : </td><td><INPUT TYPE="text" ID="usuario" NAME="usuario"></td>
+			<td>Usuario : </td><td><INPUT TYPE="text" ID="usuario" NAME="usuario">@lenguajes.edu.ar</td>
 			</tr>
 			<tr>
 			<td>Password: </td><td><INPUT TYPE="password" ID="passwd" NAME="passwd"></td>

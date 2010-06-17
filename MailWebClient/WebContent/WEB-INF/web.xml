@@ -8,9 +8,22 @@
 		<servlet-name>Login</servlet-name>
 		<servlet-class>com.uade.web.servlet.Login</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>
+		Logout</display-name>
+		<servlet-name>Logout</servlet-name>
+		<servlet-class>
+		com.uade.web.servlet.Logout</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>Login</servlet-name>
 		<url-pattern>/Login</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/Logout</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
