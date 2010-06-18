@@ -11,10 +11,32 @@ import com.uade.beans.entities.UsuarioAdm;
 
 
 public interface MailService extends Remote{
-
+	
+	/** Crea un nuevo usuario Administrador
+	 * 
+	 * */
 	public void newUserAdmin(UsuarioAdm u) throws RemoteException;
 	
+	/** Valida a un usuario administrado en base al usuario y clave hash.
+	 * 
+	 * */
 	public boolean validoUsuarioAdm (String username, String claveMD5) throws RemoteException;
+	
+	/** Devuelve una lista con todos los usuarios administradores del sistema
+	 * 
+	*/
+	public List<UsuarioAdm> getUsersAdmin() throws RemoteException;
+	
+	/** Borra un usuario administrador
+	 * 
+	 */
+	public void deleteUserAdmin(Long ID) throws RemoteException;
+	
+	/** Modifica los parametros de un usuario administrador
+	 * ID a modificar, nuevo usuario y/o nueva clave 
+	*/
+	public void editUserAdmin(Long ID, String username, String claveMD5) throws RemoteException;
+	
 	
 	/**
 	 * Actualizar Casilla en base a una cuenta 
