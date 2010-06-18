@@ -25,7 +25,7 @@
 
 </script>
 
-<table width="100%">
+<table class="panel" width="100%">
 	<tr>
 	
 	<td width="20%">
