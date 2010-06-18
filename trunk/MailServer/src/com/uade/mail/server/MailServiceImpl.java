@@ -22,16 +22,7 @@ import com.uade.mail.utils.HibernateSession;
 @SuppressWarnings("unchecked")	
 public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	
-	/**
-	 * STATIC 
-	 */
-	
 	private static final long serialVersionUID = -210094816812915149L;
-	
-	
-	/**
-	 * Model
-	 */
 	
 	
 	protected MailServiceImpl() throws RemoteException {
@@ -577,7 +568,6 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		}
 	}
 
-	@Override
 	public void newUserAdmin(UsuarioAdm u) throws RemoteException {
 		System.out.println("Method invocation [newUserAdmin]");
 		
@@ -590,6 +580,33 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 				em.persist(u);
 			}
 			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public void deleteUserAdmin(Long ID) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void editUserAdmin(Long ID, String username, String claveMD5)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List<UsuarioAdm> getUsersAdmin() throws RemoteException {
+		
+		System.out.println("Method invocation [getAllAccounts]");
+
+		try {
+			//SELECT
+			EntityManager em = HibernateSession.getEntityManager();
+			Query query = em.createQuery("SELECT u FROM UsuarioAdm u");
+			List<UsuarioAdm> usuariosAdm= query.getResultList();
+			return usuariosAdm;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.getMessage());
