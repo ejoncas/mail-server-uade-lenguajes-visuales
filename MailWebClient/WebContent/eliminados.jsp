@@ -13,14 +13,7 @@
 <script type="text/javascript">
 	$(function() {
 		//Page Initialization
-		$("#lnkInbox").addClass("selected");
-
-		/*
-		$("#lnkMail").button();
-		$("#lnkInbox").button();
-		$("#lnkEnviados").button();
-		$("#lnkEliminados").button();
-		*/
+		$("#lnkEliminados").addClass("selected");
 	});
 
 </script>
@@ -45,7 +38,7 @@
 	
 	<td>
 		<div id="contentPanel">
-			<h2>Recibidos</h2>
+			<h2>Eliminados</h2>
 			<table class="mailTable">
 			<thead>
 				<tr>

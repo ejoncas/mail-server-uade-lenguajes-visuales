@@ -6,21 +6,14 @@
 <jsp:include page="header.jsp"></jsp:include>
 <body>
 <%
-	Casilla user = (Casilla)request.getSession().getAttribute("user");
+	Casilla user = (Casilla)request.getSession().getAttribute("user");	
 %>
 
 <%if(user!=null){ %>
 <script type="text/javascript">
 	$(function() {
 		//Page Initialization
-		$("#lnkInbox").addClass("selected");
-
-		/*
-		$("#lnkMail").button();
-		$("#lnkInbox").button();
-		$("#lnkEnviados").button();
-		$("#lnkEliminados").button();
-		*/
+		$("#lnkEnviados").addClass("selected");
 	});
 
 </script>
@@ -45,7 +38,7 @@
 	
 	<td>
 		<div id="contentPanel">
-			<h2>Recibidos</h2>
+			<h2>Enviados</h2>
 			<table class="mailTable">
 			<thead>
 				<tr>

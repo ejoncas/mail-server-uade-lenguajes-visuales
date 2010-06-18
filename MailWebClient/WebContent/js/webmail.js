@@ -16,3 +16,9 @@ function validarLogin(){
 		$("#loginForm").submit();
 	}
 }
+
+function validarMail(){
+	//TODO -Validate fields
+	
+	$("#mailForm").submit();
+}
