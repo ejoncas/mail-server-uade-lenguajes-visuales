@@ -47,7 +47,7 @@ public class Login extends HttpServlet {
 		    RequestDispatcher rd = sc.getRequestDispatcher(LOGIN_FAILED);
 		    rd.forward(request, response);
 		}else{//casilla logueada. Redirect to inbox
-			request.setAttribute("user", casillaLogueada);//Agregamos el usuario a la sesion
+			request.getSession(true).setAttribute("user", casillaLogueada);//Agregamos el usuario a la sesion
 		    ServletContext sc = getServletContext();
 		    RequestDispatcher rd = sc.getRequestDispatcher(LOGIN_OK);
 		    rd.forward(request, response);

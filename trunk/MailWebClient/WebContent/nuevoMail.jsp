@@ -13,14 +13,13 @@
 <script type="text/javascript">
 	$(function() {
 		//Page Initialization
-		$("#lnkInbox").addClass("selected");
+		$("#lnkMail").addClass("selected");
 
-		/*
-		$("#lnkMail").button();
-		$("#lnkInbox").button();
-		$("#lnkEnviados").button();
-		$("#lnkEliminados").button();
-		*/
+		$("#mailForm").submit(function(){
+			validarMail();
+		});
+
+		$("#btnEnviar").button();
 	});
 
 </script>
@@ -45,20 +44,27 @@
 	
 	<td>
 		<div id="contentPanel">
-			<h2>Recibidos</h2>
+			<h2>Nuevo Mail</h2>
+			<form id="mailForm" action="SendMail" method="POST">
 			<table class="mailTable">
-			<thead>
 				<tr>
-					<th>From</th><th width="50%">Subject</th><th>Received Date</th>
+					<td>To:</td><td><input type="text"/> </td>
 				</tr>
-			</thead>
 				<tr>
-					<td>HARDCODED</td><td>HARCODED</td><td>HARDCODED</td>
+					<td>From:</td><td><input type="text" readonly="readonly" value="<%=user.getNombre() %>"/> </td>
 				</tr>
-			<tbody>
-			
-			</tbody>
+				<tr>
+					<td>Subject:</td><td><input type="text" /> </td>
+				</tr>
+				<tr>
+					<td>Body:</td><td><textarea rows="20" cols="100"></textarea></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="button" id="btnEnviar" value="Enviar"/></td>
+				</tr>
 			</table>
+			</form>
 		</div>
 	</td>
 	
