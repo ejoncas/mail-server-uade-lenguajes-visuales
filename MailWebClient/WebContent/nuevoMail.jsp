@@ -1,23 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@page import="com.uade.beans.entities.Casilla"%><html>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
 <%
-	Casilla user = (Casilla)request.getSession().getAttribute("user");
+	Casilla user = (Casilla) request.getSession().getAttribute("user");
 %>
 
-<%if(user!=null){ %>
+<%
+	if (user != null) {
+%>
 <script type="text/javascript">
-	$(function() {
+	$(document).ready(function() {
 		//Page Initialization
 		$("#lnkMail").addClass("selected");
-
 		$("#mailForm").submit(function(){
 			validarMail();
 		});
+
+		AjaxHelper.getContactsForUser('<%=user.getNombre()%>', function(contacts){
+			for(var i=0; i<contacts.length; i++){
+				$("#inputTo").autocomplete({
+					source: contacts
+				});
+			}	
+		});
+		
 
 		$("#btnEnviar").button();
 	});
@@ -26,55 +36,63 @@
 
 <table class="panel" width="100%">
 	<tr>
-	
-	<td width="20%">
+
+		<td width="20%">
 		<div id="menuPanel">
-				<p style="font-size: .8em">Bienvenido!<br/>
-				<strong><%=user.getNombre()%></strong><br/>
-				<a href="Logout">Logout</a></p><br/>
-				
-					<ul>
-						<li><a id="lnkMail" href="nuevoMail.jsp">Nuevo Mail</a></li>
-						<li><a id="lnkInbox" href="inbox.jsp">Recibidos</a></li>
-						<li><a id="lnkEnviados" href="enviados.jsp">Enviados</a></li>
-						<li><a id="lnkEliminados" href="eliminados.jsp">Eliminados</a></li>
-					</ul>
-		</div>	
-	</td>
-	
-	<td>
-		<div id="contentPanel">
-			<h2>Nuevo Mail</h2>
-			<form id="mailForm" action="SendMail" method="POST">
-			<table class="mailTable">
-				<tr>
-					<td>To:</td><td><input type="text"/> </td>
-				</tr>
-				<tr>
-					<td>From:</td><td><input type="text" readonly="readonly" value="<%=user.getNombre() %>"/> </td>
-				</tr>
-				<tr>
-					<td>Subject:</td><td><input type="text" /> </td>
-				</tr>
-				<tr>
-					<td>Body:</td><td><textarea rows="20" cols="100"></textarea></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td><input type="button" id="btnEnviar" value="Enviar"/></td>
-				</tr>
-			</table>
-			</form>
+		<p style="font-size: .8em">Bienvenido!<br />
+		<strong><%=user.getNombre()%></strong><br />
+		<a href="Logout">Logout</a></p>
+		<br />
+
+		<ul>
+			<li><a id="lnkMail" href="nuevoMail.jsp">Nuevo Mail</a></li>
+			<li><a id="lnkInbox" href="inbox.jsp">Recibidos</a></li>
+			<li><a id="lnkEnviados" href="enviados.jsp">Enviados</a></li>
+			<li><a id="lnkEliminados" href="eliminados.jsp">Eliminados</a></li>
+		</ul>
 		</div>
-	</td>
-	
+		</td>
+
+		<td>
+		<div id="contentPanel">
+		<h2>Nuevo Mail</h2>
+		<form id="mailForm" action="SendMail" method="POST">
+		<table class="mailTable">
+			<tr>
+				<td>To:</td>
+				<td><input id="inputTo" name="inputTo" type="text" /></td>
+			</tr>
+			<tr>
+				<td>From:</td>
+				<td><input type="text" readonly="readonly"
+					value="<%=user.getNombre()%>" /></td>
+			</tr>
+			<tr>
+				<td>Subject:</td>
+				<td><input type="text" /></td>
+			</tr>
+			<tr>
+				<td>Body:</td>
+				<td><textarea rows="20" cols="100"></textarea></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="button" id="btnEnviar" value="Enviar" /></td>
+			</tr>
+		</table>
+		</form>
+		</div>
+		</td>
+
 	</tr>
 </table>
-<%}else{ 
-	request.setAttribute("error", "Debe Loguearse en el sistema");
-	ServletContext sc = getServletContext();
-    RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
-    rd.forward(request, response);
-} %>
+<%
+	} else {
+		request.setAttribute("error", "Debe Loguearse en el sistema");
+		ServletContext sc = getServletContext();
+		RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
+		rd.forward(request, response);
+	}
+%>
 </body>
 </html>
