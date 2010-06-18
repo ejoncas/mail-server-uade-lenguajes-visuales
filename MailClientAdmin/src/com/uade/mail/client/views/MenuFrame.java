@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Iterator;
+import java.util.List;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -24,10 +26,9 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import com.uade.beans.entities.Casilla;
 import com.uade.beans.entities.OficinaDeCorreo;
+import com.uade.beans.entities.UsuarioAdm;
 import com.uade.mail.client.controller.MenuFrameController;
 
 
@@ -52,9 +53,9 @@ public class MenuFrame extends javax.swing.JFrame {
 	private JPanel tab3;
 	private JScrollPane jScrollPane1;
 	private JButton modificarBtn;
-	private JButton jButton4;
-	private JButton jButton2;
-	private JButton jButton1;
+	private JButton jBtnTab3Nuevo;
+	private JButton jBtnTab3Eliminar;
+	private JButton jBtnTab3Modificar;
 	private JButton btnNuevo;
 	private JButton btnVinculos;
 	private JLabel jLblTab3ClaveBis;
@@ -285,12 +286,12 @@ public class MenuFrame extends javax.swing.JFrame {
 					tab3.setLayout(tab3Layout);
 					tabbedPane.addTab("Administradores", null, tab3, "Administración de usuarios administradores");
 					{
-						jButton1 = new JButton();
-						jButton1.setText("Modificar");
-						jButton1.setFont(new java.awt.Font("AlArabiya",0,10));
-						jButton1.addActionListener(new ActionListener() {
+						jBtnTab3Modificar = new JButton();
+						jBtnTab3Modificar.setText("Modificar");
+						jBtnTab3Modificar.setFont(new java.awt.Font("AlArabiya",0,10));
+						jBtnTab3Modificar.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
-								jButton1ActionPerformed(evt);
+								jBtnTab3ModificarActionPerformed(evt);
 							}
 						});
 					}
@@ -326,30 +327,31 @@ public class MenuFrame extends javax.swing.JFrame {
 						jComboTab3UsrAdm.setModel(jComboUsrAdmModel);
 					}
 					{
-						jButton2 = new JButton();
-						jButton2.setText("Eliminar");
-						jButton2.setFont(new java.awt.Font("AlArabiya",0,10));
-						jButton2.addActionListener(new ActionListener() {
+						jBtnTab3Eliminar = new JButton();
+						jBtnTab3Eliminar.setText("Eliminar");
+						jBtnTab3Eliminar.setFont(new java.awt.Font("AlArabiya",0,10));
+						jBtnTab3Eliminar.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
-								jButton2ActionPerformed(evt);
+								jBtnTab3EliminarActionPerformed(evt);
 							}
 						});
 					}
 					{
-						jButton4 = new JButton();
-						jButton4.setText("Nuevo");
-						jButton4.setFont(new java.awt.Font("AlArabiya",0,10));
-						jButton4.addActionListener(new ActionListener() {
+						jBtnTab3Nuevo = new JButton();
+						jBtnTab3Nuevo.setText("Nuevo");
+						jBtnTab3Nuevo.setFont(new java.awt.Font("AlArabiya",0,10));
+						jBtnTab3Nuevo.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
-								jButton4ActionPerformed(evt);
+								jBtnTab3NuevoActionPerformed(evt);
 							}
 						});
 					}
+					{
 					tab3Layout.setHorizontalGroup(tab3Layout.createSequentialGroup()
 						.addContainerGap()
 						.addGroup(tab3Layout.createParallelGroup()
 						    .addGroup(GroupLayout.Alignment.LEADING, tab3Layout.createSequentialGroup()
-						        .addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+						        .addComponent(jBtnTab3Nuevo, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
 						        .addGap(200))
 						    .addGroup(tab3Layout.createSequentialGroup()
 						        .addGap(26)
@@ -366,9 +368,9 @@ public class MenuFrame extends javax.swing.JFrame {
 						                    .addComponent(jPswFldTab3ClaveBis, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)))
 						            .addComponent(jComboTab3UsrAdm, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 273, GroupLayout.PREFERRED_SIZE))))
 						.addGap(181)
-						.addComponent(jButton2, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jBtnTab3Eliminar, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-						.addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
+						.addComponent(jBtnTab3Modificar, GroupLayout.PREFERRED_SIZE, 111, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 					tab3Layout.setVerticalGroup(tab3Layout.createSequentialGroup()
 						.addContainerGap(20, 20)
@@ -387,13 +389,15 @@ public class MenuFrame extends javax.swing.JFrame {
 						    .addComponent(jPswFldTab3ClaveBis, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGap(232)
 						.addGroup(tab3Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						    .addComponent(jButton4, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						    .addComponent(jButton2, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-						    .addComponent(jButton1, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+						    .addComponent(jBtnTab3Nuevo, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(jBtnTab3Eliminar, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						    .addComponent(jBtnTab3Modificar, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 						.addGap(6));
+				}
 				}
 
 			}
+			updateWindow();
 			pack();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -403,8 +407,6 @@ public class MenuFrame extends javax.swing.JFrame {
 	}
 
 
-	
-	
     /** Returns an ImageIcon, or null if the path was invalid. */
     protected static ImageIcon createImageIcon(String path) {
     	try{
@@ -425,6 +427,10 @@ public class MenuFrame extends javax.swing.JFrame {
     	modelCentros.getDatalist().removeAllElements();
     	modelCasilla.addCasillaList(c.getAccounts());
     	modelCentros.addOficinaDeCorreoList(c.getOffices());
+    	jComboTab3UsrAdm.removeAllItems();
+    	List<UsuarioAdm> usuarios = c.getUsuariosAdm();
+		for(Iterator<UsuarioAdm> i = usuarios.iterator();i.hasNext();)
+			jComboTab3UsrAdm.addItem(i.next().toString());	
     }
     
     private void btnContraseniaActionPerformed(ActionEvent evt) {
@@ -500,23 +506,35 @@ public class MenuFrame extends javax.swing.JFrame {
 
     }
     
-    private void jButton1ActionPerformed(ActionEvent evt) {
-    	System.out.println("jButton1.actionPerformed, event="+evt);
-    	//TODO add your code for jButton1.actionPerformed
+    private void jBtnTab3ModificarActionPerformed(ActionEvent evt) {
+    	System.out.println("jBtnTab3Modificar.actionPerformed, event="+evt);
+    		
     }
     
-    private void jButton2ActionPerformed(ActionEvent evt) {
-    	System.out.println("jButton2.actionPerformed, event="+evt);
+    private void jBtnTab3EliminarActionPerformed(ActionEvent evt) {
+    	System.out.println("jBtnTab3Eliminar.actionPerformed, event="+evt);
     	//TODO add your code for jButton2.actionPerformed
     }
-    
-    private void jButton3ActionPerformed(ActionEvent evt) {
-    	System.out.println("jButton3.actionPerformed, event="+evt);
-    	//TODO add your code for jButton3.actionPerformed
-    }
-    
-    private void jButton4ActionPerformed(ActionEvent evt) {
-    	System.out.println("jButton4.actionPerformed, event="+evt);
-    	//TODO add your code for jButton4.actionPerformed
+        
+    private void jBtnTab3NuevoActionPerformed(ActionEvent evt) {
+    	System.out.println("jBtnTab3Nuevo.actionPerformed, event="+evt);
+    	
+    	/* Sergio: Busco localmente que el username no exista
+    	 * No es el mejor método, ya que en caso de existir miles de
+    	 * usuarios todo este sistema y vista no serviria,
+    	 * pero para unos cientos de usuarios, el metodo es más que valido
+    	 */
+    	
+    	/*
+    	if(jPswFldTab3Clave.getPassword().equals(jPswFldTab3ClaveBis.getPassword())){
+    		c.crearUsuarioAdm(jTxtTab3UsrAdm.getText(), jPswFldTab3Clave.getText());
+    	}else
+    	{
+    		JOptionPane.showMessageDialog(null, "La contraseña ingresada no coincide");
+    	}*/
+    	
+    	c.crearUsuarioAdm(jTxtTab3UsrAdm.getText(), jPswFldTab3Clave.getText());
+    	updateWindow();
+    	
     }
 }
