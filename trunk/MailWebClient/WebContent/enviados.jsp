@@ -18,11 +18,12 @@
 
 </script>
 
-<table width="100%">
+<table class="panel" width="100%">
 	<tr>
 	
 	<td width="20%">
 		<div id="menuPanel">
+				
 				<p style="font-size: .8em">Bienvenido!<br/>
 				<strong><%=user.getNombre()%></strong><br/>
 				<a href="Logout">Logout</a></p><br/>
