@@ -15,7 +15,7 @@ public class Main {
 		//un usuario admin por defecto
 		
 		//Solo con politica create-drop
-		//controlador.crearUsuarioAdm("admin", "admin");
+		controlador.crearUsuarioAdm("admin", "admin");
 		
 		new LoginAdmin(controlador).setVisible(true);
 	

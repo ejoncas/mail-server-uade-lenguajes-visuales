@@ -69,6 +69,16 @@ public class MenuFrameController {
 		}
 	}
 
+	public List<UsuarioAdm> getUsuariosAdm() {
+		try {
+			return this.model.getUsersAdmin();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			System.out.println("No se pudo obtener los usuarios administradores");
+			return null;
+		}
+	}
+	
 	public void crearCuenta(String nombreCuenta, char[] password,
 			Usuario usuario) {
 		Casilla c = new Casilla();

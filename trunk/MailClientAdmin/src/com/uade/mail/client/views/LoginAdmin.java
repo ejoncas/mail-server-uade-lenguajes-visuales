@@ -2,18 +2,13 @@ package com.uade.mail.client.views;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
-
 import com.uade.mail.client.controller.MenuFrameController;
-import com.uade.mail.utils.PasswordEncrypt;
 
 
 /**
@@ -89,6 +84,11 @@ public class LoginAdmin extends javax.swing.JFrame {
 				jBtnSalir = new JButton();
 				getContentPane().add(jBtnSalir);
 				jBtnSalir.setText("Salir");
+				jBtnSalir.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
+						btnSalirActionPerformed(evt);
+					}
+			});
 			}
 			pack();
 			this.setSize(366, 137);
@@ -114,6 +114,12 @@ public class LoginAdmin extends javax.swing.JFrame {
 		{
 			JOptionPane.showMessageDialog(null, "La contraseña ingresada no es correcta!");
 		}
+	}
+	
+	private void btnSalirActionPerformed(ActionEvent evt) {
+		System.out.println("btnCambiar.actionPerformed, event="+evt);
+		
+		this.dispose();
 	}
 
 }
