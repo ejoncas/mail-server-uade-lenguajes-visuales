@@ -300,12 +300,17 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	}
 
 	@Override
-	public List<Casilla> getContacts(Casilla c) throws RemoteException {
+	public List<Casilla> getContacts(Casilla c1) throws RemoteException {
 		System.out.println("Method invocation [getContacts]");
 
 		
 		try {
 			EntityManager em = HibernateSession.getEntityManager();
+			
+			//El que viene como param es un VO
+			Query q1 = em.createQuery("SELECT c FROM Casilla c where c.nombre='"+c1.getNombre()+"'");
+			Casilla c = (Casilla) q1.getSingleResult();
+			
 			Query query = em.createQuery("SELECT c from Casilla c");
 			List<Casilla> casillas= query.getResultList();
 			//Filtrar las casillas a las que le puede mandar mensajes
@@ -323,7 +328,7 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 				}
 			}
 			
-			return null;
+			return r;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.getMessage());
