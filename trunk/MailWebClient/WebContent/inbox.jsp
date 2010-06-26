@@ -23,6 +23,15 @@
 		//Page Initialization
 		$("#lnkInbox").addClass("selected");
 
+		$("img[src='img/recycle.png']").click(function(){
+			var idAEliminar = $(this).parent().children("input[type='hidden']").val();
+			var e = $(this);
+			$(this).attr('src','img/ajax-loader.gif');
+			//TODO - Call Ajax
+			AjaxHelper.removeMail(idAEliminar,'<%=user.getNombre()%>',function(){
+				$(e).parent().parent().remove();
+			});
+		});
 	});
 </script>
 
@@ -58,6 +67,7 @@
 		<table class="mailTable">
 			<thead>
 				<tr>
+					<th width="3%">Eliminar</th>
 					<th>From</th>
 					<th width="50%">Subject</th>
 					<th>Received Date</th>
@@ -66,10 +76,11 @@
 			<tbody>
 				<%
 					for (MailVO n : (List<MailVO>) request.getSession().getAttribute("noLeidos")) {
-							String snippet = n.getSubject()+ " - "+ (n.getMessage().length() < 25 ? n.getMessage()
-											: n.getMessage().substring(0, 25)) + "...";
+							String fullSnippet = n.getSubject()+ " - "+ n.getMessage();
+							String snippet = fullSnippet.length()>60? fullSnippet.substring(0,60)+ "..." : fullSnippet;
 				%>
 				<tr class="unread">
+					<td><img alt="borrarMensaje" src="img/recycle.png"> <input type="hidden" value="<%=n.getId()%>"/></td>
 					<td><%=n.getFrom()%></td>
 					<td width="50%"><a href="VerMail?mailid=<%=n.getId()%>"><%=snippet%></a></td>
 					<td><%=formatter.format(n.getSentDate())%></td>
@@ -79,10 +90,11 @@
 				%>
 				<%
 					for (MailVO l : (List<MailVO>) request.getSession().getAttribute("leidos")) {
-							String snippet = l.getSubject()+ " - "+ (l.getMessage().length() < 25 ? l.getMessage()
-											: l.getMessage().substring(0, 25)) + "...";
+						String fullSnippet = l.getSubject()+ " - "+ l.getMessage();
+						String snippet = fullSnippet.length()>60? fullSnippet.substring(0,60)+ "..." : fullSnippet;
 				%>
 				<tr>
+					<td><img alt="borrarMensaje" src="img/recycle.png"><input type="hidden" value="<%=l.getId()%>"/></td>
 					<td><%=l.getFrom()%></td>
 					<td width="50%"><a href="VerMail?mailid=<%=l.getId()%>"><%=snippet%></a></td>
 					<td><%=formatter.format(l.getSentDate())%></td>

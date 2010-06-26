@@ -15,6 +15,7 @@ import com.uade.beans.entities.EstadosPosibles;
 import com.uade.mail.beans.MailVO;
 import com.uade.mail.interfaces.MailService;
 import com.uade.web.util.AccesoRMI;
+import com.uade.web.util.JSPHelper;
 
 /**
  * Servlet implementation class VerMail
@@ -45,15 +46,31 @@ public class VerMail extends HttpServlet {
 		boolean eraLeido = false;
 		
 		for(int i = 0 ; i<leidos.size() && verMail==null; i++){
-			if(leidos.get(i).getId()==mailid){
+			if(leidos.get(i).getId().equals(mailid)){
 				verMail = leidos.get(i);//quiere ver un leido
 				eraLeido = true;
 			}
 		}
 		
 		for(int i = 0 ; i<noLeidos.size() && verMail==null; i++){
-			if(noLeidos.get(i).getId()==mailid){
+			if(noLeidos.get(i).getId().equals(mailid)){
 				verMail = noLeidos.get(i);//quiere ver uno nuevo
+			}
+		}
+		
+		boolean showBlock = true;
+		if(verMail==null){//buscar en enviados
+			for(MailVO vo : JSPHelper.getListaEnviados(((Casilla)request.getSession().getAttribute("user"))))
+				if(vo.getId().equals(mailid)){//viene de enviados
+					verMail = vo;
+					showBlock=false;
+				}
+			if(verMail==null){//buscar en basura
+				for(MailVO vo : JSPHelper.getListEliminados(((Casilla)request.getSession().getAttribute("user"))))
+					if(vo.getId().equals(mailid)){//viene de basura
+						verMail = vo;
+						showBlock=false;
+					}
 			}
 		}
 		
@@ -68,6 +85,7 @@ public class VerMail extends HttpServlet {
 			}
 			ServletContext sc = getServletContext();
 		    RequestDispatcher rd = sc.getRequestDispatcher("/verMail.jsp");
+	    	request.setAttribute("showBlock", showBlock);
 		    rd.forward(request, response);
 		}else{
 		    ServletContext sc = getServletContext();
