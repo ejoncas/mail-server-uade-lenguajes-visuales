@@ -8,6 +8,7 @@ import com.uade.beans.entities.Mail;
 import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.beans.entities.Usuario;
 import com.uade.beans.entities.UsuarioAdm;
+import com.uade.mail.beans.MailVO;
 
 
 public interface MailService extends Remote{
@@ -44,7 +45,7 @@ public interface MailService extends Remote{
 	 * @return
 	 * @throws RemoteException
 	 */
-	public List<Mail> updateInbox(Casilla c) throws RemoteException;
+	public List<MailVO> updateInbox(Casilla c,String estado) throws RemoteException;
 	
 	/**
 	 * Realiza el envio de un mensaje. Toda la info relevante para realizar 
@@ -52,7 +53,7 @@ public interface MailService extends Remote{
 	 * @param m
 	 * @throws RemoteException
 	 */
-	public void sendEmail(Mail m) throws RemoteException;
+	public void sendEmail(MailVO m) throws RemoteException;
 	
 	/**
 	 * Se encarga de crear una nueva cuenta de mail.
@@ -148,7 +149,7 @@ public interface MailService extends Remote{
 	
 	public Casilla loginAccount(String usuario, String password) throws RemoteException;
 	
-	
+	public Casilla getCasillaByUsername(String username) throws RemoteException;
 	//TODO - Log Interface
 	//TODO - Alerts Interface
 	
