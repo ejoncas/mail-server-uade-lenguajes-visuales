@@ -55,6 +55,7 @@ public class Login extends HttpServlet {
 			request.getSession(true).setAttribute("user", casillaLogueada);//Agregamos el usuario a la sesion
 			List<MailVO> mailsLeidos = model.updateInbox(casillaLogueada, EstadosPosibles.READ);
 			List<MailVO> mailsNoLeidos = model.updateInbox(casillaLogueada, EstadosPosibles.UNREAD);
+			
 			request.getSession().setAttribute("leidos", mailsLeidos);
 			request.getSession().setAttribute("noLeidos", mailsNoLeidos);
 		    ServletContext sc = getServletContext();

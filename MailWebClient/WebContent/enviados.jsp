@@ -2,11 +2,17 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page import="com.uade.beans.entities.Casilla"%><html>
+<%@page import="com.uade.beans.entities.Casilla"%>
+<%@page import="java.util.List"%>
+<%@page import="com.uade.mail.beans.MailVO"%>
+<%@page import="com.uade.web.util.JSPHelper"%>
+<%@page import="java.text.SimpleDateFormat"%><html>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
 <%
 	Casilla user = (Casilla)request.getSession().getAttribute("user");	
+	List<MailVO> mailsEnviados = JSPHelper.getListaEnviados(user); 
+	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 %>
 
 <%if(user!=null){ %>
@@ -43,13 +49,24 @@
 			<table class="mailTable">
 			<thead>
 				<tr>
-					<th>From</th><th width="50%">Subject</th><th>Received Date</th>
+					<th>To</th><th width="50%">Subject</th><th>Received Date</th>
 				</tr>
 			</thead>
-				<tr>
-					<td>HARDCODED</td><td>HARCODED</td><td>HARDCODED</td>
-				</tr>
+			
 			<tbody>
+				<%
+					for (MailVO n : mailsEnviados) {
+							String fullSnippet = n.getSubject()+ " - "+ n.getMessage();
+							String snippet = fullSnippet.length()>60? fullSnippet.substring(0,60)+ "..." : fullSnippet;
+				%>
+				<tr>
+					<td><%=n.getTo()%></td>
+					<td width="50%"><a href="VerMail?mailid=<%=n.getId()%>"><%=snippet%></a></td>
+					<td><%=formatter.format(n.getSentDate())%></td>
+				</tr>
+				<%
+					}
+				%>
 			
 			</tbody>
 			</table>

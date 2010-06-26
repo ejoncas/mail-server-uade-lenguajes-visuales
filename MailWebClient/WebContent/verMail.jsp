@@ -16,7 +16,42 @@
 %>
 <script type="text/javascript">
 	$(document).ready(function() {
+			
+		$("#bloquearUsuario").click(function(){
+			$("#bloquearUsuario").attr('src','img/ajax-loader.gif');
+			AjaxHelper.blockUser('<%=user.getNombre()%>', '<%=verMail.getFrom()%>', function(){
+				alert('usuario bloqueado satisfactoriamente');
+				$("#bloquearUsuario").remove();
+			});
+			
+		});
 
+		  $("#bloquearUsuario").qtip({
+              content: 'Bloquear Usuario',
+              show: 'mouseover',
+              hide: 'click',
+              position: {
+                 corner: {
+                    target: 'topRight',
+                    tooltip: 'bottomLeft'
+                 }
+                   },
+                   style: {
+                           tip: {
+                           corner: 'bottomLeft',
+                           size: {
+                               x: 20,
+                               y : 8
+                           }
+                           },
+                           border: {
+                    width: 7,
+                    radius: 5
+                           },
+                       name: 'light' // Inherit from preset style
+                   }
+           });
+	
 	});
 
 </script>
@@ -41,29 +76,23 @@
 
 		<td>
 		<div id="contentPanel">
-		<h2><%=verMail.getSubject() %></h2>
+		<h2><%="Subject: "+verMail.getSubject() %></h2>
 		
 		<table class="mailTable">
 			<tr>
 				<td>To:</td>
-				<td><input id="inputTo" name="inputTo" type="text" value="<%=verMail.getTo() %>"/></td>
+				<td style="text-align: left;"><%=verMail.getTo() %></td>
 			</tr>
 			<tr>
 				<td>From:</td>
-				<td><input type="text" name="inputFrom" readonly="readonly"
-					value="<%=verMail.getFrom()%>" /></td>
-			</tr>
-			<tr>
-				<td>Subject:</td>
-				<td><input name="inputSubject" id="inputSubject" type="text" value="<%=verMail.getSubject()%>"/></td>
+				<td style="text-align: left;"><%=verMail.getFrom()%>   
+				<%if((Boolean)request.getAttribute("showBlock")){ %> 
+				<img alt="bloquear" src="img/delete.png" id="bloquearUsuario"/>
+				<%} %></td>
 			</tr>
 			<tr>
 				<td>Body:</td>
-				<td><textarea name="inputBody" id="inputBody" rows="20" cols="100" ><%=verMail.getMessage() %></textarea></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" id="btnEnviar" value="Enviar" /></td>
+				<td><textarea  style="margin-left: -10%" name="inputBody" readonly="readonly" id="inputBody" rows="20" cols="100" ><%=verMail.getMessage() %></textarea></td>
 			</tr>
 		</table>
 		
