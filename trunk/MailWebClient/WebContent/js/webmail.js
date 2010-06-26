@@ -22,3 +22,17 @@ function validarMail(){
 	
 	$("#mailForm").submit();
 }
+
+function validateNuevoMail(){
+	var r = true;
+	if($("#inputTo").val()==""){
+		alert('debe ingresar un destinatario');
+		r = false;
+	}else if($("#inputSubject").val()==""){
+		alert('debe ingresar un subject');
+		r = false;
+	}else{//TODO BIEN
+		//$("#mailForm").submit();
+		return r;
+	}
+}

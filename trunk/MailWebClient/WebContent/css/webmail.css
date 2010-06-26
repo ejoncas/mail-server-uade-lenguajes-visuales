@@ -24,6 +24,12 @@ td { border: 0; padding: 1px;}
         font-weight: bold;
         text-align: center;
 }
+.msg{
+        border: solid 2px green;
+        font-size: 13px;
+        font-weight: bold;
+        text-align: center;
+}
 
 .mailTable{
 	width: 100%;
@@ -43,3 +49,7 @@ td { border: 0; padding: 1px;}
 	background-color: #f3f3f3;	
 }
 
+
+.unread{
+	font-weight: bold;
+}
