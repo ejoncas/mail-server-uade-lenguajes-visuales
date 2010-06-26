@@ -18,12 +18,9 @@ public class Test extends TestCase{
 	public void testLog(){
 		
 		Casilla c1 = new Casilla();
-		c1.setNombre("joncas@arnet.com.ar");
-		Casilla c2 = new Casilla();
-		c2.setNombre("lalala@lalal.com");
+		c1.setNombre("joncas@"+Casilla.SERVER_DOMAIN);
 		Mail m = new Mail();
 		m.setFrom(c1);
-		m.setTo(c2);
 		m.setSubject("sujeto 1");
 		m.setMessage("Hola que tal la puta madre que peola anda esto");
 		
@@ -63,7 +60,7 @@ public class Test extends TestCase{
 			
 			serviceInterface.newAccout(c1);
 			serviceInterface.newAccout(c2);
-			serviceInterface.sendEmail(m);
+			
 			
 			serviceInterface.newAccout(c1);
 			serviceInterface.newAccout(c2);

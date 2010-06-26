@@ -16,6 +16,7 @@ import com.uade.beans.entities.Mail;
 import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.beans.entities.Usuario;
 import com.uade.beans.entities.UsuarioAdm;
+import com.uade.mail.beans.MailVO;
 import com.uade.mail.interfaces.MailService;
 import com.uade.mail.utils.HibernateSession;
 
@@ -268,25 +269,48 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	}
 
 	@Override
-	public void sendEmail(Mail m) throws RemoteException {
+	public void sendEmail(MailVO m1) throws RemoteException {
 		System.out.println("Method invocation [sendEmail]");
-		//TODO - Para interfaz web
-		
 		try {
 			//SEND MAIL
-			Casilla from = m.getFrom();
-			Casilla to = m.getTo();
-			EstadoMail estado1 = new EstadoMail();
-			estado1.setMail(m);
-			estado1.setEstado(EstadosPosibles.SENT);
-			EstadoMail estado2 = new EstadoMail();
-			estado2.setMail(m);
-			estado2.setEstado(EstadosPosibles.UNREAD);
+			EntityManager em = HibernateSession.getEntityManager();
 			
-			from.getInbox().add(estado1);
-			to.getInbox().add(estado2);
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			{
+				Query q1 = em.createQuery("SELECT c FROM Casilla c where c.nombre='"+m1.getFrom()+"'");
+				Casilla from = (Casilla) q1.getSingleResult();
+				Query q2 = em.createQuery("SELECT c FROM Casilla c where c.nombre='"+m1.getTo()+"'");
+				Casilla to = (Casilla) q2.getSingleResult();
+
+				Mail m = new Mail();
+
+				EstadoMail estado1 = new EstadoMail();
+				m.setMessage(m1.getMessage());
+				m.setSubject(m1.getSubject());
+				m.setSentDate(m1.getSentDate());
+				m.setFrom(from);
+				m.setTo(to);
+				estado1.setMail(m);
+				estado1.setEstado(EstadosPosibles.SENT);
+				EstadoMail estado2 = new EstadoMail();
+				estado2.setMail(m);
+				estado2.setEstado(EstadosPosibles.UNREAD);
+				from.getInbox().add(estado1);
+				to.getInbox().add(estado2);	
 			
-			LogMensajes.getInstance().addMessage(m);
+				LogMensajes.getInstance().addMessage(m);
+				
+				
+				em.persist(m);
+				em.persist(estado1);
+				em.persist(estado2);
+				em.merge(from);
+				em.merge(to);
+			}
+			tx.commit();
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.getMessage());
@@ -294,9 +318,43 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 	}
 
 	@Override
-	public List<Mail> updateInbox(Casilla c) throws RemoteException {
+	public List<MailVO> updateInbox(Casilla c, String estado) throws RemoteException {
 		System.out.println("Method invocation [updateInbox]");
-		return null;
+		try{
+			EntityManager em = HibernateSession.getEntityManager();
+			Query q = em.createQuery("SELECT c FROM Casilla c WHERE c.nombre='"+c.getNombre()+"'");
+			
+			Casilla cdb = (Casilla) q.getSingleResult();
+			
+			
+			List<EstadoMail> estadoMails = cdb.getInbox();
+			
+			List<MailVO> m = new ArrayList<MailVO>();
+			
+			for(EstadoMail estadoMail : estadoMails){
+				if(estadoMail.getEstado().equalsIgnoreCase(estado)){
+					m.add(estadoMail.getMail().valueObject());
+				}
+			}
+			
+			return m;
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new RemoteException(e.getMessage());
+		}
+		
+	}
+	
+	public Casilla getCasillaByUsername(String username) throws RemoteException{
+		try {
+			EntityManager em = HibernateSession.getEntityManager();
+			Query q1 = em.createQuery("SELECT c FROM Casilla c where c.nombre='"+username+"'");
+			Casilla c = (Casilla) q1.getSingleResult();
+			return c;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RemoteException(e.getMessage());
+		}
 	}
 
 	@Override

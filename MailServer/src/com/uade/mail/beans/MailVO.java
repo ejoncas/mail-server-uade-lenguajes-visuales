@@ -1,6 +1,7 @@
 package com.uade.mail.beans;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 public class MailVO implements Serializable{
@@ -15,8 +16,15 @@ public class MailVO implements Serializable{
 	private String to;
 	private String subject;
 	private String message;
+	private Date sentDate;
 	
 	
+	public Date getSentDate() {
+		return sentDate;
+	}
+	public void setSentDate(Date sentDate) {
+		this.sentDate = sentDate;
+	}
 	public MailVO() {
 	}
 	public Long getId() {

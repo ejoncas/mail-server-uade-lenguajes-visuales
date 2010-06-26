@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import com.uade.mail.beans.MailVO;
+
 
 @Entity
 @Table(name="mails")
@@ -78,7 +80,17 @@ public class Mail implements Serializable{
 	}
 	public Mail() {
 	}
-	
+
+	public MailVO valueObject(){
+		MailVO m = new MailVO();
+		m.setFrom(from.getNombre());
+		m.setId(id);
+		m.setMessage(message);
+		m.setSentDate(sentDate);
+		m.setSubject(subject);
+		m.setTo(to.getNombre());
+		return m;
+	}
 	
 
 }
