@@ -3,6 +3,8 @@ package com.uade.mail.server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -18,6 +20,7 @@ import com.uade.beans.entities.Usuario;
 import com.uade.beans.entities.UsuarioAdm;
 import com.uade.mail.beans.MailVO;
 import com.uade.mail.interfaces.MailService;
+import com.uade.mail.utils.DateComparator;
 import com.uade.mail.utils.HibernateSession;
 
 @SuppressWarnings("unchecked")	
@@ -47,8 +50,7 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 				OficinaDeCorreo oficina2 = em.find(OficinaDeCorreo.class, o2.getId());
 				
 				oficina1.addOficinaDeConfianza(oficina2);
-				//Es bidireccional?
-				//oficina2.addOficinaDeConfianza(oficina1);
+				oficina2.addOficinaDeConfianza(oficina1);
 
 				em.persist(oficina1);
 				em.persist(oficina2);
@@ -337,6 +339,9 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 				}
 			}
 			
+			Comparator dateComparator = new DateComparator();
+			Collections.sort(m, dateComparator);
+			
 			return m;
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -369,7 +374,7 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 			Query q1 = em.createQuery("SELECT c FROM Casilla c where c.nombre='"+c1.getNombre()+"'");
 			Casilla c = (Casilla) q1.getSingleResult();
 			
-			Query query = em.createQuery("SELECT c from Casilla c");
+			Query query = em.createQuery("SELECT c from Casilla c where c.nombre NOT LIKE '"+c1.getNombre()+"'");
 			List<Casilla> casillas= query.getResultList();
 			//Filtrar las casillas a las que le puede mandar mensajes
 			List<Casilla> r = new ArrayList<Casilla>();
@@ -381,7 +386,11 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 					for(OficinaDeCorreo o: oficinas){
 						if(o.getCasillasMiembro().contains(casilla))//SI pertenece a alguna de sus oficinas
 							r.add(casilla);
-						//TODO - Verificar Vinculos de Confianza
+						else{//Verificar Vinculos de Confianza
+							for(OficinaDeCorreo link : o.getOficinasDeConfianza())
+								if(link.getCasillasMiembro().contains(casilla))
+									r.add(casilla);
+						}
 					}
 				}
 			}
@@ -675,6 +684,57 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 			throw new RemoteException(e.getMessage());
 		}
 	}
+
+	@Override
+	public void changeEstadoMail(MailVO m, String user, String estado) throws RemoteException {
+
+		try{
+			EntityManager em = HibernateSession.getEntityManager();
+			//El que viene como param es un VO
+			Query q1 = em.createQuery("SELECT c FROM Casilla c where c.nombre='"+user+"'");
+			Casilla c = (Casilla) q1.getSingleResult();
+			
+			List<EstadoMail> inbox = c.getInbox();
+			
+			for(EstadoMail es : inbox){
+				if(es.getMail().getId().equals(m.getId())){//es el mail al que hay que cambiarle el estado
+					es.setEstado(estado);
+					EntityTransaction tx = em.getTransaction();
+					tx.begin();
+					{
+						em.merge(es);
+					}
+					tx.commit();
+					return;//cortamos el for
+				}
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	@Override
+	public void addBloquedUser(String username, String blocked)
+			throws RemoteException {
+		try{
+			EntityManager em = HibernateSession.getEntityManager();
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			{
+				//la relacion es bidireccional si me bloquean yo paso a tenerla bloqueada tmb
+				Casilla owner = this.getCasillaByUsername(username);
+				Casilla block = this.getCasillaByUsername(blocked);
+				owner.getBloqueados().add(block);
+				block.getBloqueados().add(owner);
+				em.merge(owner);
+				em.merge(block);
+			}
+			tx.commit();
+		}catch (Exception e) {
+			e.printStackTrace();throw new RemoteException(e.getMessage());
+		}
+	}
 		
 }
-
