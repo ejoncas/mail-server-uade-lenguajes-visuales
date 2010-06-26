@@ -152,6 +152,10 @@ public interface MailService extends Remote{
 	public Casilla getCasillaByUsername(String username) throws RemoteException;
 	//TODO - Log Interface
 	//TODO - Alerts Interface
+
+	public void changeEstadoMail(MailVO m, String user, String estado)throws RemoteException ;
+
+	public void addBloquedUser(String owner , String blocked)throws RemoteException;
 	
 	
 }

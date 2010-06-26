@@ -1,6 +1,7 @@
 package com.uade.beans.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -80,6 +81,8 @@ public class Casilla implements Serializable{
 	}
 	
 	public Casilla() {
+		bloqueados=new ArrayList<Casilla>();
+		inbox = new ArrayList<EstadoMail>();
 	}
 
 }
