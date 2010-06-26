@@ -30,10 +30,14 @@
 		
 
 		$("#btnEnviar").button();
+
+		$("#btnEnviar").click(function(){validateNuevoMail()});
+;
 	});
 
 </script>
 
+<form id="mailForm" action="SendMail" method="POST">
 <table class="panel" width="100%">
 	<tr>
 
@@ -56,7 +60,7 @@
 		<td>
 		<div id="contentPanel">
 		<h2>Nuevo Mail</h2>
-		<form id="mailForm" action="SendMail" method="POST">
+		
 		<table class="mailTable">
 			<tr>
 				<td>To:</td>
@@ -64,28 +68,29 @@
 			</tr>
 			<tr>
 				<td>From:</td>
-				<td><input type="text" readonly="readonly"
+				<td><input type="text" name="inputFrom" readonly="readonly"
 					value="<%=user.getNombre()%>" /></td>
 			</tr>
 			<tr>
 				<td>Subject:</td>
-				<td><input type="text" /></td>
+				<td><input name="inputSubject" id="inputSubject" type="text" /></td>
 			</tr>
 			<tr>
 				<td>Body:</td>
-				<td><textarea rows="20" cols="100"></textarea></td>
+				<td><textarea name="inputBody" id="inputBody" rows="20" cols="100"></textarea></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="button" id="btnEnviar" value="Enviar" /></td>
+				<td><input type="submit" id="btnEnviar" value="Enviar" /></td>
 			</tr>
 		</table>
-		</form>
+		
 		</div>
 		</td>
 
 	</tr>
 </table>
+</form>
 <%
 	} else {
 		request.setAttribute("error", "Debe Loguearse en el sistema");
