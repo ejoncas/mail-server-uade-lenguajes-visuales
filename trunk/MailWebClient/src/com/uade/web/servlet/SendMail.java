@@ -1,7 +1,9 @@
 package com.uade.web.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -37,8 +39,9 @@ public class SendMail extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String from = request.getParameter("inputFrom");
-		String to = request.getParameter("inputTo");
+		String to = request.getParameter("inputTo");//separados por ','
 		String subject = request.getParameter("inputSubject");
 		String body = request.getParameter("inputBody");
 		
@@ -46,9 +49,16 @@ public class SendMail extends HttpServlet {
 		model = (MailService) AccesoRMI.getInstance().getServiceInterface();		
 		
 		//DTO
+
 		MailVO m = new MailVO();
+		
 		m.setFrom(from);
-		m.setTo(to);
+
+		List<String> toList = new ArrayList<String>();
+		for(String s : to.split(","))
+			toList.add(s);
+		
+		m.setTo(toList);
 		m.setMessage(body);
 		m.setSubject(subject);
 		m.setSentDate(new Date());
