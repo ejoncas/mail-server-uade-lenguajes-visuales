@@ -11,6 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.uade.beans.entities.Casilla;
 import com.uade.beans.entities.EstadoMail;
 import com.uade.beans.entities.EstadosPosibles;
@@ -282,8 +284,13 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 			{
 				Query q1 = em.createQuery("SELECT c FROM Casilla c where c.nombre='"+m1.getFrom()+"'");
 				Casilla from = (Casilla) q1.getSingleResult();
-				Query q2 = em.createQuery("SELECT c FROM Casilla c where c.nombre='"+m1.getTo()+"'");
-				Casilla to = (Casilla) q2.getSingleResult();
+				String casillasTo = "";
+				for(String s : m1.getTo())
+					if(StringUtils.isNotEmpty(StringUtils.remove(s, ' ')))//siempre hay uno vacio por la ',' de mas
+						casillasTo += "'"+s.trim()+"',";
+				casillasTo = casillasTo.substring(0, casillasTo.length()-1);//le sacamos la ultima , que pusimos
+				Query q2 = em.createQuery("SELECT c FROM Casilla c where c.nombre in ("+casillasTo+")");
+				List<Casilla> to = (List<Casilla>) q2.getResultList();
 
 				Mail m = new Mail();
 
@@ -299,7 +306,8 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 				estado2.setMail(m);
 				estado2.setEstado(EstadosPosibles.UNREAD);
 				from.getInbox().add(estado1);
-				to.getInbox().add(estado2);	
+				for(Casilla t : to)
+					t.getInbox().add(estado2);	
 			
 				LogMensajes.getInstance().addMessage(m);
 				
@@ -308,7 +316,8 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 				em.persist(estado1);
 				em.persist(estado2);
 				em.merge(from);
-				em.merge(to);
+				for(Casilla t : to)
+					em.merge(t);
 			}
 			tx.commit();
 			
@@ -588,6 +597,7 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 			throw new RemoteException(e.getMessage());
 		}
 	}
+
 
 	@Override
 	public Casilla loginAccount(String usuario, String password)
