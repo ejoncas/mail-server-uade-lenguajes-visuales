@@ -1,13 +1,17 @@
 package com.uade.beans.entities;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,7 +32,7 @@ public class Mail implements Serializable{
 	private static final long serialVersionUID = 3219938078669098296L;
 	private Long id;
 	private Casilla from;
-	private Casilla to;
+	private List<Casilla> to;
 	private String subject;
 	private String message;
 	private Date sentDate;
@@ -51,14 +55,15 @@ public class Mail implements Serializable{
 		this.from = from;
 	}
 	
-	@OneToOne
+	@ManyToMany
 	@Cascade(value=CascadeType.SAVE_UPDATE)
-	public Casilla getTo() {
+	public List<Casilla> getTo() {
 		return to;
 	}
-	public void setTo(Casilla to) {
+	public void setTo(List<Casilla> to) {
 		this.to = to;
 	}
+	
 	public String getSubject() {
 		return subject;
 	}
@@ -89,7 +94,10 @@ public class Mail implements Serializable{
 		m.setMessage(message);
 		m.setSentDate(sentDate);
 		m.setSubject(subject);
-		m.setTo(to.getNombre());
+		List<String> r = new ArrayList<String>();
+		for(Casilla c : to)
+			r.add(c.getNombre());
+		m.setTo(r);
 		return m;
 	}
 	
