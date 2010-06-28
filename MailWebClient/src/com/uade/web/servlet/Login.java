@@ -1,19 +1,15 @@
 package com.uade.web.servlet;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.uade.beans.entities.Casilla;
 import com.uade.beans.entities.EstadosPosibles;
-import com.uade.beans.entities.Mail;
 import com.uade.mail.beans.MailVO;
 import com.uade.mail.interfaces.MailService;
 import com.uade.web.util.AccesoRMI;
