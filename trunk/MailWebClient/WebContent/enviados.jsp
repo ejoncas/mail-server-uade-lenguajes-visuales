@@ -60,7 +60,11 @@
 							String snippet = fullSnippet.length()>60? fullSnippet.substring(0,60)+ "..." : fullSnippet;
 				%>
 				<tr>
-					<td><%=n.getTo()%></td>
+					<td>
+					<%for(String s : n.getTo()){%>
+					<%=s+"," %>	
+					<%}%>
+					</td>
 					<td width="50%"><a href="VerMail?mailid=<%=n.getId()%>"><%=snippet%></a></td>
 					<td><%=formatter.format(n.getSentDate())%></td>
 				</tr>

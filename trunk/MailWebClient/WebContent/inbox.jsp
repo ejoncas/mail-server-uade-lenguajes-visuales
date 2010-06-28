@@ -28,7 +28,7 @@
 			var e = $(this);
 			$(this).attr('src','img/ajax-loader.gif');
 			//TODO - Call Ajax
-			AjaxHelper.removeMail(idAEliminar,'<%=user.getNombre()%>',function(){
+			AjaxHelper.removeMail( null,idAEliminar,'<%=user.getNombre()%>',function(){
 				$(e).parent().parent().remove();
 			});
 		});

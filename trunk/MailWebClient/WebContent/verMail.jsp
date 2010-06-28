@@ -3,7 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@page import="com.uade.beans.entities.Casilla"%>
-<%@page import="com.uade.mail.beans.MailVO"%><html>
+<%@page import="com.uade.mail.beans.MailVO"%>
+<html>
 <jsp:include page="header.jsp"></jsp:include>
 <body>
 <%
@@ -19,41 +20,44 @@
 			
 		$("#bloquearUsuario").click(function(){
 			$("#bloquearUsuario").attr('src','img/ajax-loader.gif');
-			AjaxHelper.blockUser('<%=user.getNombre()%>', '<%=verMail.getFrom()%>', function(){
-				alert('usuario bloqueado satisfactoriamente');
-				$("#bloquearUsuario").remove();
-			});
-			
-		});
+			AjaxHelper.blockUser('<%=user.getNombre()%>', '<%=verMail.getFrom()%>
+	',
+															function() {
+																alert('usuario bloqueado satisfactoriamente');
+																$(
+																		"#bloquearUsuario")
+																		.remove();
+															});
 
-		  $("#bloquearUsuario").qtip({
-              content: 'Bloquear Usuario',
-              show: 'mouseover',
-              hide: 'click',
-              position: {
-                 corner: {
-                    target: 'topRight',
-                    tooltip: 'bottomLeft'
-                 }
-                   },
-                   style: {
-                           tip: {
-                           corner: 'bottomLeft',
-                           size: {
-                               x: 20,
-                               y : 8
-                           }
-                           },
-                           border: {
-                    width: 7,
-                    radius: 5
-                           },
-                       name: 'light' // Inherit from preset style
-                   }
-           });
-	
-	});
+										});
 
+						$("#bloquearUsuario").qtip( {
+							content : 'Bloquear Usuario',
+							show : 'mouseover',
+							hide : 'click',
+							position : {
+								corner : {
+									target : 'topRight',
+									tooltip : 'bottomLeft'
+								}
+							},
+							style : {
+								tip : {
+									corner : 'bottomLeft',
+									size : {
+										x : 20,
+										y : 8
+									}
+								},
+								border : {
+									width : 7,
+									radius : 5
+								},
+								name : 'light' // Inherit from preset style
+							}
+						});
+
+					});
 </script>
 <table class="panel" width="100%">
 	<tr>
@@ -77,25 +81,29 @@
 		<td>
 		<div id="contentPanel">
 		<h2><%="Subject: "+verMail.getSubject() %></h2>
-		
+
 		<table class="mailTable">
 			<tr>
 				<td>To:</td>
-				<td style="text-align: left;"><%=verMail.getTo() %></td>
+				<td style="text-align: left;">
+				<%for(String s : verMail.getTo()){%>
+				<%=s+"," %>	
+				<%}%>
+				</td>
 			</tr>
 			<tr>
 				<td>From:</td>
-				<td style="text-align: left;"><%=verMail.getFrom()%>   
-				<%if((Boolean)request.getAttribute("showBlock")){ %> 
-				<img alt="bloquear" src="img/delete.png" id="bloquearUsuario"/>
-				<%} %></td>
+				<td style="text-align: left;"><%=verMail.getFrom()%> <%if((Boolean)request.getAttribute("showBlock")){ %>
+				<img alt="bloquear" src="img/delete.png" id="bloquearUsuario" /> <%} %>
+				</td>
 			</tr>
 			<tr>
 				<td>Body:</td>
-				<td><textarea  style="margin-left: -10%" name="inputBody" readonly="readonly" id="inputBody" rows="20" cols="100" ><%=verMail.getMessage() %></textarea></td>
+				<td><textarea style="margin-left: -10%" name="inputBody"
+					readonly="readonly" id="inputBody" rows="20" cols="100"><%=verMail.getMessage() %></textarea></td>
 			</tr>
 		</table>
-		
+
 		</div>
 		</td>
 

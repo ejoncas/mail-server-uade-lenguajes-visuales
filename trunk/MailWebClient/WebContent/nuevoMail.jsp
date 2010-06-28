@@ -21,11 +21,27 @@
 		});
 
 		AjaxHelper.getContactsForUser('<%=user.getNombre()%>', function(contacts){
-			for(var i=0; i<contacts.length; i++){
 				$("#inputTo").autocomplete({
-					source: contacts
+					source: function(request, response) {
+						// delegate back to autocomplete, but extract the last term
+						response($.ui.autocomplete.filter(contacts, extractLast(request.term)));
+					},
+					focus: function() {
+						// prevent value inserted on focus
+						return false;
+					},
+					select: function(event, ui) {
+						var terms = split( this.value );
+						// remove the current input
+						terms.pop();
+						// add the selected item
+						terms.push( ui.item.value );
+						// add placeholder to get the comma-and-space at the end
+						terms.push("");
+						this.value = terms.join(", ");
+						return false;
+					}
 				});
-			}	
 		});
 		
 
