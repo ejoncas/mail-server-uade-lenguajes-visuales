@@ -1,6 +1,7 @@
 package com.uade.beans.entities;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -100,7 +101,25 @@ public class Mail implements Serializable{
 		m.setTo(r);
 		return m;
 	}
-	
+
+	public String toString(){
+		StringBuilder r = new StringBuilder();
+		
+		r.append("MAIL_ID: "+id);
+		r.append(" - FROM: "+from.getNombre());
+		String to = new String();
+		for(Casilla c : this.to){
+			to += c.getNombre()+" ,";
+		}
+		to = to.substring(0,to.length()-1);//borramos la coma
+		r.append(" - TO: "+to);
+		r.append(" - SUBJECT: "+subject);
+		r.append(" - BODY: "+message);
+		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+		r.append(" - SENT_DATE: "+f.format(sentDate));
+		
+		return r.toString();
+	}
 
 }
 
