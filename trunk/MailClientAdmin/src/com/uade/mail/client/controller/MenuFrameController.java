@@ -3,6 +3,10 @@ package com.uade.mail.client.controller;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+
+import sun.security.krb5.internal.ccache.CCacheInputStream;
+import sun.text.normalizer.UProperty;
+
 import com.uade.beans.entities.Casilla;
 import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.beans.entities.Usuario;
@@ -232,4 +236,26 @@ public class MenuFrameController {
 		}
 
 	}
-}
+
+	public void modificarUsuarioAdm (String username, String clavePlana)
+
+	{
+		try {
+			this.model.editUserAdmin(username, (PasswordEncrypt.generateMD5(clavePlana)));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void eliminarUsuarioAdm (String username)
+	{
+		try {
+			this.model.deleteUserAdmin(username);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}	
