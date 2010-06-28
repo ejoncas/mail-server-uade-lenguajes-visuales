@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.uade.beans.entities.Casilla;
+
 /**
  * Servlet implementation class Logout
  */
@@ -28,6 +30,9 @@ public class Logout extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.getSession().removeAttribute("user");
+		request.getSession().removeAttribute("leidos");
+		request.getSession().removeAttribute("noLeidos");
+		request.getSession().invalidate();
 		
 		//redirect
 		ServletContext sc = getServletContext();
