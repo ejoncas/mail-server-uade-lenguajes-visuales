@@ -589,7 +589,6 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		}
 	}
 
-
 	@Override
 	public Casilla loginAccount(String usuario, String password)
 			throws RemoteException {
@@ -658,15 +657,51 @@ public class MailServiceImpl extends UnicastRemoteObject implements MailService{
 		}
 	}
 
-	public void deleteUserAdmin(Long ID) throws RemoteException {
-		// TODO Auto-generated method stub
+	public void deleteUserAdmin(String username) throws RemoteException {
+		System.out.println("Method invocation [removeUserAdm]");
 		
+		try {
+			//UPDATE
+			EntityManager em = HibernateSession.getEntityManager();
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			{	
+				Query query = em.createQuery("SELECT u FROM UsuarioAdm u WHERE username='"+username+"'");
+				
+				UsuarioAdm usuarioABorrar = (UsuarioAdm) query.getSingleResult();
+				
+				em.remove(usuarioABorrar);
+			}
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RemoteException(e.getMessage());
+		}
+
 	}
 
-	public void editUserAdmin(Long ID, String username, String claveMD5)
-			throws RemoteException {
-		// TODO Auto-generated method stub
-		
+	public void editUserAdmin(String username, String claveMD5)	throws RemoteException 
+		{
+		System.out.println("Method invocation [editUserAdmin]");
+
+		try {
+			//UPDATE
+			EntityManager em = HibernateSession.getEntityManager();
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			{
+				Query query = em.createQuery("SELECT u FROM UsuarioAdm u WHERE username='"+username+"'");
+				
+				UsuarioAdm usuarioAModificar = (UsuarioAdm) query.getSingleResult();				
+
+				usuarioAModificar.setPassword(claveMD5);
+				em.persist(usuarioAModificar);
+			}
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RemoteException(e.getMessage());
+		}
 	}
 
 	public List<UsuarioAdm> getUsersAdmin() throws RemoteException {

@@ -325,6 +325,12 @@ public class MenuFrame extends javax.swing.JFrame {
 									new String[] { "Item One", "Item Two" });
 						jComboTab3UsrAdm = new JComboBox();
 						jComboTab3UsrAdm.setModel(jComboUsrAdmModel);
+						jComboTab3UsrAdm.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent evt) {
+								jComboTab3UsrAdmEliminarActionPerformed(evt);
+							}
+						});
+						
 					}
 					{
 						jBtnTab3Eliminar = new JButton();
@@ -416,7 +422,7 @@ public class MenuFrame extends javax.swing.JFrame {
     		return null;
 		}
     }
-    
+      
     private void nuevoBtnActionPerformed(ActionEvent evt) {
     	System.out.println("nuevoBtn.actionPerformed, event="+evt);
     	new SelectUserFrame(c, this).setVisible(true);
@@ -430,7 +436,7 @@ public class MenuFrame extends javax.swing.JFrame {
     	jComboTab3UsrAdm.removeAllItems();
     	List<UsuarioAdm> usuarios = c.getUsuariosAdm();
 		for(Iterator<UsuarioAdm> i = usuarios.iterator();i.hasNext();)
-			jComboTab3UsrAdm.addItem(i.next().toString());	
+			jComboTab3UsrAdm.addItem(i.next());
     }
     
     private void btnContraseniaActionPerformed(ActionEvent evt) {
@@ -508,12 +514,36 @@ public class MenuFrame extends javax.swing.JFrame {
     
     private void jBtnTab3ModificarActionPerformed(ActionEvent evt) {
     	System.out.println("jBtnTab3Modificar.actionPerformed, event="+evt);
+    	UsuarioAdm u = (UsuarioAdm)jComboTab3UsrAdm.getSelectedItem();
+
+    	if(comparePasswordsEquals(jPswFldTab3Clave.getPassword(),jPswFldTab3ClaveBis.getPassword())){
+    		c.modificarUsuarioAdm(u.getUsername(), jPswFldTab3Clave.getText());
+    	}else
+    	{
+    		JOptionPane.showMessageDialog(null, "La contraseña ingresada no coincide");
+    	}
+    	updateWindow();
     		
+    }
+	
+    private boolean comparePasswordsEquals(char[] a, char[] b){
+		for(int i=0; i< a.length; i++){
+			if(a[i]!=b[i])
+				return false;
+		}
+		return true;
+	}
+    
+    
+    
+    private void jComboTab3UsrAdmEliminarActionPerformed(ActionEvent evt) {
+    	System.out.println("jComboTab3UsrAdmEliminar.actionPerformed, event="+evt);
     }
     
     private void jBtnTab3EliminarActionPerformed(ActionEvent evt) {
     	System.out.println("jBtnTab3Eliminar.actionPerformed, event="+evt);
-    	//TODO add your code for jButton2.actionPerformed
+    	c.eliminarUsuarioAdm(jTxtTab3UsrAdm.getText());
+    	
     }
         
     private void jBtnTab3NuevoActionPerformed(ActionEvent evt) {
@@ -525,15 +555,15 @@ public class MenuFrame extends javax.swing.JFrame {
     	 * pero para unos cientos de usuarios, el metodo es más que valido
     	 */
     	
-    	/*
-    	if(jPswFldTab3Clave.getPassword().equals(jPswFldTab3ClaveBis.getPassword())){
-    		c.crearUsuarioAdm(jTxtTab3UsrAdm.getText(), jPswFldTab3Clave.getText());
+    	UsuarioAdm u = (UsuarioAdm) jComboTab3UsrAdm.getSelectedItem();
+    	
+    	if(comparePasswordsEquals(jPswFldTab3Clave.getPassword(),jPswFldTab3ClaveBis.getPassword())){
+    		c.crearUsuarioAdm(u.getUsername(), jPswFldTab3Clave.getText());
     	}else
     	{
     		JOptionPane.showMessageDialog(null, "La contraseña ingresada no coincide");
-    	}*/
+    	}
     	
-    	c.crearUsuarioAdm(jTxtTab3UsrAdm.getText(), jPswFldTab3Clave.getText());
     	updateWindow();
     	
     }
