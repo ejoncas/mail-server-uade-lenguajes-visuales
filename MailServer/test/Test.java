@@ -54,7 +54,7 @@ public class Test extends TestCase{
 			
 			Mail m = new Mail();
 			m.setFrom(c1);
-			m.setTo(c2);
+			//m.setTo(c2);
 			m.setSubject("Llamado desde la interfaz");
 			m.setMessage("Probando la interfaz");
 			

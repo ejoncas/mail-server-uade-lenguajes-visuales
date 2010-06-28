@@ -54,7 +54,7 @@ public class TestHibernate extends TestCase{
 		
 		Mail m = new Mail();
 		m.setFrom(c);
-		m.setTo(c1);
+		//m.setTo(c1);
 		m.setMessage("Hola como va?");
 		m.setSubject("Como va?");
 		
