@@ -2,6 +2,7 @@ package com.uade.mail.beans;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 public class MailVO implements Serializable{
@@ -13,7 +14,7 @@ public class MailVO implements Serializable{
 	private static final long serialVersionUID = -8294751832410362262L;
 	private Long id;
 	private String from;
-	private String to;
+	private List<String> to;
 	private String subject;
 	private String message;
 	private Date sentDate;
@@ -53,12 +54,13 @@ public class MailVO implements Serializable{
 	public void setFrom(String from) {
 		this.from = from;
 	}
-	public String getTo() {
+	public List<String> getTo() {
 		return to;
 	}
-	public void setTo(String to) {
+	public void setTo(List<String> to) {
 		this.to = to;
 	}
+	
 	
 	
 }
