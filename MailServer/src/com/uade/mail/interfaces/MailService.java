@@ -4,7 +4,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 import com.uade.beans.entities.Casilla;
-import com.uade.beans.entities.Mail;
 import com.uade.beans.entities.OficinaDeCorreo;
 import com.uade.beans.entities.Usuario;
 import com.uade.beans.entities.UsuarioAdm;
@@ -17,7 +16,7 @@ public interface MailService extends Remote{
 	 * 
 	 * */
 	public void newUserAdmin(UsuarioAdm u) throws RemoteException;
-	
+		
 	/** Valida a un usuario administrado en base al usuario y clave hash.
 	 * 
 	 * */
@@ -31,20 +30,10 @@ public interface MailService extends Remote{
 	/** Borra un usuario administrador
 	 * 
 	 */
-	public void deleteUserAdmin(Long ID) throws RemoteException;
+	public void deleteUserAdmin(String username) throws RemoteException;
 	
-	/** Modifica los parametros de un usuario administrador
-	 * ID a modificar, nuevo usuario y/o nueva clave 
-	*/
-	public void editUserAdmin(Long ID, String username, String claveMD5) throws RemoteException;
+	public void editUserAdmin(String username, String claveMD5) throws RemoteException;
 	
-	
-	/**
-	 * Actualizar Casilla en base a una cuenta 
-	 * @param c
-	 * @return
-	 * @throws RemoteException
-	 */
 	public List<MailVO> updateInbox(Casilla c,String estado) throws RemoteException;
 	
 	/**
