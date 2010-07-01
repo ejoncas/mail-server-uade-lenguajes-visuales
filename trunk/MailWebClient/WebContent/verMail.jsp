@@ -20,21 +20,16 @@
 			
 		$("#bloquearUsuario").click(function(){
 			$("#bloquearUsuario").attr('src','img/ajax-loader.gif');
-			AjaxHelper.blockUser('<%=user.getNombre()%>', '<%=verMail.getFrom()%>
-	',
-															function() {
+			AjaxHelper.blockUser('<%=user.getNombre()%>', '<%=verMail.getFrom()%>', function() {
 																alert('usuario bloqueado satisfactoriamente');
-																$(
-																		"#bloquearUsuario")
-																		.remove();
-															});
-
-										});
+																$("#bloquearUsuario").remove();
+								});
+			});
 
 						$("#bloquearUsuario").qtip( {
 							content : 'Bloquear Usuario',
 							show : 'mouseover',
-							hide : 'click',
+							hide : 'mouseleave',
 							position : {
 								corner : {
 									target : 'topRight',

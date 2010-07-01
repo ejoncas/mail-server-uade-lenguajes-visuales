@@ -65,7 +65,7 @@
 					<%=s+"," %>	
 					<%}%>
 					</td>
-					<td width="50%"><a href="VerMail?mailid=<%=n.getId()%>"><%=snippet%></a></td>
+					<td width="50%"><a href="VerMail?mailid=<%=n.getId()%>&markasread=false"><%=snippet%></a></td>
 					<td><%=formatter.format(n.getSentDate())%></td>
 				</tr>
 				<%

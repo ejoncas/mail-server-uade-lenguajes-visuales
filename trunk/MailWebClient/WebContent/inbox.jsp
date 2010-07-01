@@ -82,7 +82,7 @@
 				<tr class="unread">
 					<td><img alt="borrarMensaje" src="img/recycle.png"> <input type="hidden" value="<%=n.getId()%>"/></td>
 					<td><%=n.getFrom()%></td>
-					<td width="50%"><a href="VerMail?mailid=<%=n.getId()%>"><%=snippet%></a></td>
+					<td width="50%"><a href="VerMail?mailid=<%=n.getId()%>&markasread=true"><%=snippet%></a></td>
 					<td><%=formatter.format(n.getSentDate())%></td>
 				</tr>
 				<%
@@ -96,7 +96,7 @@
 				<tr>
 					<td><img alt="borrarMensaje" src="img/recycle.png"><input type="hidden" value="<%=l.getId()%>"/></td>
 					<td><%=l.getFrom()%></td>
-					<td width="50%"><a href="VerMail?mailid=<%=l.getId()%>"><%=snippet%></a></td>
+					<td width="50%"><a href="VerMail?mailid=<%=l.getId()%>&markasread=false"><%=snippet%></a></td>
 					<td><%=formatter.format(l.getSentDate())%></td>
 				</tr>
 				<%
