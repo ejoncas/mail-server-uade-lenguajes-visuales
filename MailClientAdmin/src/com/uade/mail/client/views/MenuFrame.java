@@ -554,11 +554,9 @@ public class MenuFrame extends javax.swing.JFrame {
     	 * usuarios todo este sistema y vista no serviria,
     	 * pero para unos cientos de usuarios, el metodo es más que valido
     	 */
-    	
-    	UsuarioAdm u = (UsuarioAdm) jComboTab3UsrAdm.getSelectedItem();
-    	
+    		
     	if(comparePasswordsEquals(jPswFldTab3Clave.getPassword(),jPswFldTab3ClaveBis.getPassword())){
-    		c.crearUsuarioAdm(u.getUsername(), jPswFldTab3Clave.getText());
+    		c.crearUsuarioAdm(jTxtTab3UsrAdm.getText(), jPswFldTab3Clave.getText());
     	}else
     	{
     		JOptionPane.showMessageDialog(null, "La contraseña ingresada no coincide");
