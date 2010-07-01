@@ -16,9 +16,7 @@
 	$(document).ready(function() {
 		//Page Initialization
 		$("#lnkMail").addClass("selected");
-		$("#mailForm").submit(function(){
-			validarMail();
-		});
+		
 
 		AjaxHelper.getContactsForUser('<%=user.getNombre()%>', function(contacts){
 				$("#inputTo").autocomplete({
@@ -47,13 +45,11 @@
 
 		$("#btnEnviar").button();
 
-		$("#btnEnviar").click(function(){validateNuevoMail()});
-;
 	});
 
 </script>
 
-<form id="mailForm" action="SendMail" method="POST">
+<form id="mailForm" action="SendMail" method="POST" onsubmit="return(validateNuevoMail())">
 <table class="panel" width="100%">
 	<tr>
 

@@ -31,10 +31,8 @@ function validateNuevoMail(){
 	}else if($("#inputSubject").val()==""){
 		alert('debe ingresar un subject');
 		r = false;
-	}else{//TODO BIEN
-		//$("#mailForm").submit();
-		return r;
 	}
+	return r;
 }
 
 function split(val) {

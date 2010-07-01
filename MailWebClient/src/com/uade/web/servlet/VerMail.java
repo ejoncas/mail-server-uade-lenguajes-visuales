@@ -38,6 +38,8 @@ public class VerMail extends HttpServlet {
 		
 		long mailid = Long.parseLong(request.getParameter("mailid"));
 		
+		boolean markasread = request.getParameter("markasread").equals("true");
+		
 		List<MailVO> leidos = (List<MailVO>) request.getSession().getAttribute("leidos");
 		List<MailVO> noLeidos =(List<MailVO>) request.getSession().getAttribute("noLeidos");
 		
@@ -76,7 +78,7 @@ public class VerMail extends HttpServlet {
 		
 		if(verMail!=null){
 			request.getSession().setAttribute("verMail", verMail);
-			if(!eraLeido){//hay que moverlo al vector de leidos, y avisarle al servidor que se leyó
+			if(markasread && !eraLeido){//hay que moverlo al vector de leidos, y avisarle al servidor que se leyó
 				leidos.add(verMail);
 				noLeidos.remove(verMail);
 				model = (MailService) AccesoRMI.getInstance().getServiceInterface();
