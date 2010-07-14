@@ -6,9 +6,9 @@ Para configurar el proyecto es necesario editar el archivo config.properties en 
 
 en este archivo se encuentran las siguientes propiedades:
 
-_mail.log.dateformat=[formato de dia para el log]_
-_mail.log.path=[path a la direccion local donde se quiere guardar el LOG]_
-_database.jdbc=[url de conexion a la base de datos]_
+*_mail.log.dateformat=[formato de dia para el log]_
+*_mail.log.path=[path a la direccion local donde se quiere guardar el LOG]_
+*_database.jdbc=[url de conexion a la base de datos]_
 
 
 ==Librerias==
