@@ -11,10 +11,22 @@ _mail.log.path=[path a la direccion local donde se quiere guardar el LOG]_
 _database.jdbc=[url de conexion a la base de datos]_
 
 
+==Librerias==
 
-= Details =
+A continuacion se especifica por cada proyecto como deben configurarse las librerias.
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+===MailClientAdmin===
+Este proyecto no requiere librerias especiales, solo necesita que se especifique en su Build Path que requiere el proyecto _MailServer_.
+Para Hacerlo hay que ir a propiedades del proyecto -> Build Path -> Referenced Proyects y ahí se agrega el proyecto _MailServer_.
+
+===MailServer===
+
+En este proyecto algunas de las librerias necesarias estan especificadas en la carpeta _/lib_, hay que agregar todo los jars contenidos al Build Path.
+Las demas librerias necesarias son Hibernate 3.5.1 y SLF4J. Estas librerias se utilizaron como _User Libraries_ por motivos de peso del proyecto.
+
+
+
+===MailWebClient===
+
+AL igual que el proyecto _MailClientAdmin_ este proyecto requiere que se le asocie el proyecto _MailServer_.
+Para Hacerlo hay que ir a propiedades del proyecto -> Build Path -> Referenced Proyects y ahí se agrega el proyecto _MailServer_.
